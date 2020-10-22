@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="20dp"
-        android:fontFamily="sans-serif-thin"
+        android:fontFamily="@font/roboto_thin"
         android:text="@string/login_header"
         android:textColor="@color/colorAccent"
         android:textSize="56sp"
@@ -93,6 +93,32 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guideline"  />
+
+    <TextView
+        android:id="@+id/facebookLinkText"
+        android:text="@string/facebookLinkText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:fontFamily="@font/roboto_thin"
+        android:textColor="@color/colorAccent"
+        android:textSize="24sp"
+        android:layout_marginTop="40sp"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"/>
+
+    <ImageButton
+
+        android:id="@+id/facebookLink"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_border"
+        android:scaleType="fitXY"
+        android:src="@drawable/ic_facebook_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/facebookLinkText" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
