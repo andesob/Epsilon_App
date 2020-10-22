@@ -22,6 +22,7 @@
         android:name="no.ntnu.epsilon_app.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+
     <fragment
         android:id="@+id/nav_faq"
         android:name="no.ntnu.epsilon_app.ui.faq.FaqFragment"
