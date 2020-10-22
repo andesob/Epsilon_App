@@ -20,4 +20,5 @@
     <string name="prompt_password">Password</string>
     <string name="prompt_phoneNumber">Phone Number</string>
     <string name="faq">Faq</string>
+    <string name="title_activity_login">Logg Inn</string>
 </resources>
