@@ -24,6 +24,7 @@ import no.ntnu.epsilon_app.ui.LoginFragment;
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
+    //TESTING GITHUB HERE
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
