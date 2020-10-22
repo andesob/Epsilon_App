@@ -1,4 +1,4 @@
-package no.ntnu.epsilon_app2;
+package no.ntnu.epsilon_app;
 
 import org.junit.Test;
 

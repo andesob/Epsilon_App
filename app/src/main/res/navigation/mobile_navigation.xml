@@ -7,19 +7,24 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="no.ntnu.epsilon_app2.ui.home.HomeFragment"
+        android:name="no.ntnu.epsilon_app.ui.home.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_gallery"
-        android:name="no.ntnu.epsilon_app2.ui.gallery.GalleryFragment"
+        android:name="no.ntnu.epsilon_app.ui.gallery.GalleryFragment"
         android:label="@string/menu_gallery"
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
         android:id="@+id/nav_slideshow"
-        android:name="no.ntnu.epsilon_app2.ui.slideshow.SlideshowFragment"
+        android:name="no.ntnu.epsilon_app.ui.slideshow.SlideshowFragment"
         android:label="@string/menu_slideshow"
         tools:layout="@layout/fragment_slideshow" />
+    <fragment
+        android:id="@+id/nav_faq"
+        android:name="no.ntnu.epsilon_app.ui.faq.FaqFragment"
+        android:label="@string/faq"
+        tools:layout="@layout/fragment_faq_item_list" />
 </navigation>

@@ -1,4 +1,4 @@
-package no.ntnu.epsilon_app2.ui.slideshow;
+package no.ntnu.epsilon_app.ui.slideshow;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
