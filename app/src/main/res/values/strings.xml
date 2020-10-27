@@ -22,4 +22,7 @@
     <string name="faq">Faq</string>
     <string name="title_activity_login">Logg Inn</string>
     <string name="facebookLinkText">Du kan også finne oss på facebook</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ask_question">Ask Question</string>
 </resources>
