@@ -28,4 +28,14 @@
         android:name="no.ntnu.epsilon_app.ui.faq.FaqFragment"
         android:label="@string/faq"
         tools:layout="@layout/fragment_faq_item_list" />
+    <fragment
+        android:id="@+id/nav_news"
+        android:name="no.ntnu.epsilon_app.ui.news.NewsFeedFragment"
+        android:label="@string/news"
+        tools:layout="@layout/news_feed_fragment" />
+    <fragment
+        android:id="@+id/nav_calendar"
+        android:name="no.ntnu.epsilon_app.ui.calendar.CalendarFragment"
+        android:label="@string/calendar"
+        tools:layout="@layout/fragment_calendar"/>
 </navigation>
