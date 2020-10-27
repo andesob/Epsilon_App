@@ -22,5 +22,9 @@
             android:icon="@drawable/ic_menu_slideshow"
             android:title="@string/faq" />
 
+        <item
+            android:id="@+id/nav_ask_question"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="@string/ask_question" />
     </group>
 </menu>

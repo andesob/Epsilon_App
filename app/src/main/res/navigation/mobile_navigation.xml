@@ -28,4 +28,9 @@
         android:name="no.ntnu.epsilon_app.ui.faq.FaqFragment"
         android:label="@string/faq"
         tools:layout="@layout/fragment_faq_item_list" />
+    <fragment
+        android:id="@+id/nav_ask_question"
+        android:name="no.ntnu.epsilon_app.ui.ask_question.ask_question_fragment"
+        android:label="@string/ask_question"
+        tools:layout="@layout/fragment_faq_item_list" />
 </navigation>
