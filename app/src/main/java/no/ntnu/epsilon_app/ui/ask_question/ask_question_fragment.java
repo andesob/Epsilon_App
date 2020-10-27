@@ -10,6 +10,7 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
@@ -36,6 +37,15 @@ public class ask_question_fragment extends Fragment {
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_ask_question, container, false);
         final EditText questionInput = root.findViewById(R.id.editTextQuestionInput);
+        final Button submitButton = root.findViewById(R.id.SubmitButton);
+
+        submitButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+               String question =  questionInput.getText().toString();
+                Toast.makeText(root.getContext(), question, Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
         questionInput.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -50,7 +60,6 @@ public class ask_question_fragment extends Fragment {
                 }
             }
         });
-
 
         return root;
     }
