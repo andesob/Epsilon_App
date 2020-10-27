@@ -4,12 +4,10 @@
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
 
-    <CalendarView
-        android:theme="@style/CustomCalendarMonth"
+    <ExpandableListView
+        android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:dateTextAppearance="@style/CustomCalendarDay"
-        android:weekDayTextAppearance="@style/CustomCalendarWeek"
-        />
-
+        android:indicatorEnd="?android:attr/expandableListPreferredItemIndicatorRight"
+        android:divider="@color/divider"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
