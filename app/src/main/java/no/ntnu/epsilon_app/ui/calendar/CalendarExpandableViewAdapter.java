@@ -43,7 +43,7 @@ public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
         if(convertView == null){
             LayoutInflater layoutInflater = (LayoutInflater) this.context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.calendar_items,null);
+            convertView = layoutInflater.inflate(R.layout.calendar_items_child,null);
         }
         TextView expandedListTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
         expandedListTextView.setText(expandedListText);
@@ -76,10 +76,9 @@ public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
         String listTitle = (String) getGroup(listPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.list_group, null);
+            convertView = layoutInflater.inflate(R.layout.calendar_item_parent, null);
         }
-        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
-        listTitleTextView.setText(listTitle);
+
         return convertView;
     }
 
