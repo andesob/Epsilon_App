@@ -3,8 +3,15 @@
     package="no.ntnu.epsilon_app">
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
-
+    <uses-permission android:name="android.permission.INTERNET"/>
     <uses-feature android:name="android.hardware.type.watch" />
+
+    <meta-data
+        android:name="com.google.android.geo.API_KEY"
+        android:value="@string/maps_api_key" />
+    <meta-data
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
 
     <application
         android:allowBackup="true"
