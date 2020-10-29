@@ -1,11 +1,20 @@
 package no.ntnu.epsilon_app.ui.calendar;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
@@ -48,6 +57,12 @@ public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
         TextView expandedListTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
         expandedListTextView.setText(expandedListText);
 
+        String latEiffelTower = "48.858235";
+        String lngEiffelTower = "2.294571";
+
+        ImageView mapView = (ImageView) convertView.findViewById(R.id.mapStatic);
+        mapView.setImageURI(Uri.parse("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&size=200x200&sensor=false&key=AIzaSyBidP1hwZhtY1ouw_EbEUOki8SymQTMdrA"));
+        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&size=200x200&sensor=false&key=AIzaSyBidP1hwZhtY1ouw_EbEUOki8SymQTMdrA").into(mapView);
         return convertView;
     }
     @Override
