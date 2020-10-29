@@ -21,33 +21,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="10dp"
     tools:context=".ui.news.NewsFragment">
 
+
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/news_border"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/newsTitleTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="#86AD33"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:textColor="#FFFFFF"
+            android:textSize="30sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/newsTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:textSize="15sp"
+            android:letterSpacing="0.1"
+            android:textColor="#FFFFFF" />
 
         <TextView
             android:id="@+id/newsBottomTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/dark_grey"/>
+            android:textColor="@color/dark_grey" />
     </LinearLayout>
 
 </ScrollView>

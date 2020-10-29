@@ -31,8 +31,6 @@ import no.ntnu.epsilon_app.ui.faq.dummy.TestData;
 public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener{
 
     private NewsFeedViewModel mViewModel;
-    private List<String> listTitle;
-    private HashMap<String, List<String>> listDetails;
     private ArrayList<News> newsList;
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
@@ -63,46 +61,6 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
         recyclerViewAdapter = new RecyclerViewAdapter(root.getContext(), newsList);
         recyclerViewAdapter.setClickListener(this);
         recyclerView.setAdapter(recyclerViewAdapter);
-
-        /*ExpandableListView expandableListView = (ExpandableListView) root.findViewById(R.id.NewsFeedExpandableListView);
-        //listDetails = TestData.getData();
-        listTitle = new ArrayList<String>(listDetails.keySet());
-
-        ExpandableListAdapter expandableListAdapter = new NewsFeedExpandableViewAdapter(root.getContext(), listTitle, listDetails);
-        expandableListView.setAdapter(expandableListAdapter);
-
-        expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
-
-            @Override
-            public void onGroupExpand(int groupPosition) {
-                Toast.makeText(root.getContext(), " List Expanded.", Toast.LENGTH_SHORT).show();
-                //Toast.makeText(getContext(), news.toString(), Toast.LENGTH_SHORT).show();
-                Navigation.findNavController(root).navigate(R.id.nav_news);
-            }
-        });
-
-        expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
-
-            @Override
-            public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getContext(), " List Collapsed.", Toast.LENGTH_SHORT).show();
-
-            }
-        });
-
-        //final Date date = new Date();
-        //final DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG , Locale.GERMANY);
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView parent, View v,
-                                        int groupPosition, int childPosition, long id) {
-                Toast.makeText(root.getContext(), "Child clicked", Toast.LENGTH_SHORT).show();
-                //String currentDateTimeString = java.text.DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, Locale.GERMANY).format(new Date());
-                //System.out.println("DATE: " + dateFormat.format(date));
-                //Navigation.findNavController(root).navigate(R.id.);
-                return false;
-            }
-        });*/
         return root;
     }
 
