@@ -1,25 +1,34 @@
-package no.ntnu.epsilon_app.ui.faq;
+package no.ntnu.epsilon_app.ui.calendar;
 
-
-import java.util.HashMap;
-import java.util.List;
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.squareup.picasso.Picasso;
+
+import java.util.HashMap;
+import java.util.List;
 
 import no.ntnu.epsilon_app.R;
 
-public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
+public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
 
-    public FaqExpandableViewAdapter(Context context, List<String> expandableListTitle,
-                                    HashMap<String, List<String>> expandableListDetail) {
+    public CalendarExpandableViewAdapter(Context context,List<String> expandableListTitle,
+                                         HashMap<String,List<String>> expandableListDetail){
         this.context = context;
         this.expandableListTitle = expandableListTitle;
         this.expandableListDetail = expandableListDetail;
@@ -27,35 +36,40 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public Object getChild(int listPosition, int expandedListPosition) {
-        return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
-                .get(expandedListPosition);
+        return this.expandableListDetail.get
+                (this.expandableListTitle.get(listPosition)).get(expandedListPosition);
     }
 
     @Override
-    public long getChildId(int listPosition, int expandedListPosition) {
-        return expandedListPosition;
+    public long getChildId(int listPosition, int expandendListPosition) {
+        return  expandendListPosition;
     }
 
     @Override
     public View getChildView(int listPosition, final int expandedListPosition,
                              boolean isLastChild, View convertView, ViewGroup parent) {
-        final String expandedListText = (String) getChild(listPosition, expandedListPosition);
-        if (convertView == null) {
-            LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.faq_items_child, null);
+        final String expandedListText = (String) getChild(listPosition,expandedListPosition);
+        if(convertView == null){
+            LayoutInflater layoutInflater = (LayoutInflater) this.context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = layoutInflater.inflate(R.layout.calendar_items_child,null);
         }
-        TextView expandedListTextView = (TextView) convertView
-                .findViewById(R.id.expandedListItem);
+        TextView expandedListTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
         expandedListTextView.setText(expandedListText);
+
+        String latEiffelTower = "48.858235";
+        String lngEiffelTower = "2.294571";
+
+        ImageView mapView = (ImageView) convertView.findViewById(R.id.mapStatic);
+        mapView.setImageURI(Uri.parse("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&size=200x200&sensor=false&key=AIzaSyBidP1hwZhtY1ouw_EbEUOki8SymQTMdrA"));
+        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&size=200x200&sensor=false&key=AIzaSyBidP1hwZhtY1ouw_EbEUOki8SymQTMdrA").into(mapView);
         return convertView;
     }
-
     @Override
     public int getChildrenCount(int listPosition) {
         return this.expandableListDetail.get(this.expandableListTitle.get(listPosition))
                 .size();
     }
-
     @Override
     public Object getGroup(int listPosition) {
         return this.expandableListTitle.get(listPosition);
@@ -77,10 +91,9 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         String listTitle = (String) getGroup(listPosition);
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = layoutInflater.inflate(R.layout.faq_list_parent, null);
+            convertView = layoutInflater.inflate(R.layout.calendar_item_parent, null);
         }
-        TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
-        listTitleTextView.setText(listTitle);
+
         return convertView;
     }
 
@@ -94,3 +107,4 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         return true;
     }
 }
+

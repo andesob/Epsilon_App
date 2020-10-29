@@ -10,6 +10,12 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        def secureProps = new Properties()
+        if (file("../keys.xml").exists()) {
+            file("../keys.xml")?.withInputStream { secureProps.load(it) }
+        }
+        resValue "string", "maps_api_key", (secureProps.getProperty("mapsApi") ?: "")
+
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -25,8 +31,10 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'com.squareup.picasso:picasso:2.71828'
     implementation 'androidx.wear:wear:1.0.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.navigation:navigation-fragment:2.3.0'

@@ -28,7 +28,21 @@
         android:name="no.ntnu.epsilon_app.ui.faq.FaqFragment"
         android:label="@string/faq"
         tools:layout="@layout/fragment_faq_item_list" />
-
+    <fragment
+        android:id="@+id/nav_ask_question"
+        android:name="no.ntnu.epsilon_app.ui.ask_question.ask_question_fragment"
+        android:label="@string/ask_question"
+        tools:layout="@layout/fragment_faq_item_list" />
+    <fragment
+        android:id="@+id/nav_about_us"
+        android:name="no.ntnu.epsilon_app.ui.about_us.AboutUsFragment"
+        android:label="@string/about_us"
+        tools:layout="@layout/fragment_about_us_list" />
+    <fragment
+        android:id="@+id/nav_calendar"
+        android:name="no.ntnu.epsilon_app.ui.calendar.CalendarFragment"
+        android:label="@string/calendar"
+        tools:layout="@layout/fragment_calendar"/>
     <fragment
         android:id="@+id/nav_news"
         android:name="no.ntnu.epsilon_app.ui.news.NewsFragment"
