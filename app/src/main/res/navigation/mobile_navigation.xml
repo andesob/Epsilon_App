@@ -3,25 +3,23 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/nav_home">
-
-    <fragment
-        android:id="@+id/nav_home"
-        android:name="no.ntnu.epsilon_app.ui.home.HomeFragment"
-        android:label="@string/menu_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/nav_gallery"
-        android:name="no.ntnu.epsilon_app.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+    app:startDestination="@+id/nav_newsfeed">
 
     <fragment
         android:id="@+id/nav_newsfeed"
         android:name="no.ntnu.epsilon_app.ui.news.NewsFeedFragment"
         android:label="@string/news_feed"
         tools:layout="@layout/news_feed_fragment" />
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="no.ntnu.epsilon_app.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" />
+    <fragment
+        android:id="@+id/nav_news"
+        android:name="no.ntnu.epsilon_app.ui.news.NewsFragment"
+        android:label="@string/news"
+        tools:layout="@layout/fragment_news" />
 
     <fragment
         android:id="@+id/nav_faq"
@@ -43,9 +41,4 @@
         android:name="no.ntnu.epsilon_app.ui.calendar.CalendarFragment"
         android:label="@string/calendar"
         tools:layout="@layout/fragment_calendar"/>
-    <fragment
-        android:id="@+id/nav_news"
-        android:name="no.ntnu.epsilon_app.ui.news.NewsFragment"
-        android:label="@string/news"
-        tools:layout="@layout/fragment_news" />
 </navigation>
