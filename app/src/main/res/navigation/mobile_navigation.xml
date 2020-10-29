@@ -18,14 +18,20 @@
         tools:layout="@layout/fragment_gallery" />
 
     <fragment
-        android:id="@+id/nav_slideshow"
-        android:name="no.ntnu.epsilon_app.ui.slideshow.SlideshowFragment"
-        android:label="@string/menu_slideshow"
-        tools:layout="@layout/fragment_slideshow" />
+        android:id="@+id/nav_newsfeed"
+        android:name="no.ntnu.epsilon_app.ui.news.NewsFeedFragment"
+        android:label="@string/news_feed"
+        tools:layout="@layout/news_feed_fragment" />
 
     <fragment
         android:id="@+id/nav_faq"
         android:name="no.ntnu.epsilon_app.ui.faq.FaqFragment"
         android:label="@string/faq"
         tools:layout="@layout/fragment_faq_item_list" />
+
+    <fragment
+        android:id="@+id/nav_news"
+        android:name="no.ntnu.epsilon_app.ui.news.NewsFragment"
+        android:label="@string/news"
+        tools:layout="@layout/fragment_news" />
 </navigation>
