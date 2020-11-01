@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -36,6 +38,7 @@ public class CalendarFragment extends Fragment {
 
         listDetails = TestData.getData();
         listTitle = new ArrayList<String>(listDetails.keySet());
+
 
         ExpandableListAdapter expandableListAdapter = new CalendarExpandableViewAdapter
                                                             (view.getContext(),listTitle,listDetails);

@@ -1,5 +1,6 @@
 package no.ntnu.epsilon_app.ui.calendar;
 
+import android.app.Activity;
 import android.content.Context;
 import android.net.Uri;
 import android.view.LayoutInflater;
@@ -11,21 +12,25 @@ import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.List;
 
 import no.ntnu.epsilon_app.R;
+import no.ntnu.epsilon_app.ui.maps.MapFragment;
 
 public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     private List<String> expandableListTitle;
     private HashMap<String, List<String>> expandableListDetail;
+
 
     public CalendarExpandableViewAdapter(Context context,List<String> expandableListTitle,
                                          HashMap<String,List<String>> expandableListDetail){
@@ -57,12 +62,19 @@ public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
         TextView expandedListTextView = (TextView) convertView.findViewById(R.id.expandedListItem);
         expandedListTextView.setText(expandedListText);
 
-        String latEiffelTower = "48.858235";
-        String lngEiffelTower = "2.294571";
+        String latEiffelTower = "62.472673";
+        String lngEiffelTower = "6.230659";
 
         ImageView mapView = (ImageView) convertView.findViewById(R.id.mapStatic);
-        mapView.setImageURI(Uri.parse("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&size=200x200&sensor=false&key=AIzaSyBidP1hwZhtY1ouw_EbEUOki8SymQTMdrA"));
-        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&size=200x200&sensor=false&key=AIzaSyBidP1hwZhtY1ouw_EbEUOki8SymQTMdrA").into(mapView);
+        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&markers=" + latEiffelTower+","+lngEiffelTower+"&size=400x600&sensor=false&key=").into(mapView);
+
+        mapView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Navigation.findNavController(v).navigate(R.id.nav_map);
+            }
+        });
+
         return convertView;
     }
     @Override
