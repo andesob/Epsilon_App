@@ -5,14 +5,19 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.news.PostNewsFragment">
+    tools:context=".ui.news.PostNewsFragment"
+    android:padding="30dp">
 
     <TextView
         android:id="@+id/newsTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/newstitle"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:layout_marginBottom="10dp"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/postNewsTitleEditText"
@@ -20,27 +25,42 @@
         android:layout_height="wrap_content"
         android:autofillHints="Title"
         android:hint="@string/enter_title_here"
-        android:inputType="text" />
+        android:inputType="text"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:background="@drawable/border"
+        android:layout_marginBottom="10dp"/>
 
     <TextView
         android:id="@+id/newsContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:text="@string/newscontent"
-        android:textAlignment="center" />
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="30sp"
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/postNewsContentEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:autofillHints="News"
+        android:gravity="start"
         android:hint="@string/enter_news_here"
-        android:inputType="textMultiLine" />
+        android:inputType="textMultiLine"
+        android:minLines="10"
+        android:textColor="#FFFFFF"
+        android:textColorHint="#FFFFFF"
+        android:background="@drawable/border"
+        android:layout_marginBottom="30dp"/>
 
     <Button
         android:id="@+id/postNewsButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/postNews" />
+        android:text="@string/postNews"
+        android:background="@color/colorAccent"/>
 
 </LinearLayout>
