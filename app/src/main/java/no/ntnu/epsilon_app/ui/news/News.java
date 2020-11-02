@@ -12,26 +12,18 @@ import java.util.Date;
 import java.util.Locale;
 
 public class News {
+    private long newsId;
     private String title;
     private String contents;
     private LocalDateTime timeWritten;
     private LocalDateTime lastUpdated;
 
-    public News(String title, String contents, LocalDateTime timeWritten, LocalDateTime lastUpdated) {
+    public News(long id, String title, String contents, LocalDateTime timeWritten, LocalDateTime lastUpdated) {
+        this.newsId = id;
         this.timeWritten = timeWritten;
         this.lastUpdated = lastUpdated;
         this.contents = contents;
         this.title = title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-        lastUpdated = LocalDateTime.now();
-    }
-
-    public void setContents(String contents) {
-        this.contents = contents;
-        lastUpdated = LocalDateTime.now();
     }
 
     public String getTimeWrittenAsString() {
@@ -46,6 +38,9 @@ public class News {
         return dtf.format(lastUpdated);
     }
 
+    public LocalDateTime getLastUpdated() {
+        return lastUpdated;
+    }
 
     @NonNull
     @Override
@@ -63,5 +58,9 @@ public class News {
 
     public String getContents() {
         return contents;
+    }
+
+    public long getId(){
+        return newsId;
     }
 }

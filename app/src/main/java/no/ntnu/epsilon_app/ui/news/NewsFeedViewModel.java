@@ -2,15 +2,10 @@ package no.ntnu.epsilon_app.ui.news;
 
 import androidx.lifecycle.ViewModel;
 
+import java.util.ArrayList;
+
 public class NewsFeedViewModel extends ViewModel {
 
-    public static News currentNews;
-
-    public void setCurrentNews(News news){
-        this.currentNews = news;
-    }
-
-    public News getCurrentNews(){
-        return currentNews;
-    }
+    public static News CURRENT_NEWS;
+    public static ArrayList<News> NEWS_LIST = new ArrayList<>();
 }

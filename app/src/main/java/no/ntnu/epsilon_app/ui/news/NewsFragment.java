@@ -32,7 +32,7 @@ public class NewsFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_news, container, false);
         NewsFeedViewModel viewModel = new NewsFeedViewModel();
-        News news = viewModel.getCurrentNews();
+        News news = NewsFeedViewModel.CURRENT_NEWS;
         TextView newsTitle = root.findViewById(R.id.newsTitleTextView);
         TextView newsContent = root.findViewById(R.id.newsTextView);
         TextView newsBottomText = root.findViewById(R.id.newsBottomTextView);
