@@ -41,4 +41,10 @@
         android:name="no.ntnu.epsilon_app.ui.calendar.CalendarFragment"
         android:label="@string/calendar"
         tools:layout="@layout/fragment_calendar"/>
+
+    <fragment
+        android:id="@+id/nav_post_news"
+        android:name="no.ntnu.epsilon_app.ui.news.PostNewsFragment"
+        android:label="@string/postNews"
+        tools:layout="@layout/post_news_fragment"/>
 </navigation>

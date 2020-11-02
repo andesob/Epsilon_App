@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".ui.news.PostNewsFragment">
+
+    <TextView
+        android:id="@+id/newsTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/newstitle"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/postNewsTitleEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="Title"
+        android:hint="@string/enter_title_here"
+        android:inputType="text" />
+
+    <TextView
+        android:id="@+id/newsContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/newscontent"
+        android:textAlignment="center" />
+
+    <EditText
+        android:id="@+id/postNewsContentEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:autofillHints="News"
+        android:hint="@string/enter_news_here"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/postNewsButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/postNews" />
+
+</LinearLayout>

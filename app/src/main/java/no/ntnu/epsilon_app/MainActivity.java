@@ -36,8 +36,7 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                goToPostNewsFragment();
             }
         });
         drawer = findViewById(R.id.drawer_layout);
@@ -51,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+    }
+
+    private void goToPostNewsFragment(){
+        Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_post_news);
     }
 
     @Override

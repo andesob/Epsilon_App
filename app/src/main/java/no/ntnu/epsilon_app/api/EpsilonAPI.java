@@ -10,4 +10,9 @@ import retrofit2.http.PUT;
 public interface EpsilonAPI {
     @GET("web/newsfeed")
     Call<ResponseBody> getNewsfeed();
+
+    @PUT("web/postNews")
+    @FormUrlEncoded
+    Call<ResponseBody> postNews(@Field("title") String title,
+                                @Field("content") String content);
 }

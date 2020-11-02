@@ -54,12 +54,7 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.news_feed_fragment, container, false);
 
-        //mViewModel = ViewModelProviders.of(this).get(NewsFeedViewModel.class);
-
-        testData testData = new testData();
-        //newsList = testData.getNewsList();
         newsList = NewsFeedViewModel.NEWS_LIST;
-
 
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getNewsfeed();
         call.enqueue(new Callback<ResponseBody>() {
@@ -67,7 +62,7 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
-                        parseNews(response.body().string());
+                        NewsParser.parseNewsFeed(response.body().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -93,42 +88,7 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
 
     @Override
     public void onItemClick(View view, int position) {
-        News news = recyclerViewAdapter.getItem(position);
-        NewsFeedViewModel.CURRENT_NEWS = news;
+        NewsFeedViewModel.CURRENT_NEWS = recyclerViewAdapter.getItem(position);
         Navigation.findNavController(root).navigate(R.id.nav_news);
-    }
-
-
-    private void parseNews(String jsonLine) {
-        JsonElement jsonElement = new JsonParser().parse(jsonLine);
-        JsonArray jsonArray = jsonElement.getAsJsonArray();
-
-        for (JsonElement element : jsonArray) {
-            JsonObject object = element.getAsJsonObject();
-
-            String timeWrittenString = object.get("timeWritten").getAsString();
-            String lastUpdatedString = object.get("lastUpdated").getAsString();
-            String title = object.get("title").getAsString();
-            String content = object.get("newsContent").getAsString();
-            long newsId = object.get("newsfeedObjectId").getAsLong();
-
-            LocalDateTime timeWritten = LocalDateTime.parse(timeWrittenString);
-            LocalDateTime lastUpdated = LocalDateTime.parse(lastUpdatedString);
-
-            boolean exists = false;
-            for (News news : newsList) {
-                if (news.getId() == newsId && news.getLastUpdated().toString().equals(lastUpdated.toString())) {
-                    exists = true;
-                    break;
-                }
-            }
-
-            if (!exists) {
-                News news = new News(newsId, title, content, timeWritten, lastUpdated);
-                newsList.add(news);
-            }
-        }
-
-        NewsFeedViewModel.NEWS_LIST = newsList;
     }
 }
