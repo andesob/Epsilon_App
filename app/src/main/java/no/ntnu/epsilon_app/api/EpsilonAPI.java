@@ -8,6 +8,7 @@ import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 
 public interface EpsilonAPI {
@@ -21,6 +22,10 @@ public interface EpsilonAPI {
 
     @GET("web/get_faqs")
     Call<List<Faq>> getFaqs();
+
+    @POST("web/ask_question")
+    @FormUrlEncoded
+    Call<ResponseBody> askQuestion(@Field("question") String questionAsked);
 
 
 }
