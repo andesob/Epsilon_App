@@ -46,7 +46,16 @@
                     android:textAlignment="center"
                     android:textAppearance="?android:attr/textAppearanceLarge" />
 
+                <TextView
+                    android:id="@+id/timePassed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:paddingHorizontal="10dp"
+                    android:textColor="@color/dark_grey"/>
+
             </LinearLayout>
+
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>

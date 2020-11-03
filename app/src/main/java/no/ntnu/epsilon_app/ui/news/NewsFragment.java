@@ -31,16 +31,18 @@ public class NewsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_news, container, false);
-        NewsFeedViewModel viewModel = new NewsFeedViewModel();
+
         News news = NewsFeedViewModel.CURRENT_NEWS;
+
         TextView newsTitle = root.findViewById(R.id.newsTitleTextView);
         TextView newsContent = root.findViewById(R.id.newsTextView);
         TextView newsBottomText = root.findViewById(R.id.newsBottomTextView);
 
-        newsTitle.setText(news.getTitle());
-        newsContent.setText(news.getContents());
         String bottomText = "Written: " + news.getTimeWrittenAsString() +
                 "\nLast updated: " + news.getLastUpdatedAsString();
+
+        newsTitle.setText(news.getTitle());
+        newsContent.setText(news.getContents());
         newsBottomText.setText(bottomText);
 
         return root;

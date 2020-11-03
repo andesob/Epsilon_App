@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 import no.ntnu.epsilon_app.R;
@@ -38,8 +40,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String title = newsList.get(position).getTitle();
-        holder.newsFeedTitle.setText(title);
+        String daysPassedString = "";
+        long daysPassed = ChronoUnit.DAYS.between(newsList.get(position).getLastUpdated(), LocalDateTime.now());
 
+        if (daysPassed == 0) {
+            daysPassedString = "Today";
+        } else {
+            daysPassedString = daysPassed + " days ago";
+        }
+
+        holder.newsFeedTitle.setText(title);
+        holder.newsFeedDatePassed.setText(daysPassedString);
     }
 
     // total number of rows
@@ -66,10 +77,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     // stores and recycles views as they are scrolled off screen
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         TextView newsFeedTitle;
+        TextView newsFeedDatePassed;
 
         ViewHolder(View itemView) {
             super(itemView);
             newsFeedTitle = itemView.findViewById(R.id.newsFeedTitle);
+            newsFeedDatePassed = itemView.findViewById(R.id.timePassed);
             itemView.setOnClickListener(this);
         }
 

@@ -43,5 +43,6 @@ public class NewsParser {
         if (!exists) {
             NewsFeedViewModel.NEWS_LIST.add(new News(newsId, title, content, timeWritten, lastUpdated));
         }
+        NewsFeedViewModel.sortList();
     }
 }

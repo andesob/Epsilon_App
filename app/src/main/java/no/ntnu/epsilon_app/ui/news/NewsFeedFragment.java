@@ -15,6 +15,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -34,7 +35,6 @@ import retrofit2.Response;
 public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
 
     private NewsFeedViewModel mViewModel;
-    private ArrayList<News> newsList = new ArrayList<>();
     private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private View root;
@@ -53,8 +53,6 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.news_feed_fragment, container, false);
-
-        newsList = NewsFeedViewModel.NEWS_LIST;
 
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getNewsfeed();
         call.enqueue(new Callback<ResponseBody>() {
@@ -75,11 +73,19 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
             }
         });
 
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToPostNewsFragment();
+            }
+        });
+
         recyclerView = root.findViewById(R.id.rvItems);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
         recyclerView.setLayoutManager(layoutManager);
 
-        recyclerViewAdapter = new RecyclerViewAdapter(root.getContext(), newsList);
+        recyclerViewAdapter = new RecyclerViewAdapter(root.getContext(), NewsFeedViewModel.NEWS_LIST);
         recyclerViewAdapter.setClickListener(this);
         recyclerView.setAdapter(recyclerViewAdapter);
         return root;
@@ -90,5 +96,9 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
     public void onItemClick(View view, int position) {
         NewsFeedViewModel.CURRENT_NEWS = recyclerViewAdapter.getItem(position);
         Navigation.findNavController(root).navigate(R.id.nav_news);
+    }
+
+    private void goToPostNewsFragment(){
+        Navigation.findNavController(root).navigate(R.id.nav_post_news);
     }
 }
