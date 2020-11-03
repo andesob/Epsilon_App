@@ -1,5 +1,8 @@
 package no.ntnu.epsilon_app.api;
 
+import java.util.List;
+
+import no.ntnu.epsilon_app.ui.faq.Faq;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -15,4 +18,9 @@ public interface EpsilonAPI {
     @FormUrlEncoded
     Call<ResponseBody> postNews(@Field("title") String title,
                                 @Field("content") String content);
+
+    @GET("web/get_faqs")
+    Call<List<Faq>> getFaqs();
+
+
 }
