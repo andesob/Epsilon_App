@@ -2,10 +2,12 @@ package no.ntnu.epsilon_app.api;
 
 import android.media.Image;
 
-import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import java.util.List;
+
+import no.ntnu.epsilon_app.ui.faq.Faq;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Field;
@@ -34,4 +36,17 @@ public interface EpsilonAPI {
 
     @GET("web/getUserPictures")
     Call<ResponseBody> getUserPictures();
+
+    @GET("web/get_faqs")
+    Call<List<Faq>> getFaqs();
+
+    @POST("web/ask_question")
+    @FormUrlEncoded
+    Call<ResponseBody> askQuestion(@Field("question") String questionAsked);
+
+    @POST("web/edit_faq")
+    @FormUrlEncoded
+    Call<ResponseBody> edit_faq(@Field("question") String question,
+                                @Field("answer")String answer,
+                                @Field("questionId") long questionID);
 }
