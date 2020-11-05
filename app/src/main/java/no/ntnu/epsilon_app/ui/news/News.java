@@ -11,7 +11,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 
-public class News {
+public class News implements Comparable<News> {
     private long newsId;
     private String title;
     private String contents;
@@ -42,6 +42,10 @@ public class News {
         return lastUpdated;
     }
 
+    public LocalDateTime getTimeWritten() {
+        return timeWritten;
+    }
+
     @NonNull
     @Override
     public String toString() {
@@ -52,6 +56,13 @@ public class News {
         return toString;
     }
 
+    @Override
+    public int compareTo(News otherNews) {
+        long diff = this.newsId - otherNews.getId();
+        int intDiff = (int) diff;
+        return intDiff;
+    }
+
     public String getTitle() {
         return title;
     }
@@ -60,7 +71,7 @@ public class News {
         return contents;
     }
 
-    public long getId(){
+    public long getId() {
         return newsId;
     }
 }
