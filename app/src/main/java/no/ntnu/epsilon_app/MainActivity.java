@@ -1,9 +1,12 @@
 package no.ntnu.epsilon_app;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
+import android.view.inputmethod.InputMethodManager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -78,6 +81,14 @@ public class MainActivity extends AppCompatActivity {
             intent.addCategory(Intent.CATEGORY_HOME);
             startActivity(intent);
         }
+    }
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        if (getCurrentFocus() != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+        return super.dispatchTouchEvent(ev);
     }
 
 }
