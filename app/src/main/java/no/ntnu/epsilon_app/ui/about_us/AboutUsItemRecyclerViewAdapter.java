@@ -2,9 +2,6 @@ package no.ntnu.epsilon_app.ui.about_us;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,23 +10,20 @@ import android.widget.TextView;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.data.Image;
-import no.ntnu.epsilon_app.ui.about_us.dummy.DummyContent.DummyItem;
-import no.ntnu.epsilon_app.ui.news.News;
-import no.ntnu.epsilon_app.ui.news.RecyclerViewAdapter;
 
 import java.util.List;
 
 /**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem}.
+ * {@link RecyclerView.Adapter} that can display a {@link AboutUsObject}.
  * TODO: Replace the implementation with code for your data type.
  */
 public class AboutUsItemRecyclerViewAdapter extends RecyclerView.Adapter<AboutUsItemRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private List<AboutUsObject> aboutUsObjects;
     private ItemClickListener mClickListener;
 
-    public AboutUsItemRecyclerViewAdapter(List<DummyItem> items) {
-        mValues = items;
+    public AboutUsItemRecyclerViewAdapter(List<AboutUsObject> aboutUsObjects) {
+        this.aboutUsObjects = aboutUsObjects;
     }
 
     @Override
@@ -41,24 +35,33 @@ public class AboutUsItemRecyclerViewAdapter extends RecyclerView.Adapter<AboutUs
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        System.out.println(position);
-        holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        Image image = null;
+        holder.aboutUsObject = aboutUsObjects.get(position);
 
+        for (Image i : AboutUsViewModel.IMAGE_LIST) {
+            if (i.getUserId() == holder.aboutUsObject.getUserid()) {
+                image = i;
+                break;
+            }
+        }
 
-        Image image = AboutUsViewModel.IMAGE_LIST.get(0);
-        holder.imageview.setImageBitmap(image.getBitmap());
+        holder.titleTV.setText(aboutUsObjects.get(position).getPosition());
+        holder.nameTV.setText(aboutUsObjects.get(position).getName());
+        holder.emailTV.setText(aboutUsObjects.get(position).getEmail());
+
+        if (image != null) {
+            holder.imageview.setImageBitmap(image.getBitmap());
+        }
     }
 
     @Override
     public int getItemCount() {
-        return mValues.size();
+        return aboutUsObjects.size();
     }
 
     // convenience method for getting data at click position
-    public DummyItem getItem(int id) {
-        return mValues.get(id);
+    public AboutUsObject getItem(int id) {
+        return aboutUsObjects.get(id);
     }
 
     // parent activity will implement this method to respond to click events
@@ -70,18 +73,20 @@ public class AboutUsItemRecyclerViewAdapter extends RecyclerView.Adapter<AboutUs
         this.mClickListener = itemClickListener;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
+        public final TextView titleTV;
+        public final TextView nameTV;
+        public final TextView emailTV;
         public ImageView imageview;
-        public DummyItem mItem;
+        public AboutUsObject aboutUsObject;
 
         ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.board_member_title);
-            mContentView = (TextView) view.findViewById(R.id.board_member_name);
+            titleTV = (TextView) view.findViewById(R.id.board_member_title);
+            nameTV = (TextView) view.findViewById(R.id.board_member_name);
+            emailTV = (TextView) view.findViewById(R.id.board_member_contact_info);
             imageview = (ImageView) view.findViewById((R.id.board_member_image));
             imageview.setOnClickListener(this);
         }
@@ -93,7 +98,7 @@ public class AboutUsItemRecyclerViewAdapter extends RecyclerView.Adapter<AboutUs
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + nameTV.getText() + "'";
         }
     }
 }

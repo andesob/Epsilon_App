@@ -9,6 +9,7 @@ import java.io.IOException;
 
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.ImageParser;
+import no.ntnu.epsilon_app.ui.about_us.AboutUsParser;
 import no.ntnu.epsilon_app.ui.news.NewsParser;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -27,6 +28,7 @@ public class SplashActivity extends Activity {
         setContentView(R.layout.splashscreen_layout);
         fetchPictures();
         getNewsFeed();
+        getAboutUsObjects();
 
 
         /* New Handler to start the Menu-Activity
@@ -71,6 +73,27 @@ public class SplashActivity extends Activity {
                 if (response.isSuccessful()) {
                     try {
                         NewsParser.parseNewsFeed(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
+    private void getAboutUsObjects(){
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getAboutUsObjects();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        AboutUsParser.parseAboutUsList(response.body().string());
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

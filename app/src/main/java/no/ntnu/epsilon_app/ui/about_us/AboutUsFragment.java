@@ -44,6 +44,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
     // TODO: Customize parameters
     private int mColumnCount = 1;
     private final static int SELECT_PHOTO = 12345;
+    private String userIdClicked;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -76,7 +77,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
 
-        AboutUsItemRecyclerViewAdapter adapter = new AboutUsItemRecyclerViewAdapter(DummyContent.ITEMS);
+        AboutUsItemRecyclerViewAdapter adapter = new AboutUsItemRecyclerViewAdapter(AboutUsViewModel.OBJECT_LIST);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -84,11 +85,13 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
     }
 
     @Override
-    public void onItemClick(final View view, int position) {
+    public void onItemClick(final View view, final int position) {
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
-                goPhotoPicker(view);
+                userIdClicked = Long.toString(AboutUsViewModel.OBJECT_LIST.get(position).getUserid());
+                goPhotoPicker();
+
             }
 
             @Override
@@ -104,7 +107,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                 .check();
     }
 
-    private void goPhotoPicker(View view){
+    private void goPhotoPicker(){
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_PHOTO);
@@ -139,7 +142,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
             byte[] byteArray = byteArrayOutputStream.toByteArray();
             final String encodedImage = android.util.Base64.encodeToString(byteArray, android.util.Base64.DEFAULT);
 
-            Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().uploadPictureAsString(encodedImage, "12", file.getName());
+            Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().uploadPictureAsString(encodedImage, userIdClicked, file.getName());
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

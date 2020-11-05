@@ -34,4 +34,7 @@ public interface EpsilonAPI {
 
     @GET("web/getUserPictures")
     Call<ResponseBody> getUserPictures();
+
+    @GET("web/getAboutUsObjects")
+    Call<ResponseBody> getAboutUsObjects();
 }

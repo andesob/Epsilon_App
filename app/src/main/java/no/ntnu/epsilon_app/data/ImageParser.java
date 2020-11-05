@@ -17,20 +17,19 @@ public class ImageParser {
         JsonArray jsonArray = jsonElement.getAsJsonArray();
 
         for (JsonElement element : jsonArray){
-            parseImageObjects(element.getAsJsonObject());
+            parseImageObject(element.getAsJsonObject());
         }
     }
 
-    private static void parseImageObjects(JsonObject object){
+    private static void parseImageObject(JsonObject object){
         String imageString = object.get("base64String").getAsString();
         long imageId = object.get("imageId").getAsLong();
-        int userId = object.get("user").getAsJsonObject().get("userid").getAsInt();
+        long userId = object.get("user").getAsJsonObject().get("userid").getAsLong();
 
         byte[] decodedString = android.util.Base64.decode(imageString, android.util.Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 
         Image image = new Image(imageId, userId, decodedByte);
         AboutUsViewModel.IMAGE_LIST.add(image);
-
     }
 }
