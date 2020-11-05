@@ -28,4 +28,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ask_question">Ask Question</string>
     <string name="about_us">About us</string>
+    <string name="news_feed">News Feed</string>
+    <string name="newstitle">Title</string>
+    <string name="newscontent">Content</string>
+    <string name="enter_title_here">Enter title here</string>
+    <string name="enter_news_here">Enter news here</string>
+    <string name="postNews">Post</string>
+    <string name="Epsilon">Epsilon</string>
+    <string name="Edit">Edit</string>
 </resources>

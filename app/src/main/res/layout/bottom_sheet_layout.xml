@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/bottom_sheet"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    app:behavior_peekHeight="250dp"
+    app:layout_behavior="@string/bottom_sheet_behavior"
+    app:behavior_hideable="true"
+    android:padding="16dp">
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="This is a BottomSheet"
+        android:textSize="25sp" />
+
+
+    <EditText
+        android:id="@+id/editTextQuestionInput"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/border"
+        android:ems="14"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/ask_question"
+        android:inputType="textMultiLine"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="#73FFFFFF"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="475dp" />
+
+    <EditText
+        android:id="@+id/editFaqAnswer"
+        android:layout_width="match_parent"
+        android:layout_height="136dp"
+        android:layout_gravity="center_horizontal|center_vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="25dp"
+        android:background="@drawable/border"
+        android:ems="14"
+        android:gravity="center_horizontal|center_vertical"
+        android:hint="@string/ask_question"
+        android:inputType="textMultiLine"
+        android:textColor="@color/colorAccent"
+        android:textColorHint="#73FFFFFF"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="475dp" />
+
+</LinearLayout>
