@@ -20,20 +20,20 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BottomSheetDialogEditFaq extends BottomSheetDialogFragment {
+public class BottomSheetDialogAddFaq extends BottomSheetDialogFragment {
     private EditText editFaqQuestion;
     private EditText editFaqAnswer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.edit_faq_bottom_sheet_layout,
+        View root = inflater.inflate(R.layout.add_faq_bottom_sheet_layout,
                 container, false);
 
-        final Button doneButton = root.findViewById(R.id.doneButton);
-        final Button closeButton = root.findViewById(R.id.closeButton);
-        editFaqQuestion = root.findViewById(R.id.editFaqQuestion);
-        editFaqAnswer = root.findViewById(R.id.editFaqAnswer);
+        final Button doneButton = root.findViewById(R.id.doneButtonAdd);
+        final Button closeButton = root.findViewById(R.id.closeButtonAdd);
+        editFaqQuestion = root.findViewById(R.id.addFaqQuestion);
+        editFaqAnswer = root.findViewById(R.id.AddFaqAnswer);
 
 
         closeButton.setOnClickListener(new View.OnClickListener() {
@@ -48,42 +48,36 @@ public class BottomSheetDialogEditFaq extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 String question = editFaqQuestion.getText().toString();
                 String answer = editFaqAnswer.getText().toString();
-
-                long id = FaqViewModel.SELECTED_FAQ.getId() ;
-                editFaq(question, answer, id);
-
+                if(question != null && answer != null) {
+                    addFaq(question, answer);
+                }
             }
         });
-        setText();
         //getActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         return root;
     }
 
 
-    private void setText() {
-        if (FaqViewModel.SELECTED_FAQ != null) {
-            editFaqQuestion.setText(FaqViewModel.SELECTED_FAQ.getQuestion());
-            editFaqAnswer.setText(FaqViewModel.SELECTED_FAQ.getAnswer());
 
-        }
-    }
-
-
-    private void editFaq(String question, String answer, long id) {
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().edit_faq(question, answer, id);
+    private void addFaq(String question, String answer) {
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().add_faqs(question, answer);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     System.out.println(response.body());
                     dismiss();
+                    Toast.makeText(getContext(), "Lagt til", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    Toast.makeText(getContext(), "Error: kunne ikke legge til", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Could not change the FAQ", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), "Error: kunne ikke legge til", Toast.LENGTH_SHORT).show();
             }
         });
     }

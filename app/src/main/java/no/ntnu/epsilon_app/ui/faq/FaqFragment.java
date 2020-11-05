@@ -4,6 +4,7 @@ import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.fragment.app.Fragment;
 
@@ -13,6 +14,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 
@@ -25,7 +27,8 @@ import java.util.List;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
-import no.ntnu.epsilon_app.tools.BottomSheetDialog;
+import no.ntnu.epsilon_app.tools.BottomSheetDialogAddFaq;
+import no.ntnu.epsilon_app.tools.BottomSheetDialogEditFaq;
 import no.ntnu.epsilon_app.ui.faq.dummy.TestData;
 import no.ntnu.epsilon_app.ui.news.NewsParser;
 import okhttp3.ResponseBody;
@@ -41,7 +44,7 @@ public class FaqFragment extends Fragment {
     private List<String> faqQuestions;
     private HashMap<String, List<String>> listDetails;
     private List<Faq> faqList;
-    private FloatingActionButton fab;
+    private ImageView fab;
     private boolean admin = true;
     private boolean clicked = false;
 
@@ -60,11 +63,22 @@ public class FaqFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_faq_item_list, container, false);
         fab = root.findViewById(R.id.faq_fab);
+        ImageView addBtn = root.findViewById(R.id.addFaq);
         getFaqs();
 
         if(admin){
            fab.setVisibility(View.VISIBLE);
+           addBtn.setVisibility(View.VISIBLE);
         }
+
+        addBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                BottomSheetDialogAddFaq bottomSheet = new BottomSheetDialogAddFaq();
+                bottomSheet.show(getActivity().getSupportFragmentManager(),"ModalBottomSheet");
+
+            }
+        });
 
        fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -129,7 +143,7 @@ public class FaqFragment extends Fragment {
 
             @Override
             public void onGroupExpand(int groupPosition) {
-                Toast.makeText(getContext(), " List Expanded.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), " List Expanded.", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -137,7 +151,7 @@ public class FaqFragment extends Fragment {
 
             @Override
             public void onGroupCollapse(int groupPosition) {
-                Toast.makeText(getContext(), " List Collapsed.", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), " List Collapsed.", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -146,7 +160,7 @@ public class FaqFragment extends Fragment {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
                                         int groupPosition, int childPosition, long id) {
-                Toast.makeText(getContext(), "Child clicked", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Child clicked", Toast.LENGTH_SHORT).show();
                 return false;
             }
         });

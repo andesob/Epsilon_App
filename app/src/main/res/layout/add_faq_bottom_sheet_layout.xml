@@ -16,7 +16,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/editFaq"
+        android:text="@string/addFaq"
         android:layout_gravity="center_horizontal"
         android:textSize="25sp"
         android:textColor="#fff"
@@ -24,7 +24,7 @@
 
 
     <EditText
-        android:id="@+id/editFaqQuestion"
+        android:id="@+id/addFaqQuestion"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal|center_vertical"
@@ -43,7 +43,7 @@
         tools:layout_editor_absoluteY="475dp" />
 
     <EditText
-        android:id="@+id/editFaqAnswer"
+        android:id="@+id/AddFaqAnswer"
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:layout_gravity="center_horizontal|center_vertical"
@@ -71,14 +71,14 @@
 
 
     <Button
-        android:id="@+id/closeButton"
+        android:id="@+id/closeButtonAdd"
         android:layout_width="100dp"
         android:layout_height="50dp"
         android:text="@string/Close"
         android:background="@drawable/login_border"/>
 
         <Button
-            android:id="@+id/doneButton"
+            android:id="@+id/doneButtonAdd"
             android:layout_width="100dp"
             android:layout_height="50dp"
             android:layout_gravity="end"
