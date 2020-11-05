@@ -27,5 +27,9 @@ public interface EpsilonAPI {
     @FormUrlEncoded
     Call<ResponseBody> askQuestion(@Field("question") String questionAsked);
 
-
+    @POST("web/edit_faq")
+    @FormUrlEncoded
+    Call<ResponseBody> edit_faq(@Field("question") String question,
+                                @Field("answer")String answer,
+                                @Field("questionId") long questionID);
 }

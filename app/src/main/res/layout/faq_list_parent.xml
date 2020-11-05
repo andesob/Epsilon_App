@@ -24,7 +24,8 @@
         android:layout_gravity="right|top"
         android:visibility="invisible"
         android:text="@string/Edit"
-        android:focusable="false"/>
+        android:focusable="false"
+        android:background="@drawable/login_border"/>
 
 </FrameLayout>
 

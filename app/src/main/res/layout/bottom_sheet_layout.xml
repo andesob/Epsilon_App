@@ -7,29 +7,35 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    app:behavior_peekHeight="250dp"
+    app:behavior_peekHeight="500dp"
     app:layout_behavior="@string/bottom_sheet_behavior"
     app:behavior_hideable="true"
-    android:padding="16dp">
+    android:padding="20dp"
+    android:background="@color/colorPrimary">
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="This is a BottomSheet"
-        android:textSize="25sp" />
+        android:text="@string/editFaq"
+        android:layout_gravity="center_horizontal"
+        android:textSize="25sp"
+        android:textColor="#fff"
+        android:paddingBottom="10dp"/>
 
 
     <EditText
-        android:id="@+id/editTextQuestionInput"
+        android:id="@+id/editFaqQuestion"
         android:layout_width="match_parent"
-        android:layout_height="136dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="25dp"
-        android:background="@drawable/border"
+        android:background="@drawable/about_us_border"
         android:ems="14"
-        android:gravity="center_horizontal|center_vertical"
-        android:hint="@string/ask_question"
+        android:textSize="14dp"
+        android:gravity="start"
+        android:hint="Spørsmål"
         android:inputType="textMultiLine"
         android:textColor="@color/colorAccent"
         android:textColorHint="#73FFFFFF"
@@ -39,19 +45,47 @@
     <EditText
         android:id="@+id/editFaqAnswer"
         android:layout_width="match_parent"
-        android:layout_height="136dp"
+        android:layout_height="100dp"
         android:layout_gravity="center_horizontal|center_vertical"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:layout_marginBottom="25dp"
-        android:background="@drawable/border"
+        android:background="@drawable/about_us_border"
         android:ems="14"
-        android:gravity="center_horizontal|center_vertical"
-        android:hint="@string/ask_question"
+        android:textSize="14dp"
+        android:gravity="start"
+        android:hint="Svar"
         android:inputType="textMultiLine"
         android:textColor="@color/colorAccent"
         android:textColorHint="#73FFFFFF"
         tools:layout_editor_absoluteX="2dp"
         tools:layout_editor_absoluteY="475dp" />
 
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:behavior_peekHeight="500dp">
+
+
+
+    <Button
+        android:id="@+id/closeButton"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="@string/Close"
+        android:background="@drawable/login_border"/>
+
+        <Button
+            android:id="@+id/doneButton"
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:text="@string/Send"
+            android:background="@drawable/login_border"/>
+
+    </FrameLayout>
+
 </LinearLayout>
+

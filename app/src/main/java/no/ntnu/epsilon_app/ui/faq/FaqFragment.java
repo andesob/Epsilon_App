@@ -1,5 +1,6 @@
 package no.ntnu.epsilon_app.ui.faq;
 
+import android.database.DataSetObserver;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -39,6 +40,7 @@ public class FaqFragment extends Fragment {
 
     private List<String> faqQuestions;
     private HashMap<String, List<String>> listDetails;
+    private List<Faq> faqList;
     private FloatingActionButton fab;
     private boolean admin = true;
     private boolean clicked = false;
@@ -81,8 +83,8 @@ public class FaqFragment extends Fragment {
             List<String> answerList = new ArrayList<>();
             String question = ApiResponse.get(i).getQuestion();
             String answer = ApiResponse.get(i).getAnswer();
-            System.out.println(question);
-            System.out.println(answer);
+            System.out.println("id:" + ApiResponse.get(i).getId());
+            //System.out.println(answer);
             answerList.add(answer);
             listDetails.put(question, answerList);
         }
@@ -94,12 +96,13 @@ public class FaqFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Faq>> call, Response<List<Faq>> response) {
                 if (response.isSuccessful()) {
-                    parseApiCall(response.body());
+                   faqList = response.body();
+                    parseApiCall(faqList);
                     if(listDetails.size() != 0) {
                         faqQuestions = new ArrayList<String>(listDetails.keySet());
                     }
+                setViewAdapter(faqQuestions, listDetails, faqList);
                 }
-                setViewAdapter(faqQuestions, listDetails);
             }
 
             @Override
@@ -115,12 +118,12 @@ public class FaqFragment extends Fragment {
         bottomSheet.show(getActivity().getSupportFragmentManager(),"ModalBottomSheet");
     }
  */
-    private void setViewAdapter(List<String> questions,HashMap<String, List<String>> listDetails ) {
+    private void setViewAdapter(List<String> questions,HashMap<String, List<String>> listDetails, List<Faq> faqList ) {
 
         ExpandableListView expandableListView = (ExpandableListView) getActivity().findViewById(R.id.expandableListView);
-        System.out.println(listDetails.get(0));
-        ExpandableListAdapter expandableListAdapter = new FaqExpandableViewAdapter(getContext(), faqQuestions, listDetails, clicked);
-        expandableListView.setAdapter(expandableListAdapter);
+        FaqViewModel.CURRENT_ADAPTER = new FaqExpandableViewAdapter(getContext(), faqQuestions, listDetails, clicked, faqList);
+        expandableListView.setAdapter(FaqViewModel.CURRENT_ADAPTER);
+
 
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 

@@ -28,6 +28,4 @@
         android:visibility="visible"
         android:focusable="false"/>
 
-
-
 </RelativeLayout>

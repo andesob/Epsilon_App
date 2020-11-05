@@ -36,4 +36,7 @@
     <string name="postNews">Post</string>
     <string name="Epsilon">Epsilon</string>
     <string name="Edit">Edit</string>
+    <string name="Close">Lukk</string>
+    <string name="Send">Send</string>
+    <string name="editFaq">Rediger et ofte stilt spørsmål</string>
 </resources>
