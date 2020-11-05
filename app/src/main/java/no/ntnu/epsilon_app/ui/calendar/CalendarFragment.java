@@ -10,8 +10,11 @@ import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -39,11 +42,19 @@ public class CalendarFragment extends Fragment {
         listDetails = TestData.getData();
         listTitle = new ArrayList<String>(listDetails.keySet());
 
+        FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.calendarEdditButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CalendarAddFragment calendarAddFragment = new CalendarAddFragment();
+                calendarAddFragment.show(getActivity().getSupportFragmentManager(),"ModalBottomSheet");
+            }
+        });
+
 
         ExpandableListAdapter expandableListAdapter = new CalendarExpandableViewAdapter
                                                             (view.getContext(),listTitle,listDetails);
         expandableListView.setAdapter((expandableListAdapter));
-
 
         return view;
     }

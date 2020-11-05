@@ -36,4 +36,8 @@
     <string name="postNews">Post</string>
     <string name="Epsilon">Epsilon</string>
     <string name="Edit">Edit</string>
+    <string name="loginBtnText">Logg Inn</string>
+    <string name="calendarBtn">Legg til i kalender</string>
+    <string name="startTime">Starttid</string>
+    <string name="endTime">Slutt-tid</string>
 </resources>
