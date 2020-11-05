@@ -1,8 +1,9 @@
 package no.ntnu.epsilon_app.ui.news;
 
-import androidx.lifecycle.ViewModelProviders;
-
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -11,19 +12,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
@@ -34,8 +25,6 @@ import retrofit2.Response;
 
 public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
 
-    private NewsFeedViewModel mViewModel;
-    private RecyclerView recyclerView;
     private RecyclerViewAdapter recyclerViewAdapter;
     private View root;
 
@@ -46,7 +35,6 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(NewsFeedViewModel.class);
     }
 
     @Override
@@ -54,6 +42,27 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
                              @Nullable Bundle savedInstanceState) {
         root = inflater.inflate(R.layout.news_feed_fragment, container, false);
 
+        getNewsfeed();
+
+        FloatingActionButton fab = root.findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                goToPostNewsFragment();
+            }
+        });
+
+        RecyclerView recyclerView = root.findViewById(R.id.rvItems);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerViewAdapter = new RecyclerViewAdapter(root.getContext(), NewsFeedViewModel.NEWS_LIST);
+        recyclerViewAdapter.setClickListener(this);
+        recyclerView.setAdapter(recyclerViewAdapter);
+
+        return root;
+    }
+
+    private void getNewsfeed() {
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getNewsfeed();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -72,23 +81,6 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
 
             }
         });
-
-        FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToPostNewsFragment();
-            }
-        });
-
-        recyclerView = root.findViewById(R.id.rvItems);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
-        recyclerView.setLayoutManager(layoutManager);
-
-        recyclerViewAdapter = new RecyclerViewAdapter(root.getContext(), NewsFeedViewModel.NEWS_LIST);
-        recyclerViewAdapter.setClickListener(this);
-        recyclerView.setAdapter(recyclerViewAdapter);
-        return root;
     }
 
 
@@ -98,7 +90,7 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
         Navigation.findNavController(root).navigate(R.id.nav_news);
     }
 
-    private void goToPostNewsFragment(){
+    private void goToPostNewsFragment() {
         Navigation.findNavController(root).navigate(R.id.nav_post_news);
     }
 }
