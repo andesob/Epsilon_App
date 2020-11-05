@@ -17,6 +17,15 @@ import android.widget.ProgressBar;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.io.IOException;
+
+import no.ntnu.epsilon_app.api.RetrofitClientInstance;
+import no.ntnu.epsilon_app.data.ImageParser;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class LoginActivity extends AppCompatActivity {
 
     public static boolean isLoggedIn = false;
@@ -35,6 +44,8 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.loginButton);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         final ImageButton imageButton = findViewById(R.id.facebookLink);
+
+        fetchPictures();
 
         progressBar.setVisibility(View.GONE);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -74,6 +85,27 @@ public class LoginActivity extends AppCompatActivity {
             
         }
         return new Intent(Intent.ACTION_VIEW,Uri.parse(FACEBOOK_URL));
+    }
+
+    private void fetchPictures(){
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getUserPictures();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        ImageParser.parseImageList(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }
 

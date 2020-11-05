@@ -14,6 +14,7 @@
         android:layout_width="55dp"
         android:layout_height="110dp"
         android:layout_weight="1"
+        android:clickable="true"
         tools:srcCompat="@tools:sample/avatars" />
 
 
