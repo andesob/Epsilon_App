@@ -1,47 +1,33 @@
 package no.ntnu.epsilon_app.tools;
 
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.navigation.Navigation;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.WeakHashMap;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
-import no.ntnu.epsilon_app.ui.faq.Faq;
 import no.ntnu.epsilon_app.ui.faq.FaqViewModel;
-import no.ntnu.epsilon_app.ui.news.NewsParser;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class BottomSheetDialog extends BottomSheetDialogFragment {
+public class BottomSheetDialogEditFaq extends BottomSheetDialogFragment {
     private EditText editFaqQuestion;
     private EditText editFaqAnswer;
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
             ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.bottom_sheet_layout,
+        View root = inflater.inflate(R.layout.edit_faq_bottom_sheet_layout,
                 container, false);
 
         final Button doneButton = root.findViewById(R.id.doneButton);
