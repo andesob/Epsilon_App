@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+
     <TextView
         android:id="@+id/listTitle"
-        android:layout_width="fill_parent"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingLeft="?android:attr/expandableListPreferredItemPaddingLeft"
         android:paddingRight="?android:attr/expandableListPreferredItemPaddingLeft"
@@ -13,6 +15,18 @@
         android:paddingBottom="10dp"
         android:textStyle="bold"
         android:textColor="#fff"
-        android:background="@drawable/faq_layout"/>
+        android:background="@drawable/faq_layout"
+        />
+    <Button
+        android:id="@+id/faqEditButton"
+        android:layout_width="wrap_content"
+        android:layout_height="38dp"
+        android:layout_gravity="right|top"
+        android:visibility="invisible"
+        android:text="@string/Edit"
+        android:focusable="false"/>
 
-</LinearLayout>
+</FrameLayout>
+
+
+
