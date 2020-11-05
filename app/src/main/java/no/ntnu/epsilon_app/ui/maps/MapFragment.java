@@ -1,5 +1,6 @@
 package no.ntnu.epsilon_app.ui.maps;
 
+import android.app.Dialog;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,8 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
+import java.util.Map;
+
 import no.ntnu.epsilon_app.R;
 
 public class MapFragment extends BottomSheetDialogFragment implements OnMapReadyCallback {
@@ -24,10 +27,18 @@ public class MapFragment extends BottomSheetDialogFragment implements OnMapReady
 
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setStyle(MapFragment.STYLE_NORMAL,R.style.SomeStyle);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_map,container,false);
+        View view = inflater.inflate(R.layout.fragment_map,container,false);
+        setStyle(MapFragment.STYLE_NORMAL,R.style.SomeStyle);
+        return view;
     }
 
     @Override
@@ -43,6 +54,7 @@ public class MapFragment extends BottomSheetDialogFragment implements OnMapReady
         }
 
     }
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

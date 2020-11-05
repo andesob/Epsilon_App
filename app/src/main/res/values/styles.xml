@@ -30,4 +30,8 @@
         <item name="android:textColor">#fff</item>
     </style>
 
+    <style name="SomeStyle" parent="Theme.MaterialComponents.Light.BottomSheetDialog">
+        <item name="behavior_draggable">false</item>
+    </style>
+
 </resources>

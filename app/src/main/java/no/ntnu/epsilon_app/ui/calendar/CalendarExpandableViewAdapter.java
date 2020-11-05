@@ -10,6 +10,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.navigation.Navigation;
@@ -66,12 +67,13 @@ public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
         String lngEiffelTower = "6.230659";
 
         ImageView mapView = (ImageView) convertView.findViewById(R.id.mapStatic);
-        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&markers=" + latEiffelTower+","+lngEiffelTower+"&size=400x600&sensor=false&key=").into(mapView);
+        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&markers=" + latEiffelTower+","+lngEiffelTower+"&size=400x600&sensor=false&key=AIzaSyCb1WHchao8azj61yoX-P_tRnDA_BRl2DA").into(mapView);
 
         mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Navigation.findNavController(v).navigate(R.id.nav_map);
+                MapFragment mapFragment = new MapFragment();
+                mapFragment.show(((AppCompatActivity)context).getSupportFragmentManager(),"ModalBottomSheet");
             }
         });
 
