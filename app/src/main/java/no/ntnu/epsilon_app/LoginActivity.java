@@ -45,8 +45,6 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         final ImageButton imageButton = findViewById(R.id.facebookLink);
 
-        fetchPictures();
-
         progressBar.setVisibility(View.GONE);
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,10 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //newFaceBookIntent(getPackageManager(),"https://www.facebook.com/EpsilonAalesund")
                 startActivity(newFaceBookIntent(getPackageManager()));
-                //Intent intent = new Intent(Intent.ACTION_VIEW,Uri.parse("fb://facewebmodal/f?href=EpsilonAalesund"));
-                //startActivity(intent);
                 }
 
         });
@@ -71,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void loginUser() {
         isLoggedIn = true;
-        startActivity(new Intent(LoginActivity.this,MainActivity.class));
+        startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
     }
 
@@ -85,27 +80,6 @@ public class LoginActivity extends AppCompatActivity {
             
         }
         return new Intent(Intent.ACTION_VIEW,Uri.parse(FACEBOOK_URL));
-    }
-
-    private void fetchPictures(){
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getUserPictures();
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        ImageParser.parseImageList(response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
     }
 }
 

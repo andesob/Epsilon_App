@@ -37,9 +37,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(LoginActivity.isLoggedIn == false){
+        /*if(LoginActivity.isLoggedIn == false){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
-        }
+        }*/
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,9 +79,7 @@ public class MainActivity extends AppCompatActivity {
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         }else {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            startActivity(intent);
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_newsfeed);
         }
     }
 
