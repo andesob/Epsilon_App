@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,10 +25,12 @@ import com.gun0912.tedpermission.TedPermission;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
+import no.ntnu.epsilon_app.data.ImageParser;
 import no.ntnu.epsilon_app.ui.about_us.dummy.DummyContent;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -45,6 +48,9 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
     private int mColumnCount = 1;
     private final static int SELECT_PHOTO = 12345;
     private String userIdClicked;
+    private int positionClicked;
+    private View root;
+    private AboutUsItemRecyclerViewAdapter adapter;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -65,11 +71,12 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View root = inflater.inflate(R.layout.fragment_about_us_list, container, false);
+        root = inflater.inflate(R.layout.fragment_about_us_list, container, false);
 
         Context context = root.getContext();
         RecyclerView recyclerView = root.findViewById(R.id.about_us_recyclerview);
         recyclerView.setNestedScrollingEnabled(false);
+        getAboutUsObjects();
 
         if (mColumnCount <= 1) {
             recyclerView.setLayoutManager(new LinearLayoutManager(context));
@@ -77,7 +84,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
 
-        AboutUsItemRecyclerViewAdapter adapter = new AboutUsItemRecyclerViewAdapter(AboutUsViewModel.OBJECT_LIST);
+        adapter = new AboutUsItemRecyclerViewAdapter(AboutUsViewModel.OBJECT_LIST);
         adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
@@ -86,12 +93,12 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
 
     @Override
     public void onItemClick(final View view, final int position) {
+        positionClicked = position;
         PermissionListener permissionlistener = new PermissionListener() {
             @Override
             public void onPermissionGranted() {
                 userIdClicked = Long.toString(AboutUsViewModel.OBJECT_LIST.get(position).getUserid());
                 goPhotoPicker();
-
             }
 
             @Override
@@ -107,7 +114,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                 .check();
     }
 
-    private void goPhotoPicker(){
+    private void goPhotoPicker() {
         Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
         photoPickerIntent.setType("image/*");
         startActivityForResult(photoPickerIntent, SELECT_PHOTO);
@@ -146,6 +153,14 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
             call.enqueue(new Callback<ResponseBody>() {
                 @Override
                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                    if (response.isSuccessful()) {
+                        try {
+                            ImageParser.parseImage(response.body().string());
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        Navigation.findNavController(root).navigate(R.id.nav_about_us);
+                    }
                 }
 
                 @Override
@@ -155,5 +170,26 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
             });
             cursor.close();
         }
+    }
+
+    private void getAboutUsObjects() {
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getAboutUsObjects();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        AboutUsParser.parseAboutUsList(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }
