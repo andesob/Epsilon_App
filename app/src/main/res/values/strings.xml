@@ -40,4 +40,5 @@
     <string name="Send">Send</string>
     <string name="editFaq">Rediger et ofte stilt spørsmål</string>
     <string name="epsilon_linjeforening">Epsilon Linjeforening</string>
+    <string name="addFaq">Legg til et ofte stilt spørsmål</string>
 </resources>

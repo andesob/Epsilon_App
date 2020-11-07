@@ -49,4 +49,10 @@ public interface EpsilonAPI {
     Call<ResponseBody> edit_faq(@Field("question") String question,
                                 @Field("answer")String answer,
                                 @Field("questionId") long questionID);
+
+    @PUT("web/add_faqs")
+    @FormUrlEncoded
+    Call<ResponseBody> add_faqs(@Field("question") String question,
+                                @Field("answer") String answer);
+
 }

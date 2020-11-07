@@ -17,10 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
-import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
-import no.ntnu.epsilon_app.tools.BottomSheetDialog;
+import no.ntnu.epsilon_app.tools.BottomSheetDialogEditFaq;
 
 public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
 
@@ -102,7 +100,7 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    BottomSheetDialog bottomSheet = new BottomSheetDialog();
+                    BottomSheetDialogEditFaq bottomSheet = new BottomSheetDialogEditFaq();
                     bottomSheet.show(((AppCompatActivity) context).getSupportFragmentManager(),"ModalBottomSheet");
 
                     String answer = expandableListDetail.get(listTitle).get(0);
