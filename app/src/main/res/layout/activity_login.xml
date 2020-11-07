@@ -76,7 +76,7 @@
         android:layout_marginBottom="200dp"
         android:background="@drawable/login_border"
         android:ems="14"
-        android:text="Login"
+        android:text="@string/loginBtnText"
         android:fitsSystemWindows="true"
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"

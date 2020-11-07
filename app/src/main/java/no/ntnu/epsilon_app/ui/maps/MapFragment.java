@@ -10,9 +10,12 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.util.Map;
@@ -59,5 +62,9 @@ public class MapFragment extends BottomSheetDialogFragment implements OnMapReady
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
+        LatLng ntnuAalesund = new LatLng(62.472117, 6.235394);
+        mMap.addMarker(new MarkerOptions()).setPosition(ntnuAalesund);
+        mMap.moveCamera(CameraUpdateFactory.newLatLng(ntnuAalesund));
+        System.out.println("FAEN DA KART");
     }
 }

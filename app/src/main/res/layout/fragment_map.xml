@@ -4,27 +4,16 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     app:layout_behavior="@string/bottom_sheet_behavior"
-    xmlns:tools="http://schemas.android.com/tools"
-    app:behavior_hideable="false"
-    android:orientation="vertical"
-    app:behavior_peekHeight="100dp"
-    android:minHeight="200dp"
+
     >
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         app:layout_behavior="@string/bottom_sheet_behavior"
         android:id="@+id/map"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:minHeight="200dp"
-
+        android:layout_height="match_parent"
         app:layout_constraintBottom_toBottomOf="parent"
-
-        app:behavior_hideable="false"
-        android:orientation="vertical"
-        app:behavior_peekHeight="100dp"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

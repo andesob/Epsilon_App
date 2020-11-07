@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WRITE_CALENDAR"/>
+    <uses-permission android:name="android.permission.READ_CALENDAR"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-feature android:name="android.hardware.type.watch" />
@@ -20,7 +22,7 @@
         android:usesCleartextTraffic="true">
     <meta-data
         android:name="com.google.android.geo.API_KEY"
-        android:value="AIzaSyCb1WHchao8azj61yoX-P_tRnDA_BRl2DA" />
+        android:value="AIzaSyB2qCCyXeJ67iEyBOT4E_PdXqgbzJ7fF4E" />
     <meta-data
         android:name="com.google.android.gms.version"
         android:value="@integer/google_play_services_version" />
