@@ -79,7 +79,7 @@ public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
         String lngEiffelTower = "6.230659";
 
         ImageView mapView = (ImageView) convertView.findViewById(R.id.mapStatic);
-        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&markers=" + latEiffelTower+","+lngEiffelTower+"&size=400x600&sensor=false&key=AIzaSyCb1WHchao8azj61yoX-P_tRnDA_BRl2DA").into(mapView);
+        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + latEiffelTower + "," + lngEiffelTower + "&zoom=15&markers=" + latEiffelTower+","+lngEiffelTower+"&size=400x600&sensor=false&key=AIzaSyB2qCCyXeJ67iEyBOT4E_PdXqgbzJ7fF4E").into(mapView);
 
         Button loginButton = (Button) convertView.findViewById(R.id.loginButton);
         loginButton.setOnClickListener(new View.OnClickListener(){

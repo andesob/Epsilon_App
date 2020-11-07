@@ -11,7 +11,8 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/addCalendarPageOne"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="visible">
 
         <TextView
             android:id="@+id/startText"
@@ -103,10 +104,10 @@
 
 
     <ImageView
-        android:id="@+id/arrowRight"
+        android:id="@+id/nextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginRight="15dp"
+        android:layout_marginEnd="15dp"
         android:src="@drawable/ic_arrow_right"
         app:layout_constraintDimensionRatio="0.8"
         app:layout_constraintBottom_toBottomOf="@id/endText"
@@ -116,7 +117,160 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
     
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width=""
-        android:layout_height=""
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addCalendarPageTwo"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/editAdress"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:ems="14"
+            android:layout_marginTop="15dp"
+            android:hint="Adresse"
+            android:textColorHint="#73FFFFFF"
+            android:textColor="@color/colorAccent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+        <Button
+            android:id="@+id/addressConfirmButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/editAdress"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+        <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/map"
+            android:name="com.google.android.gms.maps.SupportMapFragment"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_marginTop="10dp"
+            app:layout_constraintTop_toBottomOf="@id/addressConfirmButton"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+        <ImageView
+            android:id="@+id/backButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/map"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_arrow_right"
+            android:scaleX="-1"
+            app:tint="#fff"
+            android:layout_marginStart="15dp"
+            app:layout_constraintDimensionRatio="0.8"
+
+            />
+        <ImageView
+            android:id="@+id/nextButtonTwo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/map"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:src="@drawable/ic_arrow_right"
+            app:tint="#fff"
+            android:layout_marginEnd="15dp"
+            app:layout_constraintDimensionRatio="0.8"
+
+            />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/addCalendarPageThree"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/calendarTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title"
+            android:layout_marginTop="10dp"
+            android:textColor="#FFF"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:textSize="30sp"
+            />
+
+        <EditText
+            android:id="@+id/calendarEditTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="Tittel"
+            android:ems="14"
+            android:textColorHint="#73FFFFFF"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/border"
+            app:layout_constraintTop_toBottomOf="@id/calendarTitle"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="7dp"
+            />
+
+        <TextView
+            android:id="@+id/calendarDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            app:layout_constraintTop_toBottomOf="@+id/calendarEditTitle"
+            android:text="Beskrivelse"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:textColor="#FFF"
+            android:textSize="30sp"/>
+        <EditText
+            android:id="@+id/calendarEditDescription"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:hint="Beskrivelse"
+            android:ems="14"
+            android:textColorHint="#73FFFFFF"
+            android:textColor="@color/colorAccent"
+            android:background="@drawable/border"
+            android:inputType="textMultiLine"
+            android:minLines="10"
+            app:layout_constraintTop_toBottomOf="@id/calendarDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="7dp"
+            />
+
+        <Button
+            android:id="@+id/addEventButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/calendarEditDescription"
+            android:layout_marginTop="25dp"
+            android:text="Legg til event"
+            android:textColor="#fff"
+            android:background="@drawable/login_border"/>
+
+        <ImageView
+            android:id="@+id/backButtonTwo"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/addEventButton"
+            app:layout_constraintBottom_toBottomOf="@+id/addEventButton"
+            app:layout_constraintStart_toStartOf="parent"
+            android:src="@drawable/ic_arrow_right"
+            android:scaleX="-1"
+            app:tint="#fff"
+            android:layout_marginLeft="15dp"
+            app:layout_constraintDimensionRatio="0.8"
+
+            />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
 
