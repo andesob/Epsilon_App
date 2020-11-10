@@ -45,4 +45,5 @@
     <string name="calendarBtn">Legg til i kalender</string>
     <string name="startTime">Starttid</string>
     <string name="endTime">Slutt-tid</string>
+    <string name="prompt_email">E-post</string>
 </resources>

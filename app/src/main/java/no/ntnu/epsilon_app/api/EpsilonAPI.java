@@ -3,6 +3,11 @@ package no.ntnu.epsilon_app.api;
 import android.media.Image;
 
 
+import com.google.android.gms.maps.model.LatLng;
+
+import no.ntnu.epsilon_app.ui.calendar.Calendar;
+import no.ntnu.epsilon_app.ui.calendar.LatitudeLongitude;
+import no.ntnu.epsilon_app.ui.calendar.Time;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import java.util.List;
@@ -10,6 +15,7 @@ import java.util.List;
 import no.ntnu.epsilon_app.ui.faq.Faq;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -17,6 +23,7 @@ import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
+import retrofit2.http.Query;
 
 public interface EpsilonAPI {
     @GET("web/newsfeed")
@@ -54,5 +61,19 @@ public interface EpsilonAPI {
     @FormUrlEncoded
     Call<ResponseBody> add_faqs(@Field("question") String question,
                                 @Field("answer") String answer);
+    @PUT("web/add_calendar_item")
+    @FormUrlEncoded
+    Call<ResponseBody> addCalendarItem( @Field("title") String title,
+                                        @Field("description") String description,
+                                        @Field("latlng") String  latLng,
+                                        @Field("starttime") String  startTime,
+                                        @Field("endtime") String  endTime,
+                                        @Field("address") String  address);
+
+    @GET("auth/login")
+    Call<ResponseBody> loginUser(
+            @Query("email") String email,
+            @Query("pwd") String password
+    );
 
 }
