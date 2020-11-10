@@ -36,17 +36,17 @@
         android:textSize="56sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/editTextPhoneNumber" />
+        app:layout_constraintBottom_toTopOf="@id/editEmail" />
 
     <EditText
-        android:id="@+id/editTextPhoneNumber"
+        android:id="@+id/editEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:background="@drawable/border"
         android:ems="14"
-        android:hint="@string/prompt_phoneNumber"
-        android:inputType="phone"
+        android:hint="@string/prompt_email"
+        android:inputType="textEmailAddress"
         android:textColorHint="#73FFFFFF"
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -69,6 +69,7 @@
         app:layout_constraintBottom_toTopOf="@+id/loginButton" />
 
 
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
@@ -83,6 +84,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guideline" />
 
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -93,6 +95,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guideline"  />
+
+    <TextView
+        android:id="@+id/registerUserText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/RegisterNewUser"
+        app:layout_constraintBottom_toTopOf="@+id/facebookLinkText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/facebookLinkText"
@@ -126,6 +139,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.9"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

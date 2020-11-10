@@ -30,11 +30,18 @@ import java.io.IOException;
 import java.util.List;
 
 import no.ntnu.epsilon_app.R;
+import no.ntnu.epsilon_app.api.RetrofitClientInstance;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CalendarAddFragment extends BottomSheetDialogFragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
     private int count = 0;
+    private String latitudeLongitude;
+    private String addressToLatLong;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -47,19 +54,25 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_calendar_add, container, false);
+
+        final EditText editTitle = view.findViewById(R.id.calendarEditTitle);
+        final EditText editDescription = view.findViewById(R.id.calendarEditDescription);
+
         final TimePicker startTimePicker = view.findViewById(R.id.setStartTime);
         startTimePicker.setIs24HourView(true);
         final TimePicker endTimePicker = view.findViewById(R.id.setEndTime);
         endTimePicker.setIs24HourView(true);
+        final DatePicker startDatePicker = view.findViewById(R.id.setStartDate);
+        final DatePicker endDatePicker = view.findViewById(R.id.setEndDate);
         final EditText editAddressText = view.findViewById(R.id.editAdress);
+
         final Button editAddressButton = view.findViewById(R.id.addressConfirmButton);
         editAddressButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String addressToLatLong = editAddressText.getText().toString().trim();
+                addressToLatLong = editAddressText.getText().toString().trim();
                 List<Address> addressList = null;
                 Geocoder geocoder = new Geocoder(getContext());
-
 
                 try {
                     addressList = geocoder.getFromLocationName(addressToLatLong, 1);
@@ -69,6 +82,9 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
                     Address address = addressList.get(0);
                     mMap.clear();
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
+                    latitudeLongitude = String.valueOf(latLng.latitude) + (",") +String.valueOf(latLng.longitude);
+                    System.out.println(latLng);
+                    System.out.println(latitudeLongitude);
                     mMap.addMarker(new MarkerOptions().position(latLng));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
                 }
@@ -113,12 +129,52 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
             }
         });
 
+        final Button addButton = view.findViewById(R.id.addEventButton);
+        addButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("GOGOGOG");
+                String title = editTitle.getText().toString().trim();
+                String description = editDescription.getText().toString().trim();
+                //Time startTime = new Time(startDatePicker.getYear(),startDatePicker.getMonth(),startDatePicker.getDayOfMonth(),startTimePicker.getHour(),startTimePicker.getMinute());
+                String startTime =  String.valueOf(startDatePicker.getYear()) + (",") +String.valueOf(startDatePicker.getMonth())+
+                        (",") +  String.valueOf(startDatePicker.getDayOfMonth())+(",") + String.valueOf(startTimePicker.getHour()) +(",") + String.valueOf(startTimePicker.getMinute());
+                System.out.println(startTime);
+                //Time endTime = new Time(endDatePicker.getYear(),endDatePicker.getMonth(),endDatePicker.getDayOfMonth(),endTimePicker.getHour(),endTimePicker.getMinute());
+                String endTime =  String.valueOf(endDatePicker.getYear()) + (",") +String.valueOf(endDatePicker.getMonth())+
+                        (",") +  String.valueOf(endDatePicker.getDayOfMonth())+(",") + String.valueOf(endTimePicker.getHour()) +(",") + String.valueOf(endTimePicker.getMinute());
+                addEvent(title,description,latitudeLongitude,startTime,endTime,addressToLatLong);
+            }
+        });
+
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         return view;
     }
 
+    private void addEvent(String title,String description,String latLng,String startTime,String endTime,String addressToLatLong) {
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().addCalendarItem(title,description,
+                latLng,startTime,endTime,addressToLatLong);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                try {
 
+                if(response.isSuccessful()){
+                    System.out.println("SUCC");
+                    System.out.println(response.body().string());
+                }else{
+                    System.out.println(response.code());
+                }
+                }catch (IOException e){}
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                System.out.println("NO REACH");
+            }
+        });
+    }
 
 
     private void setPage(int page) {
@@ -151,7 +207,7 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
         mMap = googleMap;
         LatLng ntnuAalesund = new LatLng(62.472117, 6.235394);
         mMap.addMarker(new MarkerOptions().position(ntnuAalesund));
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ntnuAalesund, 16f));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(ntnuAalesund, 15f));
 
     }
 
