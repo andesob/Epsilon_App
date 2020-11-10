@@ -69,6 +69,7 @@
         app:layout_constraintBottom_toTopOf="@+id/loginButton" />
 
 
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
@@ -83,6 +84,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guideline" />
 
+
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
@@ -93,6 +95,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/guideline"  />
+
+    <TextView
+        android:id="@+id/registerUserText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:text="@string/RegisterNewUser"
+        app:layout_constraintBottom_toTopOf="@+id/facebookLinkText"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
 
     <TextView
         android:id="@+id/facebookLinkText"
@@ -126,6 +139,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.9"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>

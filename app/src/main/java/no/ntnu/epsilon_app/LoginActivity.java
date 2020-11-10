@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,6 +22,7 @@ import java.io.IOException;
 
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.ImageParser;
+import no.ntnu.epsilon_app.ui.register.RegisterActivity;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
         final Button loginButton = findViewById(R.id.loginButton);
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         final ImageButton imageButton = findViewById(R.id.facebookLink);
+        final TextView registerUserText = findViewById(R.id.registerUserText);
 
         progressBar.setVisibility(View.GONE);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +64,13 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(newFaceBookIntent(getPackageManager()));
                 }
 
+        });
+
+        registerUserText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
         });
     }
 
