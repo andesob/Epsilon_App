@@ -8,6 +8,7 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Patterns;
 import android.view.View;
 import android.view.WindowManager;
@@ -65,7 +66,22 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 progressBar.setVisibility(View.VISIBLE);
                 loginButton.setVisibility(View.INVISIBLE);
-                loginUser();
+
+                new CountDownTimer(1500,1000){
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        loginUser();
+                        progressBar.setVisibility(View.INVISIBLE);
+                        loginButton.setVisibility(View.VISIBLE);
+                    }
+                }.start();
+                //loginUser();
             }
         });
 
@@ -83,6 +99,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
             }
         });
+
     }
 
     private void loginUser() {
