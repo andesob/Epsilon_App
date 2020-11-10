@@ -76,4 +76,12 @@ public interface EpsilonAPI {
             @Query("pwd") String password
     );
 
+
+    @POST("auth/create_user")
+    @FormUrlEncoded
+    Call<ResponseBody> createUser(@Field("firstName") String firstName,
+                                  @Field("lastName") String lastName,
+                                  @Field("pwd") String pwd,
+                                  @Field("email") String email);
+
 }

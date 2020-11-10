@@ -17,7 +17,6 @@
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="login_header">Epsilon</string>
-    <string name="prompt_password">Password</string>
     <string name="prompt_phoneNumber">Phone Number</string>
     <string name="faq">Faq</string>
     <string name="title_activity_login">Logg Inn</string>
@@ -45,5 +44,10 @@
     <string name="calendarBtn">Legg til i kalender</string>
     <string name="startTime">Starttid</string>
     <string name="endTime">Slutt-tid</string>
-    <string name="prompt_email">E-post</string>
+    <string name="prompt_firstName">Fornavn</string>
+    <string name="prompt_LastName">Etternavn</string>
+    <string name="prompt_email">Email</string>
+    <string name="register">Registrer en ny bruker</string>
+    <string name="prompt_password">Passord</string>
+    <string name="RegisterNewUser">Registrer en ny bruker</string>
 </resources>
