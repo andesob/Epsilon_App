@@ -19,6 +19,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
@@ -83,5 +84,8 @@ public interface EpsilonAPI {
                                   @Field("lastName") String lastName,
                                   @Field("pwd") String pwd,
                                   @Field("email") String email);
+
+    @GET("auth/verify")
+    Call<ResponseBody> verifyJwt(@Header("Authorization") String token);
 
 }

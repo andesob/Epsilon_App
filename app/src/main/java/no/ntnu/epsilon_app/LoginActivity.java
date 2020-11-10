@@ -20,11 +20,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButtonToggleGroup;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 import no.ntnu.epsilon_app.api.EpsilonAPI;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
@@ -37,7 +39,6 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    public static boolean isLoggedIn = false;
     private static final String FACEBOOK_ID = "1007001496115565";
     private static final String FACEBOOK_URL="https://www.facebook.com/EpsilonAalesund";
 
@@ -50,7 +51,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        isLoggedIn();
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         editEmail = findViewById(R.id.editEmail);
@@ -81,7 +82,6 @@ public class LoginActivity extends AppCompatActivity {
                         loginButton.setVisibility(View.VISIBLE);
                     }
                 }.start();
-                //loginUser();
             }
         });
 
@@ -103,8 +103,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-        isLoggedIn = true;
-        //startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
         String email = editEmail.getText().toString().trim();
         String pwd = editPassword.getText().toString().trim();
@@ -135,7 +133,7 @@ public class LoginActivity extends AppCompatActivity {
                         Toast.makeText(context,"Login Success",Toast.LENGTH_SHORT).show();
                         sharedUserPrefs.setToken(response.body().string());
                         System.out.println("YOUR HERE");
-                        //startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                        startActivity(new Intent(LoginActivity.this, MainActivity.class));
 
                     }
                     catch (IOException e){}
@@ -153,6 +151,30 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    private void isLoggedIn(){
+        final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
+        String token = "Bearer " + sharedUserPrefs.getToken();
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().verifyJwt(token);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    System.out.println("LOGIN SUCK");
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+                }
+                else{
+                    System.out.println("LOGIN FAIL");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+
     private static Intent newFaceBookIntent(PackageManager pm){
         try{
             ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana",0);
@@ -160,7 +182,7 @@ public class LoginActivity extends AppCompatActivity {
                 return new Intent(Intent.ACTION_VIEW,Uri.parse("fb://page/"+FACEBOOK_ID));
             }
         }catch (PackageManager.NameNotFoundException e){
-            
+
         }
         return new Intent(Intent.ACTION_VIEW,Uri.parse(FACEBOOK_URL));
     }
