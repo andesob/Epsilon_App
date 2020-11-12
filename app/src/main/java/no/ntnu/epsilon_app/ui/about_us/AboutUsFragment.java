@@ -63,6 +63,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         if (getArguments() != null) {
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
@@ -85,7 +86,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
         }
 
         adapter = new AboutUsItemRecyclerViewAdapter(AboutUsViewModel.OBJECT_LIST);
-        adapter.setClickListener(this);
+
         recyclerView.setAdapter(adapter);
 
         return root;

@@ -3,6 +3,7 @@ package no.ntnu.epsilon_app;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
@@ -12,6 +13,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -23,9 +25,16 @@ import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
 
+import javax.sql.DataSource;
+
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.Image;
 import no.ntnu.epsilon_app.data.ImageParser;
+import no.ntnu.epsilon_app.data.LoginDataSource;
+import no.ntnu.epsilon_app.data.LoginRepository;
+import no.ntnu.epsilon_app.data.User;
+import no.ntnu.epsilon_app.data.UserParser;
+import no.ntnu.epsilon_app.data.UserViewModel;
 import no.ntnu.epsilon_app.ui.about_us.AboutUsViewModel;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -60,12 +69,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_logout:
+                LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+                if (loginRepository.isLoggedIn()) {
+                    loginRepository.logout();
+                }
+                final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
+                sharedUserPrefs.editor.clear();
+                sharedUserPrefs.editor.commit();
+
+                Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
+                MainActivity.this.startActivity(mainIntent);
+                MainActivity.this.finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -77,12 +104,13 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        if(drawer.isDrawerOpen(GravityCompat.START)){
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
-        }else {
+        } else {
             Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_newsfeed);
         }
     }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
         if (getCurrentFocus() != null) {
@@ -91,5 +119,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
+
 
 }

@@ -30,6 +30,9 @@ public interface EpsilonAPI {
     @GET("web/newsfeed")
     Call<ResponseBody> getNewsfeed();
 
+    @GET("web/users")
+    Call<ResponseBody> getUsers();
+
     @PUT("web/postNews")
     @FormUrlEncoded
     Call<ResponseBody> postNews(@Field("title") String title,

@@ -69,6 +69,7 @@ public class AboutUsItemRecyclerViewAdapter extends RecyclerView.Adapter<AboutUs
         void onItemClick(View view, int position);
     }
 
+
     public void setClickListener(ItemClickListener itemClickListener) {
         this.mClickListener = itemClickListener;
     }
