@@ -32,6 +32,11 @@ public class BottomSheetDialogEditFaq extends BottomSheetDialogFragment {
     private EditText editFaqQuestion;
     private EditText editFaqAnswer;
     private FaqViewModel faqViewModel;
+    private Faq currentFaq;
+
+    public BottomSheetDialogEditFaq(Faq faq) {
+        this.currentFaq = faq;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable
@@ -58,7 +63,7 @@ public class BottomSheetDialogEditFaq extends BottomSheetDialogFragment {
             public void onClick(View view) {
                 String question = editFaqQuestion.getText().toString();
                 String answer = editFaqAnswer.getText().toString();
-                long id = FaqViewModel.SELECTED_FAQ.getId() ;
+                long id = currentFaq.getId();
 
                 faqViewModel.editFaq(question, answer,id).observe(getViewLifecycleOwner(), new Observer<Response>() {
 
@@ -81,7 +86,6 @@ public class BottomSheetDialogEditFaq extends BottomSheetDialogFragment {
                             Toast.makeText(getContext(), "Error: kunne ikke endre", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                 });
             }
         });
@@ -93,9 +97,9 @@ public class BottomSheetDialogEditFaq extends BottomSheetDialogFragment {
 
 
     private void setText() {
-        if (FaqViewModel.SELECTED_FAQ != null) {
-            editFaqQuestion.setText(FaqViewModel.SELECTED_FAQ.getQuestion());
-            editFaqAnswer.setText(FaqViewModel.SELECTED_FAQ.getAnswer());
+        if (currentFaq != null) {
+            editFaqQuestion.setText(currentFaq.getQuestion());
+            editFaqAnswer.setText(currentFaq.getAnswer());
 
         }
     }

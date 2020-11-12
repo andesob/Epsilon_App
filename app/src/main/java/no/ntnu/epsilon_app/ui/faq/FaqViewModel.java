@@ -15,9 +15,6 @@ import retrofit2.Response;
 
 public class FaqViewModel extends AndroidViewModel {
 
-    public static Faq SELECTED_FAQ;
-
-
     private FaqRepository repository;
 
     public FaqViewModel(Application application ){
