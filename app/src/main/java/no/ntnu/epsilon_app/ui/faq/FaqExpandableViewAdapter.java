@@ -13,10 +13,15 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelStoreOwner;
+
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.tools.BottomSheetDialogEditFaq;
 
@@ -27,6 +32,7 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
     private HashMap<String, List<String>> expandableListDetail;
     private List<Faq> faqList;
     private boolean admin;
+    private FaqItemClickListener mItemClickListener;
 
     public FaqExpandableViewAdapter(Context context, List<String> expandableListTitle,
                                     HashMap<String, List<String>> expandableListDetail, boolean admin, List<Faq> faqList) {
@@ -35,6 +41,7 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         this.expandableListDetail = expandableListDetail;
         this.admin = admin;
         this.faqList = faqList;
+
     }
 
     @Override
@@ -84,6 +91,14 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         return listPosition;
     }
 
+    public interface FaqItemClickListener{
+        void onItemClick(View view, int position, long faqId);
+    }
+
+    public void setClickListener(FaqItemClickListener faqItemClickListener){
+        this.mItemClickListener = faqItemClickListener;
+    }
+
     @Override
     public View getGroupView(final int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
@@ -110,9 +125,21 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
                     FaqViewModel.SELECTED_FAQ = selectedFaq;
                     String idString = id + "";
                     Toast.makeText(context, idString, Toast.LENGTH_SHORT).show();
-                    System.out.println(idString);
                 }
             });
+            ImageView trashIcon = convertView.findViewById(R.id.faqTrash);
+            trashIcon.setVisibility(View.VISIBLE);
+            trashIcon.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    String answer = expandableListDetail.get(listTitle).get(0);
+                    long id = findFaqId(faqList, listTitle);
+                    Faq selectedFaq = new Faq(id, listTitle, answer);
+
+                    if(mItemClickListener != null) mItemClickListener.onItemClick(view, listPosition, id);
+                }
+            });
+
         }
 
 
@@ -132,10 +159,6 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         }
         return id;
 
-    }
-
-    public void updateList() {
-        notifyDataSetInvalidated();
     }
 
 
