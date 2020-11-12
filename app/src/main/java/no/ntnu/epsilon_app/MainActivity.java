@@ -21,6 +21,17 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import java.io.IOException;
+
+import no.ntnu.epsilon_app.api.RetrofitClientInstance;
+import no.ntnu.epsilon_app.data.Image;
+import no.ntnu.epsilon_app.data.ImageParser;
+import no.ntnu.epsilon_app.ui.about_us.AboutUsViewModel;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
@@ -29,19 +40,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(LoginActivity.isLoggedIn == false){
+        /*if(LoginActivity.isLoggedIn == false){
             startActivity(new Intent(MainActivity.this,LoginActivity.class));
-        }
+        }*/
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        /*FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToPostNewsFragment();
-            }
-        });*/
+
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
 
@@ -77,9 +82,7 @@ public class MainActivity extends AppCompatActivity {
         if(drawer.isDrawerOpen(GravityCompat.START)){
             drawer.closeDrawer(GravityCompat.START);
         }else {
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            startActivity(intent);
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_newsfeed);
         }
     }
     @Override
