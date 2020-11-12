@@ -55,6 +55,10 @@ public interface EpsilonAPI {
     Call<ResponseBody> add_faqs(@Field("question") String question,
                                 @Field("answer") String answer);
 
+    @PUT("web/delete_faq")
+    @FormUrlEncoded
+    Call<ResponseBody> delete_faq(@Field("id") long faqId);
+
 
     @POST("auth/create_user")
     @FormUrlEncoded

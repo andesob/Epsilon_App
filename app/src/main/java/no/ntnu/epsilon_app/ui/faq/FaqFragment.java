@@ -1,51 +1,41 @@
 package no.ntnu.epsilon_app.ui.faq;
 
-import android.database.DataSetObserver;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import no.ntnu.epsilon_app.R;
-import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.tools.BottomSheetDialogAddFaq;
-import no.ntnu.epsilon_app.tools.BottomSheetDialogEditFaq;
-import no.ntnu.epsilon_app.ui.faq.dummy.TestData;
-import no.ntnu.epsilon_app.ui.news.NewsParser;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
+
 
 /**
  * A fragment representing a list of Items.
  */
-public class FaqFragment extends Fragment {
+public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.FaqItemClickListener {
 
     private List<String> faqQuestions;
     private HashMap<String, List<String>> listDetails;
     private List<Faq> faqList;
-    private ImageView fab;
-    private boolean admin = true;
+    private FaqViewModel faqViewModel;
+    private  FaqExpandableViewAdapter faqAdapter;
+    private AlertDialog.Builder builder;
     private boolean clicked = false;
 
 
@@ -60,12 +50,16 @@ public class FaqFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+                             Bundle savedInstanceState){
         final View root = inflater.inflate(R.layout.fragment_faq_item_list, container, false);
-        fab = root.findViewById(R.id.faq_fab);
+        ImageView fab = root.findViewById(R.id.faq_fab);
+        faqViewModel =  new ViewModelProvider(requireActivity()).get(FaqViewModel.class);
         ImageView addBtn = root.findViewById(R.id.addFaq);
-        getFaqs();
+        builder = new AlertDialog.Builder(getContext(), R.style.LightDialogTheme);
 
+        getFaq();
+
+        boolean admin = true;
         if(admin){
            fab.setVisibility(View.VISIBLE);
            addBtn.setVisibility(View.VISIBLE);
@@ -75,7 +69,7 @@ public class FaqFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 BottomSheetDialogAddFaq bottomSheet = new BottomSheetDialogAddFaq();
-                bottomSheet.show(getActivity().getSupportFragmentManager(),"ModalBottomSheet");
+                bottomSheet.show(requireActivity().getSupportFragmentManager(),"ModalBottomSheet");
 
             }
         });
@@ -84,11 +78,31 @@ public class FaqFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 clicked = true;
-                getFaqs();
+                getFaq();
             }
         });
 
         return root;
+    }
+
+    private void setNewLists(){
+        faqQuestions = new ArrayList<>();
+        listDetails = new HashMap<>();
+    }
+
+    public void getFaq(){
+
+        faqViewModel.getFaqList().observe(getViewLifecycleOwner(), new Observer<List<Faq>>() {
+            @Override
+            public void onChanged(@NonNull List<Faq> faqs) {
+                setNewLists();
+                    parseApiCall(faqs);
+                    if (listDetails.size() != 0) {
+                        faqQuestions = new ArrayList<>(listDetails.keySet());
+                        setViewAdapter(faqQuestions, listDetails, faqs);
+                    }
+                }
+        });
     }
 
     private void parseApiCall(List<Faq> ApiResponse) {
@@ -97,47 +111,49 @@ public class FaqFragment extends Fragment {
             List<String> answerList = new ArrayList<>();
             String question = ApiResponse.get(i).getQuestion();
             String answer = ApiResponse.get(i).getAnswer();
-            System.out.println("id:" + ApiResponse.get(i).getId());
-            //System.out.println(answer);
             answerList.add(answer);
             listDetails.put(question, answerList);
         }
     }
 
-    private void getFaqs() {
-        Call<List<Faq>> call = RetrofitClientInstance.getSINGLETON().getAPI().getFaqs();
-        call.enqueue(new Callback<List<Faq>>() {
-            @Override
-            public void onResponse(Call<List<Faq>> call, Response<List<Faq>> response) {
-                if (response.isSuccessful()) {
-                   faqList = response.body();
-                    parseApiCall(faqList);
-                    if(listDetails.size() != 0) {
-                        faqQuestions = new ArrayList<String>(listDetails.keySet());
+    private void createAlertBox(final long faqId) {
+        //Setting message manually and performing action on button click
+        builder.setMessage("Vil du slette dette ofte stilte spørsmålet?" + faqId)
+                .setCancelable(true)
+                .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        faqViewModel.deleteFaq(faqId).observe(getViewLifecycleOwner(), new Observer<Response>() {
+                            @Override
+                            public void onChanged(@NonNull Response response) {
+                                getFaq();
+                            }
+                        });
                     }
-                setViewAdapter(faqQuestions, listDetails, faqList);
-                }
-            }
+                })
+                .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        //  Action for 'NO' Button
+                        dialog.cancel();
+                    }
+                });
 
-            @Override
-            public void onFailure(Call<List<Faq>> call, Throwable t) {
+        AlertDialog alert = builder.create();
+                alert.setTitle("Slett et ofte stilt spørsmål");
+                alert.show();
+    }
 
-            }
-        });
+    private void observeOnDelete(long faqId) {
+
+
 
     }
-/*
-    public static void openModalBottomSheet() {
-        BottomSheetDialog bottomSheet = new BottomSheetDialog();
-        bottomSheet.show(getActivity().getSupportFragmentManager(),"ModalBottomSheet");
-    }
- */
+
     private void setViewAdapter(List<String> questions,HashMap<String, List<String>> listDetails, List<Faq> faqList ) {
 
         ExpandableListView expandableListView = (ExpandableListView) getActivity().findViewById(R.id.expandableListView);
-        FaqViewModel.CURRENT_ADAPTER = new FaqExpandableViewAdapter(getContext(), faqQuestions, listDetails, clicked, faqList);
-        expandableListView.setAdapter(FaqViewModel.CURRENT_ADAPTER);
-
+        faqAdapter = new FaqExpandableViewAdapter(getContext(), faqQuestions, listDetails, clicked, faqList);
+        expandableListView.setAdapter(faqAdapter);
+        faqAdapter.setClickListener(this);
 
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
@@ -146,7 +162,6 @@ public class FaqFragment extends Fragment {
                 //Toast.makeText(getContext(), " List Expanded.", Toast.LENGTH_SHORT).show();
             }
         });
-
         expandableListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
 
             @Override
@@ -155,7 +170,6 @@ public class FaqFragment extends Fragment {
 
             }
         });
-
         expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v,
@@ -164,6 +178,14 @@ public class FaqFragment extends Fragment {
                 return false;
             }
         });
+
+    }
+
+    @Override
+    public void onItemClick(View view, int position, long faqId) {
+        long id = faqAdapter.getGroupId(position);
+        Toast.makeText(getContext(), faqId +"", Toast.LENGTH_SHORT).show();
+        createAlertBox(faqId);
 
     }
 }
