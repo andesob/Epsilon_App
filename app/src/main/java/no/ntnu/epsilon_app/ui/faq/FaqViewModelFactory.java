@@ -18,6 +18,7 @@ public class FaqViewModelFactory implements ViewModelProvider.Factory {
 
     @NonNull
     @Override
+    @SuppressWarnings("unchecked")
     public <T extends ViewModel> T create(@NonNull Class<T> modelClass) {
         if (modelClass == FaqViewModel.class) {
             return (T) new FaqViewModel(application);

@@ -55,7 +55,6 @@ public class BottomSheetDialogAddFaq extends BottomSheetDialogFragment {
                 dismiss();
             }
         });
-
         doneButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -66,18 +65,8 @@ public class BottomSheetDialogAddFaq extends BottomSheetDialogFragment {
                         @Override
                         public void onChanged(@NonNull Response response) {
                             if (response.isSuccessful()) {
-
-                                new CountDownTimer(500, 1000){
-                                    @Override
-                                    public void onTick(long l) {
-                                    }
-                                    @Override
-                                    public void onFinish() {
-                                        faqViewModel.getFaqList();
-                                        dismiss();
-                                    }
-
-                            }.start();
+                                faqViewModel.getFaqList();
+                                dismiss();
 
                             } else {
                                 Toast.makeText(getContext(), "Error: kunne ikke legge til", Toast.LENGTH_SHORT).show();
@@ -91,7 +80,7 @@ public class BottomSheetDialogAddFaq extends BottomSheetDialogFragment {
 
             }
         });
-                    return root;
+        return root;
     }
 }
 
