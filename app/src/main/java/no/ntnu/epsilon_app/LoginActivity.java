@@ -46,6 +46,9 @@ import no.ntnu.epsilon_app.data.User;
 import no.ntnu.epsilon_app.data.UserParser;
 import no.ntnu.epsilon_app.data.UserViewModel;
 import no.ntnu.epsilon_app.ui.register.RegisterActivity;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.ResponseBody;
 import okhttp3.internal.http.HttpHeaders;
 import retrofit2.Call;
@@ -125,15 +128,13 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onChanged(@Nullable LoggedInUser loggedInUser) {
                 if (loggedInUser == null) {
-                    showLoginFailed();
+                    setResult(Activity.RESULT_OK);
+                    //Complete and destroy login activity once successful
+                    finish();
                 } else {
                     updateUiWithUser(loggedInUser);
                 }
 
-                setResult(Activity.RESULT_OK);
-
-                //Complete and destroy login activity once successful
-                finish();
             }
         });
 
@@ -147,17 +148,16 @@ public class LoginActivity extends AppCompatActivity {
         final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
 
         if (email.isEmpty()) {
-            editEmail.setError("Vennligst tast inn en epost unge mann");
+            editEmail.setError("Vennligst tast inn en epost");
             editPassword.requestFocus();
-
             return;
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editEmail.setError("Vennligst tast inn en gyldig epost unge mann");
+            editEmail.setError("Vennligst tast inn en gyldig epost");
             return;
         }
         if (pwd.isEmpty()) {
-            editPassword.setError("Please fill in a password");
+            editPassword.setError("Vennlist tast inn et passord");
             editPassword.requestFocus();
             return;
         }
@@ -167,18 +167,29 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     try {
-                        String token = response.headers().get("Authorization");
+                        final String token = response.headers().get("Authorization");
                         User user = UserParser.parseUser(response.body().string());
                         loginViewModel.login(user.getUserid(), user.getFirstName(), user.getGroups());
-
                         sharedUserPrefs.setToken(token);
+
+                        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                        httpClient.addInterceptor(new Interceptor() {
+                            @Override
+                            public okhttp3.Response intercept(Chain chain) throws IOException {
+                                Request request = chain.request().newBuilder().addHeader("Authorization", token).build();
+                                return chain.proceed(request);
+                            }
+                        });
+
+                        RetrofitClientInstance.addInterceptor(httpClient);
+
                         startActivity(new Intent(LoginActivity.this, AfterLoginSplashActivity.class));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
 
                 } else {
-                    showLoginFailed();
+                    showLoginFailed(response.code());
                 }
             }
 
@@ -191,12 +202,24 @@ public class LoginActivity extends AppCompatActivity {
 
     private void updateUiWithUser(LoggedInUser loggedInUser) {
         String welcome = getString(R.string.welcome) + loggedInUser.getDisplayName();
-        // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), welcome, Toast.LENGTH_LONG).show();
     }
 
-    private void showLoginFailed() {
-        String errorString = "Email or password is incorrect, please try again.";
+    private void showLoginFailed(int responsecode) {
+        String errorString = "";
+        switch (responsecode) {
+            case 400:
+
+                errorString = "Eposten er ikke verifisert. Vennligst verifiser eposten og prøv på nytt.";
+                break;
+
+            case 401:
+                errorString = "Eposten eller passordet er feil, vennligst prøv på nytt.";
+                break;
+
+            default:
+                errorString = "Noe gikk galt, vennligst prøv på nytt.";
+        }
         Toast.makeText(getApplicationContext(), errorString, Toast.LENGTH_SHORT).show();
     }
 

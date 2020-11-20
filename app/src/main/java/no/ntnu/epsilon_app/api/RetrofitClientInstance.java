@@ -35,6 +35,5 @@ public class RetrofitClientInstance {
 
     public static void addInterceptor(OkHttpClient.Builder httpClient){
         retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
-        System.out.println();
     }
 }

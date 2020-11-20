@@ -49,7 +49,6 @@ public class ImageParser {
 
             if (image.getUserId() == userId) {
                 userHasPicture = true;
-                deleteFromDatabase(Long.toString(image.getImageId()));
                 position = i;
             }
         }
@@ -65,20 +64,5 @@ public class ImageParser {
             AboutUsViewModel.IMAGE_LIST.add(image);
         }
 
-    }
-
-    private static void deleteFromDatabase(String id) {
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().deletePicture(id);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                t.printStackTrace();
-            }
-        });
     }
 }

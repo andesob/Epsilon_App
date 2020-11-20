@@ -27,6 +27,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import no.ntnu.epsilon_app.R;
+import no.ntnu.epsilon_app.data.LoginDataSource;
+import no.ntnu.epsilon_app.data.LoginRepository;
 import no.ntnu.epsilon_app.tools.BottomSheetDialogAddFaq;
 import no.ntnu.epsilon_app.tools.BottomSheetDialogEditFaq;
 import retrofit2.Response;
@@ -38,7 +40,7 @@ import retrofit2.Response;
 public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.FaqExpandableViewClickListener {
 
     private FaqViewModel faqViewModel;
-    private  FaqExpandableViewAdapter faqAdapter;
+    private FaqExpandableViewAdapter faqAdapter;
     private AlertDialog.Builder builder;
     private ViewGroup transitionsContainer;
     private LayoutTransition layoutTransition;
@@ -53,7 +55,7 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState){
+                             Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_faq_item_list, container, false);
 
         ImageView fab = root.findViewById(R.id.faq_fab);
@@ -72,14 +74,15 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
            addBtn.setAnimation(getFadeInAnimation());
         }
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                BottomSheetDialogAddFaq bottomSheet = new BottomSheetDialogAddFaq();
-                bottomSheet.show(requireActivity().getSupportFragmentManager(),"ModalBottomSheet");
+        if (loginRepository.isAdmin() || loginRepository.isBoardmember()) {
+            fab.setVisibility(View.VISIBLE);
+            addBtn.setVisibility(View.VISIBLE);
 
-            }
-        });
+            addBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    BottomSheetDialogAddFaq bottomSheet = new BottomSheetDialogAddFaq();
+                    bottomSheet.show(requireActivity().getSupportFragmentManager(), "ModalBottomSheet");
 
        fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +93,15 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
             }
         });
 
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clicked = true;
+                    getFaq();
+                }
+            });
+        }
+
         return root;
     }
 
@@ -97,17 +109,17 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         faqViewModel.getFaqList().observe(getViewLifecycleOwner(), new Observer<List<Faq>>() {
             @Override
             public void onChanged(@NonNull List<Faq> faqs) {
-               HashMap<String, List<String>> listDetails = parseApiCall(faqs);
-                    if (listDetails.size() != 0) {
-                        ArrayList<String> faqQuestions = new ArrayList<>(listDetails.keySet());
-                        setViewAdapter(faqQuestions, listDetails, faqs);
-                    }
+                HashMap<String, List<String>> listDetails = parseApiCall(faqs);
+                if (listDetails.size() != 0) {
+                    ArrayList<String> faqQuestions = new ArrayList<>(listDetails.keySet());
+                    setViewAdapter(faqQuestions, listDetails, faqs);
                 }
+            }
         });
     }
 
     private HashMap<String, List<String>> parseApiCall(List<Faq> ApiResponse) {
-         HashMap<String, List<String>> hashMap = new HashMap<>();
+        HashMap<String, List<String>> hashMap = new HashMap<>();
         for (int i = 0; i < ApiResponse.size(); i++) {
             List<String> answerList = new ArrayList<>();
             String question = ApiResponse.get(i).getQuestion();
@@ -141,8 +153,8 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
                 });
 
         AlertDialog alert = builder.create();
-                alert.setTitle("Slett et ofte stilt spørsmål");
-                alert.show();
+        alert.setTitle("Slett et ofte stilt spørsmål");
+        alert.show();
     }
 
     private void setTransition() {
@@ -208,7 +220,7 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
     @Override
     public void onEditClick(View view, int position, Faq faq) {
         BottomSheetDialogEditFaq bottomSheet = new BottomSheetDialogEditFaq(faq);
-        bottomSheet.show(getActivity().getSupportFragmentManager(),"ModalBottomSheet");
+        bottomSheet.show(getActivity().getSupportFragmentManager(), "ModalBottomSheet");
     }
 
 }

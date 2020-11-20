@@ -18,6 +18,9 @@ import no.ntnu.epsilon_app.data.User;
 import no.ntnu.epsilon_app.data.UserParser;
 import no.ntnu.epsilon_app.ui.about_us.AboutUsParser;
 import no.ntnu.epsilon_app.ui.news.NewsParser;
+import okhttp3.Interceptor;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -60,7 +63,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void isLoggedIn() {
         final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
-        String token = sharedUserPrefs.getToken();
+        final String token = sharedUserPrefs.getToken();
 
         /*
         If user has no bearer token go to login screen
@@ -80,11 +83,23 @@ public class SplashActivity extends AppCompatActivity {
                     try {
                         User user = UserParser.parseUser(response.body().string());
                         loginViewModel.login(user.getUserid(), user.getFirstName(), user.getGroups());
+
+                        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                        httpClient.addInterceptor(new Interceptor() {
+                            @Override
+                            public okhttp3.Response intercept(Chain chain) throws IOException {
+                                Request request = chain.request().newBuilder().addHeader("Authorization", token).build();
+                                return chain.proceed(request);
+                            }
+                        });
+
+                        RetrofitClientInstance.addInterceptor(httpClient);
+
                         startActivity(new Intent(SplashActivity.this, AfterLoginSplashActivity.class));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else if (response.code() == 401){
+                } else {
                     goToLogin();
                 }
             }

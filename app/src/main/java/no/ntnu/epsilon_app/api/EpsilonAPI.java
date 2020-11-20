@@ -51,10 +51,6 @@ public interface EpsilonAPI {
     @GET("web/getAboutUsObjects")
     Call<ResponseBody> getAboutUsObjects();
 
-    @FormUrlEncoded
-    @POST("web/deletePicture")
-    Call<ResponseBody> deletePicture(@Field("pictureId") String pictureId);
-
     @GET("web/get_faqs")
     Call<List<Faq>> getFaqs();
 
