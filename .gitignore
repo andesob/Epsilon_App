@@ -72,4 +72,4 @@ lint/tmp/
 # App Specific cases 
 app/release/output.json
 .idea/codeStyles/
-.api_keys
+/app/src/main/res/values/api_key.xml
