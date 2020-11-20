@@ -58,6 +58,9 @@ public interface EpsilonAPI {
                                 @Field("answer")String answer,
                                 @Field("questionId") long questionID);
 
+    @GET("web/getcalendar")
+    Call<List<Calendar>> getCalendarItems();
+
     @PUT("web/add_faqs")
     @FormUrlEncoded
     Call<ResponseBody> add_faqs(@Field("question") String question,
@@ -88,4 +91,7 @@ public interface EpsilonAPI {
     @GET("auth/verify")
     Call<ResponseBody> verifyJwt(@Header("Authorization") String token);
 
+
 }
+
+
