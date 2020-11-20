@@ -169,7 +169,7 @@ public class LoginActivity extends AppCompatActivity {
                     try {
                         String token = response.headers().get("Authorization");
                         User user = UserParser.parseUser(response.body().string());
-                        loginViewModel.login(user.getUserid(), user.getFirstName());
+                        loginViewModel.login(user.getUserid(), user.getFirstName(), user.getGroups());
 
                         sharedUserPrefs.setToken(token);
                         startActivity(new Intent(LoginActivity.this, AfterLoginSplashActivity.class));
@@ -210,7 +210,7 @@ public class LoginActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
                         User user = UserParser.parseUser(response.body().string());
-                        loginViewModel.login(user.getUserid(), user.getFirstName());
+                        loginViewModel.login(user.getUserid(), user.getFirstName(), user.getGroups());
                         startActivity(new Intent(LoginActivity.this, AfterLoginSplashActivity.class));
                     } catch (IOException e) {
                         e.printStackTrace();

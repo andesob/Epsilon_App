@@ -18,6 +18,7 @@ import java.io.IOException;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
+import no.ntnu.epsilon_app.data.LoggedInUser;
 import no.ntnu.epsilon_app.data.LoginDataSource;
 import no.ntnu.epsilon_app.data.LoginRepository;
 import no.ntnu.epsilon_app.data.User;
@@ -52,13 +53,17 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
 
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
 
-        FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToPostNewsFragment();
-            }
-        });
+        if (loginRepository.isAdmin() || loginRepository.isBoardmember()){
+            FloatingActionButton fab = root.findViewById(R.id.fab);
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goToPostNewsFragment();
+                }
+            });
+        }
+
 
         RecyclerView recyclerView = root.findViewById(R.id.rvItems);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
@@ -110,12 +115,6 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
                 if (response.isSuccessful()) {
                     try {
                         UserParser.parseUserList(response.body().string());
-                        for (User user : UserViewModel.USER_LIST){
-                            System.out.println("USER: " + user.getFirstName());
-                            for (String s : user.getGroups()){
-                                System.out.println("GROUP: " + s);
-                            }
-                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

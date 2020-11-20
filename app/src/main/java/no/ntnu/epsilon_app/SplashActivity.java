@@ -25,11 +25,15 @@ import retrofit2.Response;
 
 public class SplashActivity extends AppCompatActivity {
 
-    /** Duration of wait **/
+    /**
+     * Duration of wait
+     **/
     private final int SPLASH_DISPLAY_LENGTH = 2000;
     private LoginViewModel loginViewModel;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -39,22 +43,35 @@ public class SplashActivity extends AppCompatActivity {
         isLoggedIn();
     }
 
+    private void goToLogin() {
+        /*
+        New handler to go to the login screen after a few seconds
+         */
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                /* Create an Intent that will start the Menu-Activity. */
+                Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
+                SplashActivity.this.startActivity(mainIntent);
+                SplashActivity.this.finish();
+            }
+        }, SPLASH_DISPLAY_LENGTH);
+    }
+
     private void isLoggedIn() {
         final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
         String token = sharedUserPrefs.getToken();
-        if (token.isEmpty() || token == null){
-            /* New Handler to start the Menu-Activity
-             * and close this Splash-Screen after some seconds.*/
-            new Handler().postDelayed(new Runnable(){
-                @Override
-                public void run() {
-                    /* Create an Intent that will start the Menu-Activity. */
-                    Intent mainIntent = new Intent(SplashActivity.this, LoginActivity.class);
-                    SplashActivity.this.startActivity(mainIntent);
-                    SplashActivity.this.finish();
-                }
-            }, SPLASH_DISPLAY_LENGTH);
+
+        /*
+        If user has no bearer token go to login screen
+         */
+        if (token.isEmpty() || token == null) {
+            goToLogin();
         }
+
+        /*
+        Verify token, if response is unauthorized ie. the token is invalid go to login screen
+         */
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().verifyJwt(token);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -62,11 +79,13 @@ public class SplashActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     try {
                         User user = UserParser.parseUser(response.body().string());
-                        loginViewModel.login(user.getUserid(), user.getFirstName());
+                        loginViewModel.login(user.getUserid(), user.getFirstName(), user.getGroups());
                         startActivity(new Intent(SplashActivity.this, AfterLoginSplashActivity.class));
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else if (response.code() == 401){
+                    goToLogin();
                 }
             }
 

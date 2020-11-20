@@ -77,6 +77,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
         Context context = root.getContext();
         RecyclerView recyclerView = root.findViewById(R.id.about_us_recyclerview);
         recyclerView.setNestedScrollingEnabled(false);
+
         getAboutUsObjects();
 
         if (mColumnCount <= 1) {
@@ -87,6 +88,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
 
         adapter = new AboutUsItemRecyclerViewAdapter(AboutUsViewModel.OBJECT_LIST);
 
+        adapter.setClickListener(this);
         recyclerView.setAdapter(adapter);
 
         return root;

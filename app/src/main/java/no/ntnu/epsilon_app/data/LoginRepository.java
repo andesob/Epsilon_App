@@ -1,5 +1,7 @@
 package no.ntnu.epsilon_app.data;
 
+import java.util.List;
+
 import no.ntnu.epsilon_app.SharedUserPrefs;
 
 /**
@@ -32,6 +34,14 @@ public class LoginRepository {
         return user != null;
     }
 
+    public boolean isAdmin(){
+        return user.getGroups().contains(Group.ADMIN);
+    }
+
+    public boolean isBoardmember(){
+        return user.getGroups().contains(Group.BOARD);
+    }
+
     public void logout() {
         user = null;
         //dataSource.logout();
@@ -43,9 +53,9 @@ public class LoginRepository {
         // @see https://developer.android.com/training/articles/keystore
     }
 
-    public LoggedInUser login(long userid, String displayname) {
+    public LoggedInUser login(long userid, String displayname, List<String> groups) {
         // handle login
-        LoggedInUser loggedInUser = dataSource.login(userid, displayname);
+        LoggedInUser loggedInUser = dataSource.login(userid, displayname, groups);
         if (loggedInUser != null) {
             setLoggedInUser(loggedInUser);
         }

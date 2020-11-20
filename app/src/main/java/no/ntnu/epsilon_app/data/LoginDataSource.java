@@ -5,6 +5,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.List;
 
 import no.ntnu.epsilon_app.AfterLoginSplashActivity;
 import no.ntnu.epsilon_app.LoginActivity;
@@ -20,9 +21,9 @@ import retrofit2.Response;
  */
 public class LoginDataSource {
 
-    public LoggedInUser login(long userid, String displayname) {
+    public LoggedInUser login(long userid, String displayname, List<String> groups) {
         try {
-            LoggedInUser loggedInUser = new LoggedInUser(userid, displayname);
+            LoggedInUser loggedInUser = new LoggedInUser(userid, displayname, groups);
             return loggedInUser;
         } catch (Exception e) {
             return null;
