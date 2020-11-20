@@ -49,7 +49,6 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
         root = inflater.inflate(R.layout.news_feed_fragment, container, false);
 
         getNewsfeed();
-        getUsers();
 
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
 
@@ -105,26 +104,5 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
 
     private void goToPostNewsFragment() {
         Navigation.findNavController(root).navigate(R.id.nav_post_news);
-    }
-
-    private void getUsers(){
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getUsers();
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        UserParser.parseUserList(response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
     }
 }

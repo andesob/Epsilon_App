@@ -13,6 +13,7 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -106,13 +107,15 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
 
             @Override
             public void onPermissionDenied(ArrayList<String> deniedPermissions) {
-
             }
         };
 
+        String deniedMessage = "Hvis du avviser tillatelsen kan du ikke legge til eller endre bilder." +
+                "\n\nSlå på tillatelsene i dine mobilinnstillinger.";
+
         TedPermission.with(getContext())
                 .setPermissionListener(permissionlistener)
-                .setDeniedMessage("If you reject permission,you can not use this service\n\nPlease turn on permissions at [Setting] > [Permission]")
+                .setDeniedMessage(deniedMessage)
                 .setPermissions(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 .check();
     }
@@ -126,6 +129,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+
         // Here we need to check if the activity that was triggers was the Image Gallery.
         // If it is the requestCode will match the LOAD_IMAGE_RESULTS value.
         // If the resultCode is RESULT_OK and there is some data we know that an image was picked.

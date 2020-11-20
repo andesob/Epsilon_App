@@ -29,7 +29,6 @@ public class AfterLoginSplashActivity extends Activity {
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         setContentView(R.layout.splashscreen_layout);
-        getUsers();
         fetchPictures();
         getNewsFeed();
         getAboutUsObjects();
@@ -56,30 +55,6 @@ public class AfterLoginSplashActivity extends Activity {
                 if (response.isSuccessful()) {
                     try {
                         ImageParser.parseImageList(response.body().string());
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-
-            }
-        });
-    }
-
-    private void getUsers(){
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getUsers();
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    try {
-                        UserParser.parseUserList(response.body().string());
-                        for (User user : UserViewModel.USER_LIST){
-                            System.out.println(user.getFirstName());
-                        }
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
