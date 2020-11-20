@@ -18,6 +18,12 @@ import java.io.IOException;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
+import no.ntnu.epsilon_app.data.LoggedInUser;
+import no.ntnu.epsilon_app.data.LoginDataSource;
+import no.ntnu.epsilon_app.data.LoginRepository;
+import no.ntnu.epsilon_app.data.User;
+import no.ntnu.epsilon_app.data.UserParser;
+import no.ntnu.epsilon_app.data.UserViewModel;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -43,14 +49,21 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
         root = inflater.inflate(R.layout.news_feed_fragment, container, false);
 
         getNewsfeed();
+        getUsers();
 
-        FloatingActionButton fab = root.findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                goToPostNewsFragment();
-            }
-        });
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+
+        if (loginRepository.isAdmin() || loginRepository.isBoardmember()){
+            FloatingActionButton fab = root.findViewById(R.id.fab);
+            fab.setVisibility(View.VISIBLE);
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    goToPostNewsFragment();
+                }
+            });
+        }
+
 
         RecyclerView recyclerView = root.findViewById(R.id.rvItems);
         LinearLayoutManager layoutManager = new LinearLayoutManager(root.getContext());
@@ -92,5 +105,26 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
 
     private void goToPostNewsFragment() {
         Navigation.findNavController(root).navigate(R.id.nav_post_news);
+    }
+
+    private void getUsers(){
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getUsers();
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if (response.isSuccessful()) {
+                    try {
+                        UserParser.parseUserList(response.body().string());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
     }
 }

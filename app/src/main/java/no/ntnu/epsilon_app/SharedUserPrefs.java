@@ -11,9 +11,11 @@ public class SharedUserPrefs {
     SharedPreferences sharedPreferences;
     SharedPreferences.Editor editor;
 
+
     public SharedUserPrefs (Context context){
         this.sharedPreferences = context.getSharedPreferences(SHARED_USER_PREF_NAME, Activity.MODE_PRIVATE);
         this.editor = sharedPreferences.edit();
+
     }
 
     public String getToken(){

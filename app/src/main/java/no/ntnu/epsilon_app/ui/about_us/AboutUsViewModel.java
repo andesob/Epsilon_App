@@ -11,4 +11,5 @@ import no.ntnu.epsilon_app.data.Image;
 public class AboutUsViewModel extends ViewModel {
 
     public static ArrayList<Image> IMAGE_LIST = new ArrayList<>();
+    public static ArrayList<AboutUsObject> OBJECT_LIST = new ArrayList<>();
 }

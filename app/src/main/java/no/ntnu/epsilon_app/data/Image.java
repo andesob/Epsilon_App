@@ -5,21 +5,14 @@ import android.graphics.Bitmap;
 public class Image {
     long imageId;
 
-    String imageBase64String;
-
     Bitmap bitmap;
 
-    int userId;
+    long userId;
 
-    public Image(long imageId, int userId, Bitmap bitmap){
+    public Image(long imageId, long userId, Bitmap bitmap){
         this.imageId = imageId;
         this.userId = userId;
-        //this.imageBase64String = imageBase64String;
         this.bitmap = bitmap;
-    }
-
-    public String getImageBase64String(){
-        return imageBase64String;
     }
 
     public Bitmap getBitmap() {
@@ -28,5 +21,9 @@ public class Image {
 
     public long getImageId(){
         return imageId;
+    }
+
+    public long getUserId(){
+        return userId;
     }
 }

@@ -40,7 +40,7 @@ public class CalendarFragment extends Fragment {
         ExpandableListView expandableListView = (ExpandableListView) view.findViewById(R.id.expandableListView);
 
         listDetails = TestData.getData();
-        listTitle = new ArrayList<String>(listDetails.keySet());
+        listTitle = new ArrayList<>(listDetails.keySet());
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.calendarEdditButton);
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
