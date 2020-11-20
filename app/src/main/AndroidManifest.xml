@@ -41,7 +41,10 @@
             android:label="@string/RegisterNewUser"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
-
+        <activity android:name=".AfterLoginSplashActivity"
+            android:label="@string/Epsilon"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
         <activity android:name=".SplashActivity"
             android:label="@string/Epsilon"
             android:theme="@style/AppTheme.NoActionBar">

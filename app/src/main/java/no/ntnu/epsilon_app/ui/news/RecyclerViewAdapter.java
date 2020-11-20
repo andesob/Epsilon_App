@@ -17,7 +17,6 @@ import no.ntnu.epsilon_app.R;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
-    private List<String> mData;
     private LayoutInflater mInflater;
     private ItemClickListener mClickListener;
     private List<News> newsList;

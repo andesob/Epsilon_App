@@ -30,6 +30,9 @@ public interface EpsilonAPI {
     @GET("web/newsfeed")
     Call<ResponseBody> getNewsfeed();
 
+    @GET("web/users")
+    Call<ResponseBody> getUsers();
+
     @PUT("web/postNews")
     @FormUrlEncoded
     Call<ResponseBody> postNews(@Field("title") String title,
@@ -44,6 +47,9 @@ public interface EpsilonAPI {
 
     @GET("web/getUserPictures")
     Call<ResponseBody> getUserPictures();
+
+    @GET("web/getAboutUsObjects")
+    Call<ResponseBody> getAboutUsObjects();
 
     @GET("web/get_faqs")
     Call<List<Faq>> getFaqs();
@@ -79,6 +85,10 @@ public interface EpsilonAPI {
             @Query("email") String email,
             @Query("pwd") String password
     );
+
+    @PUT("web/delete_faq")
+    @FormUrlEncoded
+    Call<ResponseBody> delete_faq(@Field("id") long faqId);
 
 
     @POST("auth/create_user")

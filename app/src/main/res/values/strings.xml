@@ -50,4 +50,6 @@
     <string name="register">Registrer en ny bruker</string>
     <string name="prompt_password">Passord</string>
     <string name="RegisterNewUser">Registrer en ny bruker</string>
+    <string name="welcome">"Welcome "</string>
+    <string name="action_logout">Logout</string>
 </resources>

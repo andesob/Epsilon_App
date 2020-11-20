@@ -26,6 +26,7 @@
         android:layout_below="@id/expandableListView"
         android:src="@drawable/ic_plus"
         android:layout_marginTop="20dp"
+        android:visibility="invisible"
         />
 
     <ImageView
@@ -36,7 +37,7 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_edit"
         android:backgroundTint="@color/dark_grey"
-        android:visibility="visible"
+        android:visibility="invisible"
         android:focusable="false"
         android:layout_margin="5dp"/>
 
