@@ -5,9 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 
 import android.content.Context;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -99,7 +101,6 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
     }
 
 
-
     @Override
     public View getGroupView(final int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
@@ -107,10 +108,13 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.faq_list_parent, null);
+
         }
+
 
         TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
         listTitleTextView.setText(listTitle);
+
         if (admin){
         Button editButton = convertView.findViewById(R.id.faqEditButton);
             editButton.setVisibility(View.VISIBLE);

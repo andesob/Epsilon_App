@@ -1,19 +1,26 @@
 package no.ntnu.epsilon_app.ui.faq;
 
+import android.animation.LayoutTransition;
+import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewGroup.LayoutParams;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.transition.AutoTransition;
+import androidx.transition.TransitionInflater;
+import androidx.transition.TransitionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -33,6 +40,8 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
     private FaqViewModel faqViewModel;
     private  FaqExpandableViewAdapter faqAdapter;
     private AlertDialog.Builder builder;
+    private ViewGroup transitionsContainer;
+    private LayoutTransition layoutTransition;
     private boolean clicked = false;
 
     /**
@@ -46,10 +55,12 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){
         final View root = inflater.inflate(R.layout.fragment_faq_item_list, container, false);
+
         ImageView fab = root.findViewById(R.id.faq_fab);
         faqViewModel =  new ViewModelProvider(requireActivity()).get(FaqViewModel.class);
-        ImageView addBtn = root.findViewById(R.id.addFaq);
+        transitionsContainer = (ViewGroup) root.findViewById(R.id.faqFragment);
         builder = new AlertDialog.Builder(getContext(), R.style.LightDialogTheme);
+        ImageView addBtn = root.findViewById(R.id.addFaq);
 
         getFaq();
 
@@ -57,6 +68,8 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         if(admin){
            fab.setVisibility(View.VISIBLE);
            addBtn.setVisibility(View.VISIBLE);
+           fab.setAnimation(getFadeInAnimation());
+           addBtn.setAnimation(getFadeInAnimation());
         }
 
         addBtn.setOnClickListener(new View.OnClickListener() {
@@ -71,6 +84,7 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 clicked = true;
                 getFaq();
             }
@@ -80,7 +94,6 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
     }
 
     public void getFaq(){
-
         faqViewModel.getFaqList().observe(getViewLifecycleOwner(), new Observer<List<Faq>>() {
             @Override
             public void onChanged(@NonNull List<Faq> faqs) {
@@ -104,6 +117,7 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         }
         return hashMap;
     }
+
 
     private void createAlertBox(final long faqId) {
         //Setting message manually and performing action on button click
@@ -131,12 +145,33 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
                 alert.show();
     }
 
-    private void setViewAdapter(List<String> questions,HashMap<String, List<String>> listDetails, List<Faq> faqList ) {
+    private void setTransition() {
+        AutoTransition autoTransition = new AutoTransition();
+        autoTransition.excludeChildren(R.id.expandableListView, true);
+        autoTransition.excludeChildren(R.id.faqGroup, true);
+        System.out.println(transitionsContainer.getChildCount());
+        autoTransition.excludeChildren(R.id.faq_fab, true);
+        autoTransition.excludeChildren(R.id.addFaq, true);
+        autoTransition.setDuration(300);
+        TransitionManager.beginDelayedTransition(transitionsContainer, autoTransition);
+    }
 
+    private AlphaAnimation getFadeInAnimation() {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
+        alphaAnimation.setDuration(800);
+        return alphaAnimation;
+    }
+
+    private void setViewAdapter(List<String> questions,HashMap<String, List<String>> listDetails, List<Faq> faqList ) {
+        //ObjectAnimator animation = ObjectAnimator.ofFloat(transitionsContainer, "translationX", 0f);
+        //animation.setDuration(2000);
+        //animation.start();
         ExpandableListView expandableListView = (ExpandableListView) getActivity().findViewById(R.id.expandableListView);
         if (clicked) {
             expandableListView.setGroupIndicator(null);
         }
+        expandableListView.setAnimation(getFadeInAnimation());
+
         faqAdapter = new FaqExpandableViewAdapter(getContext(), questions, listDetails, clicked, faqList);
         expandableListView.setAdapter(faqAdapter);
         faqAdapter.setTrashClickListener(this);

@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/faqFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -14,8 +15,6 @@
         android:id="@+id/expandableListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@android:color/darker_gray"
-        android:dividerHeight="0.5dp"
         android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" />
 
     <ImageView
@@ -24,6 +23,7 @@
         android:layout_height="50dp"
         android:layout_centerHorizontal="true"
         android:layout_below="@id/expandableListView"
+        android:visibility="gone"
         android:src="@drawable/ic_plus"
         android:layout_marginTop="20dp"
         />
@@ -36,7 +36,7 @@
         android:layout_alignParentBottom="true"
         android:src="@drawable/ic_edit"
         android:backgroundTint="@color/dark_grey"
-        android:visibility="visible"
+        android:visibility="gone"
         android:focusable="false"
         android:layout_margin="5dp"/>
 
