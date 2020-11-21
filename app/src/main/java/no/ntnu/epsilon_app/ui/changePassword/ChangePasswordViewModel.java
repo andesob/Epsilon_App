@@ -16,10 +16,14 @@ public class ChangePasswordViewModel extends ViewModel {
      public ChangePasswordViewModel(){
          this.repository = new ChangePasswordRepository();
      }
+
      public MutableLiveData<Result> getChangePasswordData(String oldPassword, String newPassword) {
          return repository.getChangePasswordData(oldPassword, newPassword);
      }
 
+     public MutableLiveData<Result> getChangePasswordData() {
+         return repository.getChangePasswordData();
+     }
     public boolean isOldPwdValid(String oldPassword) {
         if (oldPassword.trim().length() < 5){
             return false;

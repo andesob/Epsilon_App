@@ -1,14 +1,8 @@
 package no.ntnu.epsilon_app.ui.changePassword;
 
-import android.app.Application;
-
 import androidx.lifecycle.MutableLiveData;
-
-import java.util.List;
-
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.Result;
-import no.ntnu.epsilon_app.ui.faq.Faq;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -29,7 +23,7 @@ public class ChangePasswordRepository {
                 if (response.isSuccessful()) {
                     changePasswordData.setValue(new Result.Success(response));
                 } else {
-                    changePasswordData.setValue(new Result.Error(response));
+                    changePasswordData.setValue(new Result.Error(response.body()));
                 }
             }
             @Override
@@ -41,4 +35,7 @@ public class ChangePasswordRepository {
         return changePasswordData;
     }
 
+    public MutableLiveData<Result> getChangePasswordData() {
+        return changePasswordData;
+    }
 }

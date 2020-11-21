@@ -1,24 +1,19 @@
 package no.ntnu.epsilon_app.ui.faq;
 
 
-import java.util.HashMap;
-import java.util.List;
-
 import android.content.Context;
-import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AlphaAnimation;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.appcompat.app.AppCompatActivity;
+import java.util.HashMap;
+import java.util.List;
 
 import no.ntnu.epsilon_app.R;
-import no.ntnu.epsilon_app.tools.BottomSheetDialogEditFaq;
 
 public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
 
@@ -59,7 +54,7 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.faq_items_child, null);
         }
-        TextView expandedListTextView = (TextView) convertView
+        TextView expandedListTextView = convertView
                 .findViewById(R.id.expandedListItem);
         expandedListTextView.setText(expandedListText);
         return convertView;
@@ -78,7 +73,7 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-            return this.expandableListTitle.size();
+        return this.expandableListTitle.size();
     }
 
     @Override
@@ -88,13 +83,15 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
 
     public interface FaqExpandableViewClickListener {
         void onTrashClick(View view, int position, long faqId);
+
         void onEditClick(View view, int position, Faq faq);
     }
 
-    public void setEditClickListener(FaqExpandableViewClickListener faqExpandableViewClickListener){
+    public void setEditClickListener(FaqExpandableViewClickListener faqExpandableViewClickListener) {
         this.faqEditClickListener = faqExpandableViewClickListener;
     }
-    public void setTrashClickListener(FaqExpandableViewClickListener faqExpandableViewClickListener){
+
+    public void setTrashClickListener(FaqExpandableViewClickListener faqExpandableViewClickListener) {
         this.trashClickListener = faqExpandableViewClickListener;
     }
 
@@ -113,8 +110,8 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
         listTitleTextView.setText(listTitle);
 
-        if (admin){
-        Button editButton = convertView.findViewById(R.id.faqEditButton);
+        if (admin) {
+            Button editButton = convertView.findViewById(R.id.faqEditButton);
             editButton.setVisibility(View.VISIBLE);
             editButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -123,7 +120,8 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
                     long id = findFaqId(faqList, listTitle);
                     Faq selectedFaq = new Faq(id, listTitle, answer);
 
-                    if(faqEditClickListener != null) faqEditClickListener.onEditClick(view, listPosition, selectedFaq);
+                    if (faqEditClickListener != null)
+                        faqEditClickListener.onEditClick(view, listPosition, selectedFaq);
                 }
             });
             ImageView trashIcon = convertView.findViewById(R.id.faqTrash);
@@ -132,7 +130,8 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
                 @Override
                 public void onClick(View view) {
                     long id = findFaqId(faqList, listTitle);
-                    if(trashClickListener != null) trashClickListener.onTrashClick(view, listPosition, id);
+                    if (trashClickListener != null)
+                        trashClickListener.onTrashClick(view, listPosition, id);
                 }
             });
 
@@ -143,12 +142,12 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
     private long findFaqId(List<Faq> faqs, String searchWords) {
         long id = -1;
 
-        for(int i = 0; i < faqs.size(); i++){
+        for (int i = 0; i < faqs.size(); i++) {
             System.out.println("question: " + faqs.get(i).getQuestion());
-            if (faqs.get(i).getQuestion().contentEquals(searchWords)){
+            if (faqs.get(i).getQuestion().contentEquals(searchWords)) {
                 id = faqs.get(i).getId();
                 System.out.println("id:" + faqs.get(i).getQuestion());
-                return  id;
+                return id;
             }
         }
         return id;

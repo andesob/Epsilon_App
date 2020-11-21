@@ -1,31 +1,24 @@
 package no.ntnu.epsilon_app.ui.faq;
 
-import android.animation.LayoutTransition;
-import android.animation.ObjectAnimator;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewGroup.LayoutParams;
 import android.view.animation.AlphaAnimation;
-import android.view.animation.Animation;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.transition.AutoTransition;
-import androidx.transition.TransitionInflater;
-import androidx.transition.TransitionManager;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Objects;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.data.LoginDataSource;
@@ -57,12 +50,15 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         final View root = inflater.inflate(R.layout.fragment_faq_item_list, container, false);
 
         ImageView fab = root.findViewById(R.id.faq_fab);
-        faqViewModel =  new ViewModelProvider(requireActivity()).get(FaqViewModel.class);
+        faqViewModel = new ViewModelProvider(requireActivity()).get(FaqViewModel.class);
         builder = new AlertDialog.Builder(getContext(), R.style.LightDialogTheme);
         ImageView addBtn = root.findViewById(R.id.addFaq);
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
 
         getFaq();
+        observeDeleteFaq();
+        observeAddFaq();
+        observeEditFaq();
 
         if (loginRepository.isAdmin() || loginRepository.isBoardmember()) {
             fab.setVisibility(View.VISIBLE);
@@ -71,32 +67,25 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
             addBtn.setAnimation(getFadeInAnimation());
 
             addBtn.setOnClickListener(new View.OnClickListener() {
-                                          @Override
-                                          public void onClick(View view) {
-                                              BottomSheetDialogAddFaq bottomSheet = new BottomSheetDialogAddFaq();
-                                              bottomSheet.show(requireActivity().getSupportFragmentManager(), "ModalBottomSheet");
-                                          }
-                                      });
-                    fab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            clicked = true;
-                            faqViewModel.getFaqList();
-                        }
-                    });
-
-                    fab.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            clicked = true;
-                            faqViewModel.getFaqList();
-                        }
-                    });
+                @Override
+                public void onClick(View view) {
+                    System.out.println("add btn clicked");
+                    BottomSheetDialogAddFaq bottomSheet = new BottomSheetDialogAddFaq();
+                    bottomSheet.show(requireActivity().getSupportFragmentManager(), "ModalBottomSheet");
                 }
+            });
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    clicked = true;
+                    faqViewModel.getFaqList();
+                }
+            });
+        }
         return root;
     }
 
-    public void getFaq(){
+    public void getFaq() {
         faqViewModel.getFaqList().observe(getViewLifecycleOwner(), new Observer<List<Faq>>() {
             @Override
             public void onChanged(@NonNull List<Faq> faqs) {
@@ -128,12 +117,7 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
                 .setCancelable(true)
                 .setPositiveButton("Ja", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        faqViewModel.deleteFaq(faqId).observe(getViewLifecycleOwner(), new Observer<Response>() {
-                            @Override
-                            public void onChanged(@NonNull Response response) {
-                                faqViewModel.getFaqList();
-                            }
-                        });
+                        faqViewModel.deleteFaq(faqId);
                     }
                 })
                 .setNegativeButton("Nei", new DialogInterface.OnClickListener() {
@@ -155,11 +139,53 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         return alphaAnimation;
     }
 
-    private void setViewAdapter(List<String> questions,HashMap<String, List<String>> listDetails, List<Faq> faqList ) {
-        ExpandableListView expandableListView = (ExpandableListView) requireActivity().findViewById(R.id.expandableListView);
+    private void observeDeleteFaq() {
+        faqViewModel.getDeleteFaqLiveData().observe(getViewLifecycleOwner(), new Observer<Response>() {
+            @Override
+            public void onChanged(@NonNull Response response) {
+                faqViewModel.getFaqList();
+            }
+        });
+    }
+
+    private void observeEditFaq() {
+
+        faqViewModel.getEditFaqLiveData().observe(getViewLifecycleOwner(), new Observer<Response>() {
+
+            @Override
+            public void onChanged(@NonNull Response response) {
+                if (response.isSuccessful()) {
+                    faqViewModel.getFaqList();
+                } else {
+                    Toast.makeText(getContext(), "Error: kunne ikke endre", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    private void observeAddFaq() {
+        faqViewModel.getAddFaqLiveData().observe(getViewLifecycleOwner(), new Observer<Response>() {
+            @Override
+            public void onChanged(@NonNull Response response) {
+                if (response.isSuccessful()) {
+                    faqViewModel.getFaqList();
+                    Toast.makeText(getContext(), "Lagt til", Toast.LENGTH_SHORT).show();
+
+
+                } else {
+                    Toast.makeText(getContext(), "Error: kunne ikke legge til", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+    }
+
+    private void setViewAdapter(List<String> questions, HashMap<String, List<String>> listDetails, List<Faq> faqList) {
+        ExpandableListView expandableListView = requireActivity().findViewById(R.id.expandableListView);
         if (clicked) {
             expandableListView.setGroupIndicator(null);
         }
+        System.out.println("Refreshing");
         expandableListView.setAnimation(getFadeInAnimation());
         FaqExpandableViewAdapter faqAdapter = new FaqExpandableViewAdapter(getContext(), questions, listDetails, clicked, faqList);
         expandableListView.setAdapter(faqAdapter);
@@ -186,9 +212,7 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
                 return false;
             }
         });
-
     }
-
     @Override
     public void onTrashClick(View view, int position, long faqId) {
         createAlertBox(faqId);

@@ -49,9 +49,7 @@ public class ChangePasswordFragment extends Fragment {
         newPwd2 = root.findViewById(R.id.newPwd2);
         progressBar = root.findViewById(R.id.progressBar);
         final Button changwPwdButton = root.findViewById(R.id.changwPwdButton);
-
-
-
+        observeChangePasswordData();
 
         progressBar.setVisibility(View.GONE);
         changwPwdButton.setOnClickListener(new View.OnClickListener() {
@@ -78,23 +76,7 @@ public class ChangePasswordFragment extends Fragment {
                             changwPwdButton.setVisibility(View.VISIBLE);
 
                             if(validateInput(oldPassword,newPassword1,newPassword2)) {
-
-                                viewModel.getChangePasswordData(oldPassword, newPassword1).observe(getViewLifecycleOwner(), new Observer<Result>() {
-                                    @Override
-                                    public void onChanged(Result result) {
-                                        if (result instanceof Result.Error){
-                                            Toast.makeText(getContext(), "Error: kunne ikke endre passordet", Toast.LENGTH_SHORT).show();
-                                            System.out.println(result.toString());
-                                        }
-                                        else if (result instanceof Result.Success){
-                                            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_newsfeed);
-                                            Toast.makeText(getContext(), "Passordet er endret", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
-                                            Toast.makeText(getContext(), "Det oppsto en feil", Toast.LENGTH_SHORT).show();
-                                        }
-                                    }
-                                });
+                                viewModel.getChangePasswordData(oldPassword,newPassword1);
                             }
                         }
                     }
@@ -104,6 +86,26 @@ public class ChangePasswordFragment extends Fragment {
         return root;
     }
 
+
+    private void observeChangePasswordData() {
+        viewModel.getChangePasswordData().observe(getViewLifecycleOwner(), new Observer<Result>() {
+            @Override
+            public void onChanged(Result result) {
+                if (result instanceof Result.Error){
+                    System.out.println(((Result.Error) result).getError());
+                    Toast.makeText(getContext(),"Error: kunne ikke endre passordet", Toast.LENGTH_SHORT).show();
+                }
+                else if (result instanceof Result.Success){
+                    Toast.makeText(getContext(), "Passordet er endret", Toast.LENGTH_SHORT).show();
+                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_newsfeed);
+                }
+                else {
+                    Toast.makeText(getContext(), "Det oppsto en feil", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+    }
     private void changePassword(String oldPassword, String newPassword) {
 
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().changePassword(oldPassword, newPassword);
