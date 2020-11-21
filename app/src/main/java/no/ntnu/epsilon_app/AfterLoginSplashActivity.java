@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.ImageParser;
@@ -13,6 +15,8 @@ import no.ntnu.epsilon_app.data.User;
 import no.ntnu.epsilon_app.data.UserParser;
 import no.ntnu.epsilon_app.data.UserViewModel;
 import no.ntnu.epsilon_app.ui.about_us.AboutUsParser;
+import no.ntnu.epsilon_app.ui.calendar.Calendar;
+import no.ntnu.epsilon_app.ui.calendar.CalendarViewModel;
 import no.ntnu.epsilon_app.ui.news.NewsParser;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -32,6 +36,7 @@ public class AfterLoginSplashActivity extends Activity {
         fetchPictures();
         getNewsFeed();
         getAboutUsObjects();
+        getCalendarItems();
 
 
         /* New Handler to start the Menu-Activity
@@ -45,6 +50,27 @@ public class AfterLoginSplashActivity extends Activity {
                 AfterLoginSplashActivity.this.finish();
             }
         }, SPLASH_DISPLAY_LENGTH);
+    }
+
+    private void getCalendarItems() {
+        Call<List<Calendar>> call = RetrofitClientInstance.getSINGLETON().getAPI().getCalendarItems();
+        call.enqueue(new Callback<List<Calendar>>() {
+            @Override
+            public void onResponse(Call<List<Calendar>> call, Response<List<Calendar>> response) {
+                if (response.isSuccessful()) {
+                    System.out.println("JAAAAAAAAAAAAAAAAAAAA");
+                    //calendarList = (ArrayList<Calendar>) response.body();
+                    //System.out.println(calendarList.get(0));
+                    CalendarViewModel.CALENDAR_LIST = (ArrayList<Calendar>) response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<List<Calendar>> call, Throwable t) {
+                System.out.println("FUUUUUUUUUUUUUUCK");
+                System.out.println(t.getCause().toString());
+            }
+        });
     }
 
     private void fetchPictures(){

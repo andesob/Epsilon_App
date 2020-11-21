@@ -82,4 +82,9 @@ public class Calendar {
                 getEndTimeParsed(4);
         return time;
     }
+
+    public String splitLangLng(int position){
+        String[] arr = getLatLng().split(",");
+        return arr[position];
+    }
 }

@@ -63,7 +63,7 @@ public class CalendarFragment extends Fragment {
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        calendarAdapter = new CalendarRecyclerViewAdapter(CalendarViewModel.CALENDAR_LIST);
+        calendarAdapter = new CalendarRecyclerViewAdapter(getContext(),CalendarViewModel.CALENDAR_LIST);
         recyclerView.setAdapter(calendarAdapter);
 
         FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.calendarEdditButton);

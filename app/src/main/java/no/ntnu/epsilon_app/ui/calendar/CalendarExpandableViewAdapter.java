@@ -1,4 +1,5 @@
 /*
+
 package no.ntnu.epsilon_app.ui.calendar;
 
 import android.Manifest;
@@ -169,5 +170,6 @@ public class CalendarExpandableViewAdapter extends BaseExpandableListAdapter {
         return true;
     }
 }
+
 
 */

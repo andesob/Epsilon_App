@@ -25,9 +25,12 @@ import no.ntnu.epsilon_app.R;
 public class MapFragment extends BottomSheetDialogFragment implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private String lat;
+    private String lng;
 
-    public MapFragment(){
-
+    public MapFragment(String lat,String lng){
+        this.lat = lat;
+        this.lng = lng;
     }
 
     @Override
@@ -40,31 +43,18 @@ public class MapFragment extends BottomSheetDialogFragment implements OnMapReady
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_map,container,false);
-        setStyle(MapFragment.STYLE_NORMAL,R.style.SomeStyle);
+        SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
         return view;
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if(getActivity()!=null){
-            SupportMapFragment mapFragment = (SupportMapFragment) getActivity()
-                    .getSupportFragmentManager()
-                    .findFragmentById(R.id.map);
-            if(mapFragment!=null){
-                mapFragment.getMapAsync(this);
-            }
-        }
-
     }
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLng ntnuAalesund = new LatLng(62.472117, 6.235394);
-        mMap.addMarker(new MarkerOptions()).setPosition(ntnuAalesund);
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(ntnuAalesund));
+        LatLng position = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+        mMap.addMarker(new MarkerOptions().position(position));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,15f));
         System.out.println("FAEN DA KART");
     }
 }
