@@ -82,6 +82,11 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             case R.id.action_logout:
                 logout();
+                break;
+
+        case R.id.changePassword:
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_change_pwd);
+            break;
         }
         return super.onOptionsItemSelected(item);
     }

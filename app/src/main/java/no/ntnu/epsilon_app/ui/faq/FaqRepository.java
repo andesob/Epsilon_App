@@ -1,11 +1,9 @@
 package no.ntnu.epsilon_app.ui.faq;
 
 import android.app.Application;
-import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
@@ -22,7 +20,7 @@ public class FaqRepository {
     private MutableLiveData<Response> deleteFaqLiveData = new MutableLiveData<>();
     private Application application;
 
-    public FaqRepository(Application application ){
+    public FaqRepository(Application application) {
         this.application = application;
     }
 
@@ -31,14 +29,16 @@ public class FaqRepository {
         call.enqueue(new Callback<List<Faq>>() {
             @Override
             public void onResponse(Call<List<Faq>> call, Response<List<Faq>> response) {
+                System.out.println("getFaqs code: " + response.code());
                 if (response.isSuccessful()) {
                     List<Faq> faqList = response.body();
-                    if(faqList != null ) {
+                    if (faqList != null) {
                         faqListLiveData.setValue(faqList);
                     }
                 }
 
             }
+
             @Override
             public void onFailure(Call<List<Faq>> call, Throwable t) {
 
@@ -55,6 +55,7 @@ public class FaqRepository {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println(response.code());
                 if (response.isSuccessful()) {
                     addFaqLiveData.setValue(response);
                 } else {
@@ -79,8 +80,7 @@ public class FaqRepository {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     editFaqLiveData.setValue(response);
-                }
-                else {
+                } else {
                     editFaqLiveData.setValue(response);
 
                 }
@@ -103,8 +103,7 @@ public class FaqRepository {
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
                     deleteFaqLiveData.setValue(response);
-                }
-                else {
+                } else {
                     deleteFaqLiveData.setValue(response);
                 }
             }
@@ -114,6 +113,19 @@ public class FaqRepository {
 
             }
         });
+        return deleteFaqLiveData;
+    }
+
+
+    public MutableLiveData<Response> getAddFaqLiveData() {
+        return addFaqLiveData;
+    }
+
+    public MutableLiveData<Response> getEditFaqLiveData() {
+        return editFaqLiveData;
+    }
+
+    public MutableLiveData<Response> getDeleteFaqLiveData() {
         return deleteFaqLiveData;
     }
 }

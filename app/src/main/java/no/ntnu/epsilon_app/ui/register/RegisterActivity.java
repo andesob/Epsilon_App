@@ -37,6 +37,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText registerTextEmail;
     private EditText registerTextPassword;
     private ProgressBar progressBar;
+    private Button registerButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,7 +51,7 @@ public class RegisterActivity extends AppCompatActivity {
         registerTextEmail = findViewById(R.id.registerTextEmail);
         registerTextPassword = findViewById(R.id.registerTextPassword);
         progressBar = findViewById(R.id.progressBar);
-        final Button registerButton = findViewById(R.id.registerButton);
+        registerButton = findViewById(R.id.registerButton);
 
         androidx.appcompat.widget.Toolbar toolbar = findViewById(R.id.toolbar);
 
@@ -69,11 +70,11 @@ public class RegisterActivity extends AppCompatActivity {
                 progressBar.setVisibility(View.VISIBLE);
                 registerButton.setVisibility(View.INVISIBLE);
 
-
-                new CountDownTimer(1500, 1000){
+                new CountDownTimer(1500, 1000) {
                     @Override
                     public void onTick(long l) {
                     }
+
                     @Override
                     public void onFinish() {
 
@@ -82,16 +83,9 @@ public class RegisterActivity extends AppCompatActivity {
                         String email = registerTextEmail.getText().toString();
                         String password = registerTextPassword.getText().toString();
 
-                        if(progressBar != null){
-                            progressBar.setVisibility(View.INVISIBLE);
-                            registerButton.setVisibility(View.VISIBLE);
-
-                            if(validateInput(firstName,lastName,email,password)) {
-                                registerNewUser(firstName,lastName,password,email);
-                            }
-
+                        if (validateInput(firstName, lastName, email, password)) {
+                            registerNewUser(firstName, lastName, password, email);
                         }
-
                     }
                 }.start();
             }
@@ -100,17 +94,21 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void registerNewUser(String firstName, String lastName, String password, String email) {
 
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().createUser(firstName, lastName, password,email);
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().createUser(firstName, lastName, password, email);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+
+                if (progressBar != null) {
+                    progressBar.setVisibility(View.INVISIBLE);
+                    registerButton.setVisibility(View.VISIBLE);
+                }
                 if (response.isSuccessful()) {
                     Toast.makeText(getBaseContext(), "Lagt til", Toast.LENGTH_SHORT).show();
 
                     isLoggedIn = true;
                     startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
-                }
-                else {
+                } else {
                     Toast.makeText(getBaseContext(), "Error: kunne ikke legge til", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -121,26 +119,22 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-
-
+    
     private boolean validateInput(String firstName, String lastName, String email, String password) {
 
-        if (!registerViewModel.isNameValid(firstName)){
+        if (!registerViewModel.isNameValid(firstName)) {
             registerTextFirstName.requestFocus();
             registerTextFirstName.setError("Please provide a first name");
             return false;
-        }
-        else if(!registerViewModel.isNameValid(lastName)){
+        } else if (!registerViewModel.isNameValid(lastName)) {
             registerTextLastName.requestFocus();
             registerTextLastName.setError("Please provide a last name");
             return false;
-        }
-        else if(!registerViewModel.isEmailNameValid(email)){
+        } else if (!registerViewModel.isEmailNameValid(email)) {
             registerTextEmail.requestFocus();
             registerTextEmail.setError("Please provide a valid email");
             return false;
-        }
-        else if(!registerViewModel.isPasswordValid(password)){
+        } else if (!registerViewModel.isPasswordValid(password)) {
             registerTextPassword.requestFocus();
             registerTextPassword.setError("The password must be longer than 5 characters");
             return false;

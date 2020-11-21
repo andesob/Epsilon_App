@@ -107,6 +107,11 @@ public interface EpsilonAPI {
     @GET("auth/verify")
     Call<ResponseBody> verifyJwt(@Header("Authorization") String token);
 
+    @PUT("auth/changePassword")
+    @FormUrlEncoded
+    Call<ResponseBody> changePassword(@Field("oldPwd") String oldPassword,
+                                      @Field("newPwd") String newPassword);
+
     @GET("auth/isTokenExpired")
     Call<ResponseBody> useRefreshToken(@Header("refreshToken") String refreshToken);
 }
