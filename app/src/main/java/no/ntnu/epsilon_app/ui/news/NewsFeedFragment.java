@@ -1,5 +1,6 @@
 package no.ntnu.epsilon_app.ui.news;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -17,6 +19,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.io.IOException;
 import java.util.Random;
 
+import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.LoggedInUser;
@@ -86,6 +89,8 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }else{
+                    ((MainActivity)getActivity()).goToSplashScreen();
                 }
             }
 

@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.ui.faq.Faq;
@@ -87,6 +88,9 @@ public class ask_question_fragment extends Fragment {
                 if (response.isSuccessful()) {
                     String success = "Question sent";
                     Toast.makeText(getContext(),success , Toast.LENGTH_SHORT).show();
+                    }
+                else{
+                    ((MainActivity)getActivity()).goToSplashScreen();
                     }
                 }
 

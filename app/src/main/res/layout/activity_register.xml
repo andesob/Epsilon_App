@@ -87,6 +87,7 @@
             android:background="@drawable/border"
             android:ems="14"
             android:hint="@string/prompt_email"
+            android:inputType="textEmailAddress"
             android:textColorHint="#73FFFFFF"
             android:textColor="@color/colorAccent"
             app:layout_constraintEnd_toEndOf="parent"

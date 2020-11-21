@@ -19,6 +19,7 @@ import android.widget.EditText;
 
 import java.io.IOException;
 
+import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import okhttp3.ResponseBody;
@@ -82,6 +83,8 @@ public class PostNewsFragment extends Fragment {
                         e.printStackTrace();
                     }
                     Navigation.findNavController(root).navigate(R.id.nav_newsfeed);
+                }else{
+                    ((MainActivity)getActivity()).goToSplashScreen();
                 }
             }
 

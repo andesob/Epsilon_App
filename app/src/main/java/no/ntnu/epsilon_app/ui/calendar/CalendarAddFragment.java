@@ -29,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 import java.io.IOException;
 import java.util.List;
 
+import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import okhttp3.ResponseBody;
@@ -164,7 +165,7 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
                     System.out.println("SUCC");
                     System.out.println(response.body().string());
                 }else{
-                    System.out.println(response.code());
+                    ((MainActivity)getActivity()).goToSplashScreen();
                 }
                 }catch (IOException e){}
             }

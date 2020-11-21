@@ -29,6 +29,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.ImageParser;
@@ -168,6 +169,9 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                         }
                         Navigation.findNavController(root).navigate(R.id.nav_about_us);
                     }
+                    else{
+                        ((MainActivity)getActivity()).goToSplashScreen();
+                    }
                 }
 
                 @Override
@@ -190,6 +194,9 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                }
+                else{
+                    ((MainActivity)getActivity()).goToSplashScreen();
                 }
             }
 

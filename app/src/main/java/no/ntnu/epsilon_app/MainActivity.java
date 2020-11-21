@@ -40,6 +40,7 @@ import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -80,19 +81,33 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_logout:
-                LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
-                if (loginRepository.isLoggedIn()) {
-                    loginRepository.logout();
-                }
-                final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
-                sharedUserPrefs.editor.clear();
-                sharedUserPrefs.editor.commit();
-
-                Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
-                MainActivity.this.startActivity(mainIntent);
-                MainActivity.this.finish();
+                logout();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void logout(){
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+        if (loginRepository.isLoggedIn()) {
+            loginRepository.logout();
+        }
+        final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
+        sharedUserPrefs.editor.clear();
+        sharedUserPrefs.editor.commit();
+
+        Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
+        MainActivity.this.startActivity(mainIntent);
+        MainActivity.this.finish();
+    }
+
+    public void goToSplashScreen(){
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+        if(loginRepository.isLoggedIn()){
+            loginRepository.logout();
+        }
+        Intent mainIntent = new Intent(MainActivity.this,SplashActivity.class);
+        MainActivity.this.startActivity(mainIntent);
+        MainActivity.this.finish();
     }
 
     @Override
@@ -119,6 +134,8 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
+    private void onFailure(){
+        }
 
 
 }

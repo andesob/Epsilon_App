@@ -37,6 +37,7 @@ public class FaqRepository {
                         faqListLiveData.setValue(faqList);
                     }
                 }
+
             }
             @Override
             public void onFailure(Call<List<Faq>> call, Throwable t) {
@@ -81,6 +82,7 @@ public class FaqRepository {
                 }
                 else {
                     editFaqLiveData.setValue(response);
+
                 }
             }
 

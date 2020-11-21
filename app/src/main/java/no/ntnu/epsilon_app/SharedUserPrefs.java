@@ -24,4 +24,7 @@ public class SharedUserPrefs {
     public void setToken(String token){
         editor.putString("token",token).apply();
     }
+
+    public String getRefreshToken(){return sharedPreferences.getString("refreshToken","");}
+    public void setRefreshToken(String refreshToken){editor.putString("refreshToken",refreshToken).apply();}
 }

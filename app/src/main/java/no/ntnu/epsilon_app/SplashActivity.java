@@ -65,6 +65,7 @@ public class SplashActivity extends AppCompatActivity {
         final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
         final String token = sharedUserPrefs.getToken();
 
+        System.out.println("TOKEN MAYNE: " + token);
         /*
         If user has no bearer token go to login screen
          */
@@ -100,8 +101,63 @@ public class SplashActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
+                    System.out.println("==============================================");
+                    System.out.println("DU ER HER");
+                    useRefreshToken();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
+    private void useRefreshToken(){
+        final SharedUserPrefs sharedUserPrefs2 = new SharedUserPrefs(this);
+        final String refreshToken = sharedUserPrefs2.getRefreshToken();
+        System.out.println("=====================================");
+        System.out.println(refreshToken);
+
+        if(refreshToken.isEmpty()||refreshToken==null){
+            System.out.println("======================================");
+            System.out.println("GÅ TIL LOGIN");
+            goToLogin();
+            return;
+        }
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().useRefreshToken(refreshToken);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+                    System.out.println("===============================");
+                    System.out.println("REEEEEEEEEEEEEEEEEEEEEEEEEE");
+                    final String token = response.headers().get("Authorization");
+                    final String refreshToken = response.headers().get("refreshTokenHeader");
+
+                    sharedUserPrefs2.setToken(token);
+                    sharedUserPrefs2.setRefreshToken(refreshToken);
+
+                    OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
+                    httpClient.addInterceptor(new Interceptor() {
+                        @Override
+                        public okhttp3.Response intercept(Chain chain) throws IOException {
+                            Request request = chain.request().newBuilder().addHeader("Authorization", token).build();
+                            return chain.proceed(request);
+                        }
+                    });
+
+                    RetrofitClientInstance.addInterceptor(httpClient);
+                    isLoggedIn();
+
+
+                }
+                else{
+                    System.out.println("==========================");
+                    System.out.println("FREEEEEEEEEEEEEEEEEEESH");
                     goToLogin();
                 }
+
             }
 
             @Override

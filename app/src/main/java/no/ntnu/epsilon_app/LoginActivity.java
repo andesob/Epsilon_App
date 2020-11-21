@@ -75,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         //Unnecessary????
-        isLoggedIn();
+        //isLoggedIn();
 
 
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
@@ -104,6 +104,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onFinish() {
                         loginUser();
+                        System.out.println("ENTERING LOGINTHING");
                         progressBar.setVisibility(View.INVISIBLE);
                         loginButton.setVisibility(View.VISIBLE);
                     }
@@ -144,7 +145,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginUser() {
-
+        System.out.println("CYKA BLYEAT");
         final String email = editEmail.getText().toString().trim();
         final String pwd = editPassword.getText().toString().trim();
 
@@ -164,6 +165,8 @@ public class LoginActivity extends AppCompatActivity {
             editPassword.requestFocus();
             return;
         }
+
+        System.out.println("RANDOM STUFF: \n\n\n" + email + "\n\n\n" + pwd);
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().loginUser(email, pwd);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -176,10 +179,12 @@ public class LoginActivity extends AppCompatActivity {
                 } else {
                     showLoginFailed(response.code());
                 }
+                System.out.println("cyka");
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                t.printStackTrace();
 
             }
         });

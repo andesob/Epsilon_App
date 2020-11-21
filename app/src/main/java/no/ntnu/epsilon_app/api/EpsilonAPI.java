@@ -107,7 +107,8 @@ public interface EpsilonAPI {
     @GET("auth/verify")
     Call<ResponseBody> verifyJwt(@Header("Authorization") String token);
 
-
+    @GET("auth/isTokenExpired")
+    Call<ResponseBody> useRefreshToken(@Header("refreshToken") String refreshToken);
 }
 
 

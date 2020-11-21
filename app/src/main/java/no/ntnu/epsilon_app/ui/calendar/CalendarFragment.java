@@ -31,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
+import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.ui.faq.dummy.TestData;
@@ -93,6 +94,9 @@ public class CalendarFragment extends Fragment {
                     //calendarList = (ArrayList<Calendar>) response.body();
                     //System.out.println(calendarList.get(0));
                     CalendarViewModel.CALENDAR_LIST = (ArrayList<Calendar>) response.body();
+                }
+                else{
+                    ((MainActivity)getActivity()).goToSplashScreen();
                 }
             }
 
