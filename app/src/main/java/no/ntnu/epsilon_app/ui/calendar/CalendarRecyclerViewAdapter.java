@@ -65,13 +65,12 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
         holder.time.setText(calendar.getTime(calendar.getStartTime(),calendar.getEndTime()));
         holder.description.setText(calendar.getDescription());
         holder.address.setText(calendar.getAddress());
-        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + calendar.getLatLng() + "&zoom=15&markers=" + calendar.getLatLng() + "&size=400x600&sensor=false&key=" + holder.mapView.getContext().getString(R.string.MAPS_API_KEY)).into(holder.mapView);
+        //Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + calendar.getLatLng() + "&zoom=15&markers=" + calendar.getLatLng() + "&size=400x600&sensor=false&key=" + holder.mapView.getContext().getString(R.id.)).into(holder.mapView);
 
         holder.mapView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 MapFragment mapFragment = new MapFragment(calendar.splitLangLng(0),calendar.splitLangLng(1));
-                System.out.println(calendar.splitLangLng(0)+calendar.splitLangLng(1));
                 mapFragment.show(((AppCompatActivity)v.getContext()).getSupportFragmentManager(),"ModalBottomSheet");
             }
         });
@@ -161,7 +160,6 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
             parentCard.setOnClickListener(new View.OnClickListener(){
                 @Override
                 public void onClick(View v) {
-                    System.out.println("click");
                     Calendar calendar = calendarList.get(getAdapterPosition());
                     calendar.setExpanded(!calendar.isExpanded());
                     notifyItemChanged(getAdapterPosition());

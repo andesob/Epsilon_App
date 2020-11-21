@@ -142,10 +142,8 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         long id = -1;
 
         for(int i = 0; i < faqs.size(); i++){
-            System.out.println("question: " + faqs.get(i).getQuestion());
             if (faqs.get(i).getQuestion().contentEquals(searchWords)){
                 id = faqs.get(i).getId();
-                System.out.println("id:" + faqs.get(i).getQuestion());
                 return  id;
             }
         }

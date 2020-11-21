@@ -84,8 +84,6 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
                     mMap.clear();
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
                     latitudeLongitude = String.valueOf(latLng.latitude) + (",") +String.valueOf(latLng.longitude);
-                    System.out.println(latLng);
-                    System.out.println(latitudeLongitude);
                     mMap.addMarker(new MarkerOptions().position(latLng));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
                 }
@@ -134,13 +132,11 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("GOGOGOG");
                 String title = editTitle.getText().toString().trim();
                 String description = editDescription.getText().toString().trim();
                 //Time startTime = new Time(startDatePicker.getYear(),startDatePicker.getMonth(),startDatePicker.getDayOfMonth(),startTimePicker.getHour(),startTimePicker.getMinute());
                 String startTime =  String.valueOf(startDatePicker.getYear()) + (",") +String.valueOf(startDatePicker.getMonth())+
                         (",") +  String.valueOf(startDatePicker.getDayOfMonth())+(",") + String.valueOf(startTimePicker.getHour()) +(",") + String.valueOf(startTimePicker.getMinute());
-                System.out.println(startTime);
                 //Time endTime = new Time(endDatePicker.getYear(),endDatePicker.getMonth(),endDatePicker.getDayOfMonth(),endTimePicker.getHour(),endTimePicker.getMinute());
                 String endTime =  String.valueOf(endDatePicker.getYear()) + (",") +String.valueOf(endDatePicker.getMonth())+
                         (",") +  String.valueOf(endDatePicker.getDayOfMonth())+(",") + String.valueOf(endTimePicker.getHour()) +(",") + String.valueOf(endTimePicker.getMinute());
@@ -162,8 +158,6 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
                 try {
 
                 if(response.isSuccessful()){
-                    System.out.println("SUCC");
-                    System.out.println(response.body().string());
                 }else{
                     ((MainActivity)getActivity()).goToSplashScreen();
                 }
@@ -172,7 +166,6 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                System.out.println("NO REACH");
             }
         });
     }

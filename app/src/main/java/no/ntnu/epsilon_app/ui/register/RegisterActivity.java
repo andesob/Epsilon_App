@@ -105,7 +105,6 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    System.out.println(response.body());
                     Toast.makeText(getBaseContext(), "Lagt til", Toast.LENGTH_SHORT).show();
 
                     isLoggedIn = true;

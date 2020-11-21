@@ -33,6 +33,8 @@ public class SplashActivity extends AppCompatActivity {
      **/
     private final int SPLASH_DISPLAY_LENGTH = 2000;
     private LoginViewModel loginViewModel;
+    private SharedUserPrefs sharedUserPrefs;
+    private String oldRefresh;
 
     /**
      * Called when the activity is first created.
@@ -43,6 +45,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.splashscreen_layout);
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
+        sharedUserPrefs = new SharedUserPrefs(this);
         isLoggedIn();
     }
 
@@ -62,10 +65,7 @@ public class SplashActivity extends AppCompatActivity {
     }
 
     private void isLoggedIn() {
-        final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
         final String token = sharedUserPrefs.getToken();
-
-        System.out.println("TOKEN MAYNE: " + token);
         /*
         If user has no bearer token go to login screen
          */
@@ -101,8 +101,6 @@ public class SplashActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 } else {
-                    System.out.println("==============================================");
-                    System.out.println("DU ER HER");
                     useRefreshToken();
                 }
             }
@@ -113,30 +111,23 @@ public class SplashActivity extends AppCompatActivity {
             }
         });
     }
-    private void useRefreshToken(){
-        final SharedUserPrefs sharedUserPrefs2 = new SharedUserPrefs(this);
-        final String refreshToken = sharedUserPrefs2.getRefreshToken();
-        System.out.println("=====================================");
-        System.out.println(refreshToken);
 
-        if(refreshToken.isEmpty()||refreshToken==null){
-            System.out.println("======================================");
-            System.out.println("GÅ TIL LOGIN");
+    private void useRefreshToken() {
+        final String oldRefreshToken = sharedUserPrefs.getRefreshToken();
+
+        if (oldRefreshToken.isEmpty() || oldRefreshToken == null) {
             goToLogin();
             return;
         }
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().useRefreshToken(refreshToken);
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().useRefreshToken(oldRefreshToken);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if(response.isSuccessful()){
-                    System.out.println("===============================");
-                    System.out.println("REEEEEEEEEEEEEEEEEEEEEEEEEE");
+                if (response.isSuccessful()) {
                     final String token = response.headers().get("Authorization");
                     final String refreshToken = response.headers().get("refreshTokenHeader");
-
-                    sharedUserPrefs2.setToken(token);
-                    sharedUserPrefs2.setRefreshToken(refreshToken);
+                    sharedUserPrefs.setToken(token);
+                    sharedUserPrefs.setRefreshToken(refreshToken);
 
                     OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
                     httpClient.addInterceptor(new Interceptor() {
@@ -149,12 +140,7 @@ public class SplashActivity extends AppCompatActivity {
 
                     RetrofitClientInstance.addInterceptor(httpClient);
                     isLoggedIn();
-
-
-                }
-                else{
-                    System.out.println("==========================");
-                    System.out.println("FREEEEEEEEEEEEEEEEEEESH");
+                } else {
                     goToLogin();
                 }
 

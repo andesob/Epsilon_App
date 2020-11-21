@@ -55,6 +55,5 @@ public class MapFragment extends BottomSheetDialogFragment implements OnMapReady
         LatLng position = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
         mMap.addMarker(new MarkerOptions().position(position));
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(position,15f));
-        System.out.println("FAEN DA KART");
     }
 }

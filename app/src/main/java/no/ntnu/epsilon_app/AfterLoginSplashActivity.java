@@ -58,17 +58,12 @@ public class AfterLoginSplashActivity extends Activity {
             @Override
             public void onResponse(Call<List<Calendar>> call, Response<List<Calendar>> response) {
                 if (response.isSuccessful()) {
-                    System.out.println("JAAAAAAAAAAAAAAAAAAAA");
-                    //calendarList = (ArrayList<Calendar>) response.body();
-                    //System.out.println(calendarList.get(0));
                     CalendarViewModel.CALENDAR_LIST = (ArrayList<Calendar>) response.body();
                 }
             }
 
             @Override
             public void onFailure(Call<List<Calendar>> call, Throwable t) {
-                System.out.println("FUUUUUUUUUUUUUUCK");
-                System.out.println(t.getCause().toString());
             }
         });
     }

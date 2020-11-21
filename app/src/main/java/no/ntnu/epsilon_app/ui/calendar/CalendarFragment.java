@@ -90,9 +90,6 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onResponse(Call<List<Calendar>> call, Response<List<Calendar>> response) {
                 if (response.isSuccessful()) {
-                    System.out.println("JAAAAAAAAAAAAAAAAAAAA");
-                    //calendarList = (ArrayList<Calendar>) response.body();
-                    //System.out.println(calendarList.get(0));
                     CalendarViewModel.CALENDAR_LIST = (ArrayList<Calendar>) response.body();
                 }
                 else{
@@ -102,50 +99,8 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public void onFailure(Call<List<Calendar>> call, Throwable t) {
-                System.out.println("FUUUUUUUUUUUUUUCK");
-                System.out.println(t.getCause().toString());
             }
         });
     }
-
-    /* private void jsonParser(List<Calendar> inputList){
-         for(int i = 0; i <inputList.size(); i++){
-             List<String> parentList = new ArrayList<>();
-             List<String> childList = new ArrayList<>();
-             String title = inputList.get(i).getTitle();
-             String startDay = inputList.get(i).getStartTimeParsed(2);
-             String startMonth = inputList.get(i).getStartTimeParsed(1);
-             String startYear = inputList.get(i).getStartTimeParsed(0);
-             String dayOfWeek = getDayOfWeek(startYear,startMonth,startDay);
-             parentList.addAll(Arrays.asList(startDay,dayOfWeek,title));
-
-             String description = inputList.get(i).getDescription();
-             String startHour = inputList.get(i).getStartTimeParsed(3);
-             String startMinute = inputList.get(i).getStartTimeParsed(4);
-             String endHour = inputList.get(i).getEndTimeParsed(3);
-             String endMinute = inputList.get(i).getEndTimeParsed(4);
-             String address = inputList.get(i).getAddress();
-             childList.addAll(Arrays.asList(description,startHour,startMinute,endHour,endMinute,address));
-             System.out.println(startYear);
-             listDetails.put(parentList,childList);
-
-         }*/
-    //}
-    private String getDayOfWeek(String startYear, String startMonth, String startDay) {
-        int year = Integer.parseInt(startYear);
-        int month = Integer.parseInt(startMonth);
-        int date = Integer.parseInt(startDay);
-        LocalDate d = LocalDate.of(year, month, date);
-        DayOfWeek dow = d.getDayOfWeek();
-        String s = dow.getDisplayName(TextStyle.SHORT, Locale.US);
-        System.out.println(s);
-        return s;
-    }
-
-    /*private void setViewAdapter(List<List<String>> parent,HashMap<String,List<String>> child){
-        ExpandableListView expandableListView = (ExpandableListView) getActivity().findViewById(R.id.expandableListView);
-        calendarAdapter = new CalendarExpandableViewAdapter(getContext(),parent,child);
-        expandableListView.setAdapter(calendarAdapter);
-    }*/
 
 }

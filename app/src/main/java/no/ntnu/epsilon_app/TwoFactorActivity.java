@@ -85,7 +85,6 @@ public class TwoFactorActivity extends AppCompatActivity {
                     try {
                         final String token = response.headers().get("Authorization");
                         final String refreshToken = response.headers().get("refreshTokenHeader");
-                        System.out.println(refreshToken);
                         User user = UserParser.parseUser(response.body().string());
                         loginViewModel.login(user.getUserid(), user.getFirstName(), user.getGroups());
                         sharedUserPrefs.setToken(token);
