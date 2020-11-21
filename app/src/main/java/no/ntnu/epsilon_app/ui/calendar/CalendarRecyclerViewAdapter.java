@@ -65,7 +65,7 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
         holder.time.setText(calendar.getTime(calendar.getStartTime(),calendar.getEndTime()));
         holder.description.setText(calendar.getDescription());
         holder.address.setText(calendar.getAddress());
-        //Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + calendar.getLatLng() + "&zoom=15&markers=" + calendar.getLatLng() + "&size=400x600&sensor=false&key=" + holder.mapView.getContext().getString(R.id.)).into(holder.mapView);
+        Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + calendar.getLatLng() + "&zoom=15&markers=" + calendar.getLatLng() + "&size=400x600&sensor=false&key=" + holder.mapView.getContext().getString(R.string.MAPS_API_KEY)).into(holder.mapView);
 
         holder.mapView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -155,13 +155,11 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                try {
-
+                System.out.println("RESPONSE CODE: " + response.code());
                 if(response.isSuccessful()){
                 }else{
                     ((MainActivity)getActivity()).goToSplashScreen();
                 }
-                }catch (IOException e){}
             }
 
             @Override
