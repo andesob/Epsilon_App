@@ -91,6 +91,12 @@ public class MainActivity extends AppCompatActivity {
                 Intent mainIntent = new Intent(MainActivity.this, LoginActivity.class);
                 MainActivity.this.startActivity(mainIntent);
                 MainActivity.this.finish();
+                break;
+
+        case R.id.changePassword:
+            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_change_pwd);
+            break;
+
         }
         return super.onOptionsItemSelected(item);
     }

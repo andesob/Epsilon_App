@@ -51,4 +51,10 @@
         android:id="@+id/nav_map"
         android:name="no.ntnu.epsilon_app.ui.maps.MapFragment"
         tools:layout="@layout/fragment_map"/>
+
+    <fragment
+        android:id="@+id/nav_change_pwd"
+        android:name="no.ntnu.epsilon_app.ui.changePassword.ChangePasswordFragment"
+        tools:layout="@layout/fragment_change_password"/>
+
 </navigation>

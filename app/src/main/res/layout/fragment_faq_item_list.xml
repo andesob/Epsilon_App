@@ -26,7 +26,6 @@
         android:visibility="gone"
         android:src="@drawable/ic_plus"
         android:layout_marginTop="20dp"
-        android:visibility="invisible"
         />
 
     <ImageView

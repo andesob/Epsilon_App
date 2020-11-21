@@ -52,4 +52,7 @@
     <string name="RegisterNewUser">Registrer en ny bruker</string>
     <string name="welcome">"Welcome "</string>
     <string name="action_logout">Logout</string>
+    <string name="changePassword">Endre passordet ditt</string>
+    <string name="oldPassword">Gammel passord</string>
+    <string name="newPassword">Nytt passord</string>
 </resources>

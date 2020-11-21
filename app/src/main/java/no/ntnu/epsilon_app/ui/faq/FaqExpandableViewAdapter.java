@@ -86,8 +86,6 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         return listPosition;
     }
 
-
-
     public interface FaqExpandableViewClickListener {
         void onTrashClick(View view, int position, long faqId);
         void onEditClick(View view, int position, Faq faq);
