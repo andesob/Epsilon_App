@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.io.IOException;
+import java.util.Random;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
@@ -52,7 +53,7 @@ public class NewsFeedFragment extends Fragment implements RecyclerViewAdapter.It
 
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
 
-        if (loginRepository.isAdmin() || loginRepository.isBoardmember()){
+        if (loginRepository.isAdmin() || loginRepository.isBoardmember()) {
             FloatingActionButton fab = root.findViewById(R.id.fab);
             fab.setVisibility(View.VISIBLE);
             fab.setOnClickListener(new View.OnClickListener() {
