@@ -86,6 +86,12 @@ public interface EpsilonAPI {
             @Query("pwd") String password
     );
 
+    @POST("auth/twofactor")
+    @FormUrlEncoded
+    Call<ResponseBody> checkTwoFactor(@Field("email") String email,
+                                      @Field("pwd") String pwd,
+                                      @Field("2factorkey") String key);
+
     @PUT("web/delete_faq")
     @FormUrlEncoded
     Call<ResponseBody> delete_faq(@Field("id") long faqId);

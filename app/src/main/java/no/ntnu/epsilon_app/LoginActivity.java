@@ -74,7 +74,10 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
+        //Unnecessary????
         isLoggedIn();
+
+
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         editEmail = findViewById(R.id.editEmail);
@@ -166,28 +169,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    try {
-                        final String token = response.headers().get("Authorization");
-                        User user = UserParser.parseUser(response.body().string());
-                        loginViewModel.login(user.getUserid(), user.getFirstName(), user.getGroups());
-                        sharedUserPrefs.setToken(token);
-
-                        OkHttpClient.Builder httpClient = new OkHttpClient.Builder();
-                        httpClient.addInterceptor(new Interceptor() {
-                            @Override
-                            public okhttp3.Response intercept(Chain chain) throws IOException {
-                                Request request = chain.request().newBuilder().addHeader("Authorization", token).build();
-                                return chain.proceed(request);
-                            }
-                        });
-
-                        RetrofitClientInstance.addInterceptor(httpClient);
-
-                        startActivity(new Intent(LoginActivity.this, AfterLoginSplashActivity.class));
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
+                    Intent intent = new Intent(LoginActivity.this, TwoFactorActivity.class);
+                    intent.putExtra("email", email);
+                    intent.putExtra("pwd", pwd);
+                    startActivity(intent);
                 } else {
                     showLoginFailed(response.code());
                 }
@@ -199,6 +184,8 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
+
 
     private void updateUiWithUser(LoggedInUser loggedInUser) {
         String welcome = getString(R.string.welcome) + loggedInUser.getDisplayName();
