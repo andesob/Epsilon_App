@@ -2,12 +2,16 @@ package no.ntnu.epsilon_app;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageButton;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -46,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     DrawerLayout drawer;
+    private static final String FACEBOOK_ID = "1007001496115565";
+    private static final String FACEBOOK_URL = "https://www.facebook.com/EpsilonAalesund";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 
         drawer = findViewById(R.id.drawer_layout);
         NavigationView navigationView = findViewById(R.id.nav_view);
+        final ImageButton imageButton = findViewById(R.id.facebookLinkDrawer);
 
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
@@ -67,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
+
+        imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(newFaceBookIntent(getPackageManager()));
+            }
+
+        });
     }
 
 
@@ -141,6 +156,18 @@ public class MainActivity extends AppCompatActivity {
     }
     private void onFailure(){
         }
+
+    private static Intent newFaceBookIntent(PackageManager pm) {
+        try {
+            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
+            if (applicationInfo.enabled) {
+                return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + FACEBOOK_ID));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+
+        }
+        return new Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL));
+    }
 
 
 }
