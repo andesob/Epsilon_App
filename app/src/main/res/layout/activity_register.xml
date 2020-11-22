@@ -22,7 +22,7 @@
           app:layout_constraintEnd_toEndOf="parent"
           app:layout_constraintStart_toStartOf="parent"
           app:layout_constraintTop_toTopOf="parent"
-          app:navigationIcon="?attr/homeAsUpIndicator"/>
+          app:navigationIcon="?attr/homeAsUpIndicator" />
 
         <ImageView
             android:id="@+id/epsilon_logo"

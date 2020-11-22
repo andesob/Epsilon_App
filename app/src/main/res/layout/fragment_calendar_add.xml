@@ -139,6 +139,10 @@
             android:id="@+id/addressConfirmButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/confirm"
+            android:background="@drawable/login_border"
+            android:layout_marginTop="5dp"
+            android:textColor="#fff"
             app:layout_constraintTop_toBottomOf="@id/editAdress"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"/>
