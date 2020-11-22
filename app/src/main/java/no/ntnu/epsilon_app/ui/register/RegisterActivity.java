@@ -86,6 +86,12 @@ public class RegisterActivity extends AppCompatActivity {
                         if (validateInput(firstName, lastName, email, password)) {
                             registerNewUser(firstName, lastName, password, email);
                         }
+                        else {
+                            if (progressBar != null) {
+                                progressBar.setVisibility(View.INVISIBLE);
+                                registerButton.setVisibility(View.VISIBLE);
+                            }
+                        }
                     }
                 }.start();
             }
@@ -119,7 +125,7 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
     }
-    
+
     private boolean validateInput(String firstName, String lastName, String email, String password) {
 
         if (!registerViewModel.isNameValid(firstName)) {

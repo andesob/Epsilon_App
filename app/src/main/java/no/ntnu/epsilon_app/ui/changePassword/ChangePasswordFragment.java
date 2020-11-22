@@ -41,7 +41,7 @@ public class ChangePasswordFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View root = inflater.inflate(R.layout.fragment_change_password, container, false);
 
-        requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
+        //requireActivity().getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 
         viewModel = new ChangePasswordViewModel();
         oldPwd = root.findViewById(R.id.oldPwd);

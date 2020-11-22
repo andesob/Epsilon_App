@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -43,6 +44,7 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
     private int count = 0;
     private String latitudeLongitude;
     private String addressToLatLong;
+    private View view;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -156,7 +158,9 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 System.out.println("RESPONSE CODE: " + response.code());
+                dismiss();
                 if(response.isSuccessful()){
+
                 }else{
                     ((MainActivity)getActivity()).goToSplashScreen();
                 }

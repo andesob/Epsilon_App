@@ -3,6 +3,7 @@ package no.ntnu.epsilon_app.ui.faq;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -52,7 +53,7 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         ImageView fab = root.findViewById(R.id.faq_fab);
         faqViewModel = new ViewModelProvider(requireActivity()).get(FaqViewModel.class);
         builder = new AlertDialog.Builder(getContext(), R.style.LightDialogTheme);
-        ImageView addBtn = root.findViewById(R.id.addFaq);
+        final ImageView addBtn = root.findViewById(R.id.addFaq);
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
 
         getFaq();
@@ -69,6 +70,18 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                        addBtn.setEnabled(false);
+                    new CountDownTimer(500, 1000) {
+                        @Override
+                        public void onTick(long l) {
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            addBtn.setEnabled(true);
+                        }
+                    }.start();
+
                     System.out.println("add btn clicked");
                     BottomSheetDialogAddFaq bottomSheet = new BottomSheetDialogAddFaq();
                     bottomSheet.show(requireActivity().getSupportFragmentManager(), "ModalBottomSheet");

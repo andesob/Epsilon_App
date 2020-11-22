@@ -15,7 +15,6 @@
             <androidx.constraintlayout.widget.ConstraintLayout
                 xmlns:app="http://schemas.android.com/apk/res-auto"
                 xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/expandableView"
                 android:layout_width="match_parent"
                 android:background="@color/colorPrimary"
                 android:layout_height="wrap_content">
@@ -23,6 +22,7 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:id="@+id/parentCard"
                     android:layout_width="match_parent"
+                    android:paddingStart="10dp"
                     android:layout_height="wrap_content"
                     app:layout_constraintTop_toTopOf="parent">
 
@@ -83,6 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@color/dark_divider"
+                    android:paddingBottom="7dp"
                     android:visibility="visible"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -117,10 +118,24 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:textColor="#fff"
+                        android:paddingStart="10dp"
                         app:layout_constraintEnd_toStartOf="@+id/guideline"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="@tools:sample/lorem[40]" />
+
+                    <ImageView
+                        android:id="@+id/deleteBtn"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        android:src="@drawable/ic_trash"
+                        app:tint="#fff"
+                        android:visibility="invisible"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="@id/guideline"/>
+
+
 
                     <TextView
                         android:id="@+id/adressTitle"
