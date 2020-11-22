@@ -24,6 +24,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
@@ -40,6 +41,7 @@ import no.ntnu.epsilon_app.ui.maps.MapFragment;
 public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRecyclerViewAdapter.ViewHolder> {
 
    private ArrayList<Calendar> calendarList;
+   private CalendarFragment calendarFragment;
    private Context context;
     private static final int PERMISSIONS_REQUEST_READ_CONTACTS = 69;
 
@@ -53,6 +55,7 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.calendar_expandable_item,parent,false);
        ViewHolder holder = new ViewHolder(view);
+       calendarFragment = new CalendarFragment();
        return holder;
     }
 
@@ -135,6 +138,8 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
         String s = dow.getDisplayName(TextStyle.SHORT, Locale.US);
         return s;
     }
+
+
 
     public class ViewHolder extends RecyclerView.ViewHolder{
 
