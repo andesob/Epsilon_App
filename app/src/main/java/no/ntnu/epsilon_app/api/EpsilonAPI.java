@@ -1,21 +1,14 @@
 package no.ntnu.epsilon_app.api;
 
-import android.media.Image;
-
-
-import com.google.android.gms.maps.model.LatLng;
 
 import no.ntnu.epsilon_app.ui.calendar.Calendar;
-import no.ntnu.epsilon_app.ui.calendar.LatitudeLongitude;
-import no.ntnu.epsilon_app.ui.calendar.Time;
 import okhttp3.MultipartBody;
-import okhttp3.RequestBody;
+
 import java.util.List;
 
 import no.ntnu.epsilon_app.ui.faq.Faq;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
-import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -114,6 +107,10 @@ public interface EpsilonAPI {
 
     @GET("auth/isTokenExpired")
     Call<ResponseBody> useRefreshToken(@Header("refreshToken") String refreshToken);
+
+    @PUT("web/delete_calendar_item")
+    @FormUrlEncoded
+    Call<ResponseBody> deleteCalendarItem(@Field("id") long id);
 }
 
 

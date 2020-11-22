@@ -1,13 +1,15 @@
 package no.ntnu.epsilon_app.ui.calendar;
 
 import android.Manifest;
-import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.provider.CalendarContract;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,23 +22,27 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.app.ActivityCompat;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
-import java.lang.reflect.Array;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.format.TextStyle;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
-import java.util.zip.Inflater;
 
 import no.ntnu.epsilon_app.R;
-import no.ntnu.epsilon_app.data.Image;
+import no.ntnu.epsilon_app.api.RetrofitClientInstance;
+import no.ntnu.epsilon_app.data.LoginDataSource;
+import no.ntnu.epsilon_app.data.LoginRepository;
 import no.ntnu.epsilon_app.ui.maps.MapFragment;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRecyclerViewAdapter.ViewHolder> {
 
@@ -69,6 +75,36 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
         holder.description.setText(calendar.getDescription());
         holder.address.setText(calendar.getAddress());
         Picasso.get().load("http://maps.google.com/maps/api/staticmap?center=" + calendar.getLatLng() + "&zoom=15&markers=" + calendar.getLatLng() + "&size=400x600&sensor=false&key=" + holder.mapView.getContext().getString(R.string.MAPS_API_KEY)).into(holder.mapView);
+
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+        if(loginRepository.isAdmin()||loginRepository.isBoardmember()){
+            holder.deleteButton.setVisibility(View.VISIBLE);
+        }
+
+        holder.deleteButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(new ContextThemeWrapper(context,R.style.myDialog));
+                builder.setMessage("Vil du slette dette arrangementet");
+                builder.setCancelable(true);
+                builder.setNegativeButton("Nei", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+                builder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        deleteCalendarItem(calendar.getId());
+                        dialog.cancel();
+                    }
+                });
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+
+        });
 
         holder.mapView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -114,6 +150,14 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
                         values.put(CalendarContract.Events.EVENT_TIMEZONE, timeZone.getID());
                         Uri uri = cr.insert(CalendarContract.Events.CONTENT_URI, values);
 
+                        long eventId = Long.parseLong(uri.getLastPathSegment());
+
+                        ContentValues reminder = new ContentValues();
+                        reminder.put(CalendarContract.Reminders.EVENT_ID,eventId);
+                        reminder.put(CalendarContract.Reminders.MINUTES,1440);
+                        reminder.put(CalendarContract.Reminders.METHOD,CalendarContract.Reminders.METHOD_ALERT);
+                        cr.insert(CalendarContract.Reminders.CONTENT_URI, reminder);
+
                         Toast.makeText(context, "Arrangemang lagret i din kalender", Toast.LENGTH_SHORT).show();
                     }
 
@@ -131,7 +175,7 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
 
     private String getDayOfWeek(String startYear,String startMonth,String startDay) {
         int year = Integer.parseInt(startYear);
-        int month = Integer.parseInt(startMonth);
+        int month = Integer.parseInt(startMonth) + 1;
         int date = Integer.parseInt(startDay);
         LocalDate d = LocalDate.of(year, month, date);
         DayOfWeek dow = d.getDayOfWeek();
@@ -139,6 +183,25 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
         return s;
     }
 
+    private void deleteCalendarItem(long id){
+        System.out.println("=============================");
+        System.out.println(id);
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().deleteCalendarItem(id);
+        call.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                if(response.isSuccessful()){
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+    }
 
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -146,7 +209,7 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
         ConstraintLayout expandableLayout;
         ConstraintLayout parentCard;
         TextView dateTextView, dateNumber, title, time, description,address;
-        ImageView mapView;
+        ImageView mapView,deleteButton;
         Button addButton;
         ViewHolder(View view){
             super(view);
@@ -172,13 +235,8 @@ public class CalendarRecyclerViewAdapter extends RecyclerView.Adapter<CalendarRe
             });
 
             addButton = view.findViewById(R.id.addButton);
-      /*      mapView.setOnClickListener(new View.OnClickListener(){
-                @Override
-                public void onClick(View v) {
-                    MapFragment mapFragment = new MapFragment();
-                    mapFragment.show(((AppCompatActivity)v.getContext()).getSupportFragmentManager(),"ModalBottomSheet");
-                }
-            });*/
+            deleteButton = view.findViewById(R.id.deleteBtn);
+
         }
 
 

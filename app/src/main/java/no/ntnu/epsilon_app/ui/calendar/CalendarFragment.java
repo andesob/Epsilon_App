@@ -54,6 +54,7 @@ public class CalendarFragment extends Fragment {
     private Button firstMonth,secondMonth,thirdMonth,fourthMonth,fifthMonth
             ,sixthMonth,seventhMonth,eightMonth,ninthMonth,tenthMonth
             ,eleventhMonth,twelthMonth;
+
     private ArrayList<Button> monthList;
 
     public CalendarFragment() {
@@ -105,7 +106,7 @@ public class CalendarFragment extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         calendarAdapter = new CalendarRecyclerViewAdapter(getContext(),setList(CalendarViewModel.CALENDAR_LIST,0));
         recyclerView.setAdapter(calendarAdapter);
-        FloatingActionButton floatingActionButton = (FloatingActionButton) view.findViewById(R.id.calendarEdditButton);
+        ImageView floatingActionButton = view.findViewById(R.id.calendarEdditButton);
 
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
         if(loginRepository.isAdmin()||loginRepository.isBoardmember()){
@@ -154,7 +155,7 @@ public class CalendarFragment extends Fragment {
     private ArrayList<Calendar> setList(ArrayList<Calendar> inputList,int position){
         ArrayList<Calendar> newList = new ArrayList<>();
         for(Calendar c : inputList){
-            if((Integer.parseInt(c.getStartTimeParsed(1))) == (position + LocalDate.now().getMonthValue()-1)){
+            if((Integer.parseInt(c.getStartTimeParsed(1))) == ((position + LocalDate.now().getMonth().ordinal()) % 12)){
                 System.out.println(c);
                 newList.add(c);
             }
