@@ -5,6 +5,9 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClientInstance {
+    //IP for server
+    //private static final String BASE_URL = "http://158.38.101.247:8080/Epsilon_Backend/api/";
+
     //IP at school wifi
     //private static final String BASE_URL = "http://10.22.179.231:8080/Epsilon_Backend/api/";
 
