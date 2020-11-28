@@ -11,36 +11,37 @@
     <string name="nav_header_title">Android Studio</string>
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Innstillinger</string>
+
 
     <string name="menu_home">Home</string>
     <string name="menu_gallery">Gallery</string>
     <string name="menu_slideshow">Slideshow</string>
     <string name="login_header">Epsilon</string>
     <string name="prompt_phoneNumber">Phone Number</string>
-    <string name="faq">Faq</string>
+    <string name="faq">Ofte stilte spørsmål</string>
     <string name="title_activity_login">Logg Inn</string>
     <string name="facebookLinkText">Du kan også finne oss på facebook</string>
-    <string name="news">News</string>
-    <string name="calendar">Calendar</string>
+    <string name="news">Nyheter</string>
+    <string name="calendar">Kalender</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="ask_question">Ask Question</string>
-    <string name="about_us">About us</string>
-    <string name="news_feed">News Feed</string>
-    <string name="newstitle">Title</string>
+    <string name="ask_question">Still et spørsmål</string>
+    <string name="about_us">Om oss</string>
+    <string name="news_feed">Nyheter</string>
+    <string name="newstitle">Tittel</string>
     <string name="newscontent">Content</string>
-    <string name="enter_title_here">Enter title here</string>
-    <string name="enter_news_here">Enter news here</string>
-    <string name="postNews">Post</string>
+    <string name="enter_title_here">Skriv tittel her</string>
+    <string name="enter_news_here">Skriv nyheten her</string>
+    <string name="postNews">Send</string>
     <string name="Epsilon">Epsilon</string>
-    <string name="Edit">Edit</string>
+    <string name="Edit">Rediger</string>
     <string name="Close">Lukk</string>
     <string name="Send">Send</string>
     <string name="editFaq">Rediger et ofte stilt spørsmål</string>
     <string name="epsilon_linjeforening">Epsilon Linjeforening</string>
     <string name="addFaq">Legg til et ofte stilt spørsmål</string>
-    <string name="loginBtnText">Logg Inn</string>
+    <string name="loginBtnText">Logg inn</string>
     <string name="calendarBtn">Legg til i kalender</string>
     <string name="startTime">Starttid</string>
     <string name="endTime">Slutt-tid</string>
@@ -50,11 +51,13 @@
     <string name="register">Registrer en ny bruker</string>
     <string name="prompt_password">Passord</string>
     <string name="RegisterNewUser">Registrer en ny bruker</string>
-    <string name="welcome">"Welcome "</string>
-    <string name="action_logout">Logout</string>
-    <string name="twoFactorKey">Enter code here</string>
+    <string name="welcome">"Velkommen "</string>
+    <string name="action_logout">Log ut</string>
+    <string name="twoFactorKey">Skriv koden her</string>
     <string name="changePassword">Endre passordet ditt</string>
     <string name="oldPassword">Gammel passord</string>
     <string name="newPassword">Nytt passord</string>
     <string name="confirm">Bekreft</string>
+    <string name="ask_epsilon_a_question">Still Epsilon et spørsmål</string>
+    <string name="about_epsilon_text">Epsilon Ålesund er en linjeforing for studenter på NTNU Ålesund. Foreningen har fokus på å øke samholdet mellom fagene Data, Automasjon og Elkraft.</string>
 </resources>
