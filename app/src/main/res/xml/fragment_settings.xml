@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent"
+    app:iconSpaceReserved="false">
+
+        <PreferenceCategory
+            app:iconSpaceReserved="false"
+            app:key="notifications_category"
+            app:title="Varlser">
+
+            <SwitchPreferenceCompat
+                app:iconSpaceReserved="false"
+                app:key="notifications"
+                app:title="Skru på varsler"/>
+
+        </PreferenceCategory>
+
+        <PreferenceCategory
+            app:iconSpaceReserved="false"
+            app:key="help_category"
+            app:title="Hjelp">
+            <Preference
+                app:iconSpaceReserved="false"
+                app:key="Tilbakemeldinger"
+                app:summary="Dersom noe er feil, så send Eskil en mail"
+                app:title="Send tilbakemelding"/>
+        </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:key="facebook_link_settings"
+        app:title="Facebook">
+        <Preference
+            app:iconSpaceReserved="false"
+            app:key="facebook_link"
+            app:title="@string/facebookLinkText"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:iconSpaceReserved="false"
+        app:key="edit_settings"
+        app:title="">
+        <Preference
+            app:iconSpaceReserved="false"
+            app:fragment="no.ntnu.res.layout.fragment_change_password"
+            app:key="changePassword"
+            android:padding="10dp"
+            android:title="@string/changePassword" />
+        <Preference
+            app:key="logout"
+            app:iconSpaceReserved="false"
+            android:padding="10dp"
+            android:title="@string/action_logout" />
+    </PreferenceCategory>
+
+    </PreferenceScreen>

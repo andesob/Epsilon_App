@@ -29,8 +29,6 @@
                 android:gravity="center"
                 android:text="Om Epsilon"
                 android:textColor="#fff"
-
-
                 android:textSize="24dp" />
 
             <TextView
