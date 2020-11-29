@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.sql.DataSource;
 
@@ -61,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),
                 R.drawable.ic_settings);
-        toolbar.setOverflowIcon(drawable);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
@@ -97,20 +97,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_logout:
-                logout();
+            case R.id.settings_button:
+                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_settings);
                 break;
-
-        case R.id.changePassword:
-            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_change_pwd);
-            break;
-
-        case R.id.settings:
-            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_settings);
-            break;
         }
-
-        return super.onOptionsItemSelected(item);
+            return super.onOptionsItemSelected(item);
     }
 
     public void logout(){

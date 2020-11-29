@@ -12,6 +12,7 @@ import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
+import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.tools.EpsilonFacebookIntent;
 
@@ -47,7 +48,7 @@ public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
                         logout.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                                 @Override
                                 public boolean onPreferenceClick(Preference preference) {
-
+                                        ((MainActivity)requireActivity()).logout();
                                         return true;
                                 }
                         });

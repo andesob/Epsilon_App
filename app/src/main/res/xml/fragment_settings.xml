@@ -13,7 +13,7 @@
             <SwitchPreferenceCompat
                 app:iconSpaceReserved="false"
                 app:key="notifications"
-                app:title="Skru på varsler"/>
+                app:title="Skru på varsler" />
 
         </PreferenceCategory>
 
