@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.MenuItem;
@@ -18,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -28,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import java.io.IOException;
+import java.util.Objects;
 
 import javax.sql.DataSource;
 
@@ -39,6 +42,7 @@ import no.ntnu.epsilon_app.data.LoginRepository;
 import no.ntnu.epsilon_app.data.User;
 import no.ntnu.epsilon_app.data.UserParser;
 import no.ntnu.epsilon_app.data.UserViewModel;
+import no.ntnu.epsilon_app.tools.EpsilonFacebookIntent;
 import no.ntnu.epsilon_app.ui.about_us.AboutUsViewModel;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -50,15 +54,14 @@ public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     DrawerLayout drawer;
-    private static final String FACEBOOK_ID = "1007001496115565";
-    private static final String FACEBOOK_URL = "https://www.facebook.com/EpsilonAalesund";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
         Toolbar toolbar = findViewById(R.id.toolbar);
+        Drawable drawable = ContextCompat.getDrawable(getApplicationContext(),
+                R.drawable.ic_settings);
         setSupportActionBar(toolbar);
 
         drawer = findViewById(R.id.drawer_layout);
@@ -78,9 +81,8 @@ public class MainActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(newFaceBookIntent(getPackageManager()));
+                startActivity(EpsilonFacebookIntent.newFaceBookIntent(getPackageManager()));
             }
-
         });
     }
 
@@ -95,15 +97,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_logout:
-                logout();
+            case R.id.settings_button:
+                Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_settings);
                 break;
-
-        case R.id.changePassword:
-            Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_change_pwd);
-            break;
         }
-        return super.onOptionsItemSelected(item);
+            return super.onOptionsItemSelected(item);
     }
 
     public void logout(){
@@ -157,17 +155,7 @@ public class MainActivity extends AppCompatActivity {
     private void onFailure(){
         }
 
-    private static Intent newFaceBookIntent(PackageManager pm) {
-        try {
-            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
-            if (applicationInfo.enabled) {
-                return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + FACEBOOK_ID));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
 
-        }
-        return new Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL));
-    }
 
 
 }
