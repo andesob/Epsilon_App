@@ -256,7 +256,7 @@
             android:background="@drawable/border"
             android:inputType="textMultiLine"
             android:minLines="10"
-            android:maxLines="11"
+            android:maxLines="10"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
