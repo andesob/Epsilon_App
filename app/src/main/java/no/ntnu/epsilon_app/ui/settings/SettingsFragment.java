@@ -25,6 +25,7 @@ public class SettingsFragment extends PreferenceFragmentCompat {
                 rv.setPadding(20, 0, 20, 0);
         }
 
+
         @Override
 public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
         setPreferencesFromResource(R.xml.fragment_settings, rootKey);
@@ -32,7 +33,6 @@ public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
                 Preference changePassword = findPreference("changePassword");
                 Preference logout = findPreference("logout");
                 Preference facebookLink = findPreference("facebook_link");
-
 
                 if (changePassword != null) {
                         changePassword.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -62,7 +62,6 @@ public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
                                 }
                         });
                 }
-
         }
 
 

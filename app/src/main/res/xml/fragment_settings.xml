@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:layout_width="match_parent"
     app:iconSpaceReserved="false">
 
@@ -14,7 +14,6 @@
                 app:iconSpaceReserved="false"
                 app:key="notifications"
                 app:title="Skru på varsler" />
-
         </PreferenceCategory>
 
         <PreferenceCategory
@@ -24,7 +23,7 @@
             <Preference
                 app:iconSpaceReserved="false"
                 app:key="Tilbakemeldinger"
-                app:summary="Dersom noe er feil, så send Eskil en mail"
+                android:summary="Dersom noe er feil, så send Eskil en mail"
                 app:title="Send tilbakemelding"/>
         </PreferenceCategory>
 
