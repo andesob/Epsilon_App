@@ -39,3 +39,4 @@ public class RetrofitClientInstance {
         retrofit = new Retrofit.Builder().baseUrl(BASE_URL).addConverterFactory(GsonConverterFactory.create()).client(httpClient.build()).build();
     }
 }
+
