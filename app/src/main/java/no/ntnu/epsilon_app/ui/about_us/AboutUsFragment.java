@@ -169,9 +169,8 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                             e.printStackTrace();
                         }
                         Navigation.findNavController(root).navigate(R.id.nav_about_us);
-                    }
-                    else{
-                        ((MainActivity)getActivity()).goToSplashScreen();
+                    } else {
+                        ((MainActivity) getActivity()).goToSplashScreen();
                     }
                 }
 
@@ -195,9 +194,8 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
-                    ((MainActivity)getActivity()).goToSplashScreen();
+                } else {
+                    ((MainActivity) getActivity()).goToSplashScreen();
                 }
             }
 
