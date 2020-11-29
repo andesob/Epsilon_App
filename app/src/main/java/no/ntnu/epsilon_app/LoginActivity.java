@@ -45,6 +45,7 @@ import no.ntnu.epsilon_app.data.LoginViewModelFactory;
 import no.ntnu.epsilon_app.data.User;
 import no.ntnu.epsilon_app.data.UserParser;
 import no.ntnu.epsilon_app.data.UserViewModel;
+import no.ntnu.epsilon_app.tools.EpsilonFacebookIntent;
 import no.ntnu.epsilon_app.ui.register.RegisterActivity;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
@@ -57,8 +58,6 @@ import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String FACEBOOK_ID = "1007001496115565";
-    private static final String FACEBOOK_URL = "https://www.facebook.com/EpsilonAalesund";
     private LoginViewModel loginViewModel;
 
     private EditText editEmail;
@@ -114,7 +113,7 @@ public class LoginActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(newFaceBookIntent(getPackageManager()));
+                startActivity(EpsilonFacebookIntent.newFaceBookIntent(getPackageManager()));
             }
 
         });
@@ -236,16 +235,5 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private static Intent newFaceBookIntent(PackageManager pm) {
-        try {
-            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
-            if (applicationInfo.enabled) {
-                return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + FACEBOOK_ID));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        }
-        return new Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL));
-    }
 }
 
