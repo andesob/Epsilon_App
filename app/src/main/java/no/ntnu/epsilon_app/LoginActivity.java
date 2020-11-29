@@ -155,6 +155,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editEmail.setError("Vennligst tast inn en gyldig epost");
+            editEmail.requestFocus();
             return;
         }
         if (pwd.isEmpty()) {

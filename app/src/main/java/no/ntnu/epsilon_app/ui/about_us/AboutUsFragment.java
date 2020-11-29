@@ -2,6 +2,7 @@ package no.ntnu.epsilon_app.ui.about_us;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -149,7 +150,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
@@ -168,9 +169,8 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                             e.printStackTrace();
                         }
                         Navigation.findNavController(root).navigate(R.id.nav_about_us);
-                    }
-                    else{
-                        ((MainActivity)getActivity()).goToSplashScreen();
+                    } else {
+                        ((MainActivity) getActivity()).goToSplashScreen();
                     }
                 }
 
@@ -194,9 +194,8 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
-                    ((MainActivity)getActivity()).goToSplashScreen();
+                } else {
+                    ((MainActivity) getActivity()).goToSplashScreen();
                 }
             }
 

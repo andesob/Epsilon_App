@@ -28,6 +28,8 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import no.ntnu.epsilon_app.MainActivity;
@@ -134,6 +136,7 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                int errorCount = 0;
                 String title = editTitle.getText().toString().trim();
                 String description = editDescription.getText().toString().trim();
                 //Time startTime = new Time(startDatePicker.getYear(),startDatePicker.getMonth(),startDatePicker.getDayOfMonth(),startTimePicker.getHour(),startTimePicker.getMinute());
@@ -142,8 +145,49 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
                 //Time endTime = new Time(endDatePicker.getYear(),endDatePicker.getMonth(),endDatePicker.getDayOfMonth(),endTimePicker.getHour(),endTimePicker.getMinute());
                 String endTime =  String.valueOf(endDatePicker.getYear()) + (",") +String.valueOf(endDatePicker.getMonth())+
                         (",") +  String.valueOf(endDatePicker.getDayOfMonth())+(",") + String.valueOf(endTimePicker.getHour()) +(",") + String.valueOf(endTimePicker.getMinute());
-                addEvent(title,description,latitudeLongitude,startTime,endTime,addressToLatLong);
+
+                if(LocalDate.of(startDatePicker.getYear(),startDatePicker.getMonth()+1,
+                            startDatePicker.getDayOfMonth()).isAfter(LocalDate.of(endDatePicker.getYear(),endDatePicker.getMonth()+1,
+                            endDatePicker.getDayOfMonth()))) {
+                    count = 0;
+                    setPage(count);
+                    Toast.makeText(getActivity(), "Startdato er satt til etter sluttdato", Toast.LENGTH_SHORT).show();
+                    errorCount += 1;
+                    return;
+                }
+
+                if(LocalTime.of(startTimePicker.getHour(),startTimePicker.getMinute()).isAfter(LocalTime.of(endTimePicker.getHour(),endTimePicker.getMinute()))){
+                    count = 0;
+                    setPage(count);
+                    Toast.makeText(getActivity(), "Starttid er satt til etter slutt-tid", Toast.LENGTH_SHORT).show();
+                    errorCount += 1;
+                    return;
+                }
+                if(title.isEmpty()){
+                    editTitle.setError("Vennligst tast inn en tittel");
+                    editTitle.requestFocus();
+                    errorCount += 1;
+                    return;
+                }
+                if(description.isEmpty()){
+                    editDescription.setError("Vennligst tast inn en beskrivelse");
+                    editDescription.requestFocus();
+                    errorCount += 1;
+                    return;
+                }
+                if(addressToLatLong.isEmpty() || latitudeLongitude.isEmpty()){
+                    count=1;
+                    setPage(count);
+                    Toast.makeText(getActivity(),"Lokasjon ikke satt",Toast.LENGTH_SHORT).show();
+                    errorCount += 1;
+                    return;
+                }
+                if(errorCount != 0) {
+                    addEvent(title, description, latitudeLongitude, startTime, endTime, addressToLatLong);
+                }
+
             }
+
         });
 
         SupportMapFragment mapFragment = (SupportMapFragment) this.getChildFragmentManager().findFragmentById(R.id.map);
@@ -152,6 +196,9 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
     }
 
     private void addEvent(String title,String description,String latLng,String startTime,String endTime,String addressToLatLong) {
+
+
+
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().addCalendarItem(title,description,
                 latLng,startTime,endTime,addressToLatLong);
         call.enqueue(new Callback<ResponseBody>() {
