@@ -16,7 +16,7 @@ public class ChangePasswordRepository {
     }
 
     public MutableLiveData<Response> getChangePasswordData(String oldPassword, String newPassword) {
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().changePassword(oldPassword, newPassword );
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().changePassword(oldPassword, newPassword);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {

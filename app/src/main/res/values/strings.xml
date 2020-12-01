@@ -62,4 +62,6 @@
     <string name="about_epsilon_text">Epsilon Ålesund er en linjeforing for studenter på NTNU Ålesund. Foreningen har fokus på å øke samholdet mellom fagene Data, Automasjon og Elkraft.</string>
     <string name="settings">Innstillinger</string>
     <string name="showMoreText">(Trykk for å utvide)</string>
+    <string name="forgotPassword">Glemt passord</string>
+    <string name="link_to_facebook">Link to facebook</string>
 </resources>
