@@ -41,7 +41,7 @@
                 android:text="@string/ask_epsilon_a_question"
                 android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="26dp"
+                android:textSize="26sp"
                 android:textStyle="bold"/>
 
             <EditText
@@ -69,7 +69,6 @@
                 android:layout_gravity="bottom|center_horizontal"
                 android:background="@drawable/login_border"
                 android:ems="14"
-
                 android:fitsSystemWindows="true"
                 android:text="@string/Send"
                 android:textColor="@color/colorAccent" />
