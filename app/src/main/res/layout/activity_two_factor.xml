@@ -49,7 +49,7 @@
             android:textColor="@color/colorAccent"
             android:textColorHint="#73FFFFFF"
             android:autofillHints="Two factor code"
-            android:inputType="text" />
+            android:inputType="phone" />
 
 
         <Button

@@ -10,32 +10,31 @@ import retrofit2.Response;
 
 public class ChangePasswordRepository {
 
-    private MutableLiveData<Result> changePasswordData = new MutableLiveData<>();
+    private MutableLiveData<Response> changePasswordData = new MutableLiveData<>();
 
     public ChangePasswordRepository( ){
     }
 
-    public MutableLiveData<Result> getChangePasswordData(String oldPassword, String newPassword) {
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().changePassword(oldPassword, newPassword );
+    public MutableLiveData<Response> getChangePasswordData(String oldPassword, String newPassword) {
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().changePassword(oldPassword, newPassword);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
                 if (response.isSuccessful()) {
-                    changePasswordData.setValue(new Result.Success(response));
+                    changePasswordData.setValue(response);
                 } else {
-                    changePasswordData.setValue(new Result.Error(response.body()));
+                    changePasswordData.setValue(response);
                 }
             }
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Result result = new Result.Error("OnFailure called");
-                changePasswordData.setValue(result);
+                changePasswordData.setValue(null);
             }
         });
         return changePasswordData;
     }
 
-    public MutableLiveData<Result> getChangePasswordData() {
+    public MutableLiveData<Response> getChangePasswordData() {
         return changePasswordData;
     }
 }

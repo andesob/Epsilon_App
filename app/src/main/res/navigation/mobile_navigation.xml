@@ -57,4 +57,8 @@
         android:name="no.ntnu.epsilon_app.ui.changePassword.ChangePasswordFragment"
         tools:layout="@layout/fragment_change_password"/>
 
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="no.ntnu.epsilon_app.ui.settings.SettingsFragment"
+        android:label="@string/settings"/>
 </navigation>

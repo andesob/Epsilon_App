@@ -29,6 +29,9 @@ public class NewsParser {
         String content = object.get("newsContent").getAsString();
         long newsId = object.get("newsfeedObjectId").getAsLong();
 
+        timeWrittenString = timeWrittenString.replace(" ", "T");
+        lastUpdatedString = lastUpdatedString.replace(" ", "T");
+
         LocalDateTime timeWritten = LocalDateTime.parse(timeWrittenString);
         LocalDateTime lastUpdated = LocalDateTime.parse(lastUpdatedString);
 

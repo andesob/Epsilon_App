@@ -8,6 +8,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import no.ntnu.epsilon_app.data.Result;
+import retrofit2.Response;
 
 public class ChangePasswordViewModel extends ViewModel {
 
@@ -17,11 +18,11 @@ public class ChangePasswordViewModel extends ViewModel {
          this.repository = new ChangePasswordRepository();
      }
 
-     public MutableLiveData<Result> getChangePasswordData(String oldPassword, String newPassword) {
+     public MutableLiveData<Response> getChangePasswordData(String oldPassword, String newPassword) {
          return repository.getChangePasswordData(oldPassword, newPassword);
      }
 
-     public MutableLiveData<Result> getChangePasswordData() {
+     public MutableLiveData<Response> getChangePasswordData() {
          return repository.getChangePasswordData();
      }
     public boolean isOldPwdValid(String oldPassword) {
@@ -34,7 +35,7 @@ public class ChangePasswordViewModel extends ViewModel {
     }
 
     public boolean isNewPwdValid(String newPassword){
-        if (newPassword == null || newPassword == null) {
+        if (newPassword == null) {
             return false;
         }
         else {

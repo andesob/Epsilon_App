@@ -1,13 +1,8 @@
 package no.ntnu.epsilon_app;
 
-import android.accounts.AccountAuthenticatorResponse;
-import android.accounts.NetworkErrorException;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.util.Patterns;
@@ -21,44 +16,27 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
-import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.google.android.material.button.MaterialButtonToggleGroup;
-
 import java.io.IOException;
-import java.sql.SQLOutput;
 
-import javax.sql.DataSource;
-
-import no.ntnu.epsilon_app.api.EpsilonAPI;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
-import no.ntnu.epsilon_app.data.ImageParser;
 import no.ntnu.epsilon_app.data.LoggedInUser;
-import no.ntnu.epsilon_app.data.LoginDataSource;
-import no.ntnu.epsilon_app.data.LoginRepository;
 import no.ntnu.epsilon_app.data.LoginViewModel;
 import no.ntnu.epsilon_app.data.LoginViewModelFactory;
 import no.ntnu.epsilon_app.data.User;
 import no.ntnu.epsilon_app.data.UserParser;
-import no.ntnu.epsilon_app.data.UserViewModel;
+import no.ntnu.epsilon_app.tools.EpsilonFacebookIntent;
 import no.ntnu.epsilon_app.ui.register.RegisterActivity;
-import okhttp3.Interceptor;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.ResponseBody;
-import okhttp3.internal.http.HttpHeaders;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String FACEBOOK_ID = "1007001496115565";
-    private static final String FACEBOOK_URL = "https://www.facebook.com/EpsilonAalesund";
     private LoginViewModel loginViewModel;
 
     private EditText editEmail;
@@ -86,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressBar progressBar = findViewById(R.id.progressBar);
         final ImageButton imageButton = findViewById(R.id.facebookLink);
         final TextView registerUserText = findViewById(R.id.registerUserText);
+        final TextView forgotPasswordText = findViewById(R.id.forgotPasswordText);
 
         progressBar.setVisibility(View.GONE);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -114,7 +93,7 @@ public class LoginActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(newFaceBookIntent(getPackageManager()));
+                startActivity(EpsilonFacebookIntent.newFaceBookIntent(getPackageManager()));
             }
 
         });
@@ -123,6 +102,14 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+            }
+        });
+
+        forgotPasswordText.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this, ForgotPasswordActivity.class));
             }
         });
 
@@ -156,6 +143,7 @@ public class LoginActivity extends AppCompatActivity {
         }
         if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             editEmail.setError("Vennligst tast inn en gyldig epost");
+            editEmail.requestFocus();
             return;
         }
         if (pwd.isEmpty()) {
@@ -236,16 +224,5 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private static Intent newFaceBookIntent(PackageManager pm) {
-        try {
-            ApplicationInfo applicationInfo = pm.getApplicationInfo("com.facebook.katana", 0);
-            if (applicationInfo.enabled) {
-                return new Intent(Intent.ACTION_VIEW, Uri.parse("fb://page/" + FACEBOOK_ID));
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-
-        }
-        return new Intent(Intent.ACTION_VIEW, Uri.parse(FACEBOOK_URL));
-    }
 }
 

@@ -88,66 +88,65 @@ public class ChangePasswordFragment extends Fragment {
 
 
     private void observeChangePasswordData() {
-        viewModel.getChangePasswordData().observe(getViewLifecycleOwner(), new Observer<Result>() {
+        viewModel.getChangePasswordData().observe(getViewLifecycleOwner(), new Observer<Response>() {
             @Override
-            public void onChanged(Result result) {
-                if (result instanceof Result.Error){
-                    System.out.println(((Result.Error) result).getError());
-                    Toast.makeText(getContext(),"Error: kunne ikke endre passordet", Toast.LENGTH_SHORT).show();
-                }
-                else if (result instanceof Result.Success){
-                    Toast.makeText(getContext(), "Passordet er endret", Toast.LENGTH_SHORT).show();
-                    Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_newsfeed);
+            public void onChanged(Response response) {
+                if (response.isSuccessful()){
+                    handleSuccess(response.code());
                 }
                 else {
-                    Toast.makeText(getContext(), "Det oppsto en feil", Toast.LENGTH_SHORT).show();
+                    handleError(response.code());
                 }
             }
         });
 
     }
-    private void changePassword(String oldPassword, String newPassword) {
 
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().changePassword(oldPassword, newPassword);
-        call.enqueue(new Callback<ResponseBody>() {
-            @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()) {
-                    System.out.println(response.body());
-                    Toast.makeText(getContext(), "Passordet er endret", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    Toast.makeText(getContext(), "Error: kunne ikke endre passordet", Toast.LENGTH_SHORT).show();
-                }
-            }
+    private void handleError(int responseCode){
+        if (responseCode == 400){
+            System.out.println("User or password is null");
+            Toast.makeText(getContext(), "Noe gikk galt da vi prøvde å endre passordet", Toast.LENGTH_SHORT).show();
+        }
+        else if(responseCode == 401){
+            System.out.println("The old password was wrong");
+            oldPwd.requestFocus();
+            oldPwd.setError("Det gamle passordet er feil");
+        }
+        else
+        {
+            System.out.println("Error code: " + responseCode);
+            System.out.println("An unknown error occurred while changing the password");
+            Toast.makeText(getContext(), "Noe gikk galt da vi prøvde å endre passordet", Toast.LENGTH_SHORT).show();
+        }
+    }
 
-            @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
-                Toast.makeText(getContext(), "Error: kunne ikke endre passordet2", Toast.LENGTH_SHORT).show();
-            }
-        });
+    private void handleSuccess(int responseCode){
+        if(responseCode == 200){
+            Toast.makeText(getContext(), "Passordet er endret", Toast.LENGTH_SHORT).show();
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_newsfeed);
+        }
     }
 
     private boolean validateInput(String oldPassword, String newPassword1, String newPassword2) {
 
         if (!viewModel.isOldPwdValid(oldPassword)){
             oldPwd.requestFocus();
-            oldPwd.setError("Please provide the current password");
+            oldPwd.setError("Det gamle passordet er feil");
             return false;
         }
         else if(!viewModel.isNewPwdValid(newPassword1)){
             newPwd1.requestFocus();
-            newPwd1.setError("Password must be more than 5 characters");
+            newPwd1.setError("Passordet må være lengre enn 5 karakterer");
             return false;
         }
         else if(!viewModel.isNewPwdValid(newPassword2)){
             newPwd2.requestFocus();
-            newPwd2.setError("Password must be more than 5 characters");
+            newPwd2.setError("Passordet må være lengre enn 5 karakterer");
             return false;
         }
         else if(!viewModel.isPasswordEqual(newPassword1, newPassword2)){
             newPwd2.requestFocus();
-            newPwd2.setError("The new password must be equal");
+            newPwd2.setError("Det nye passordet må være like");
             return false;
         }
         return true;

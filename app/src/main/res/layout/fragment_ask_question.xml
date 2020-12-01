@@ -38,10 +38,10 @@
                 android:layout_gravity="center_horizontal"
                 android:layout_marginBottom="46dp"
                 android:fontFamily="@font/roboto_thin"
-                android:text="Ask Epsilon a question"
+                android:text="@string/ask_epsilon_a_question"
                 android:textAlignment="center"
                 android:textColor="#fff"
-                android:textSize="26dp"
+                android:textSize="26sp"
                 android:textStyle="bold"/>
 
             <EditText
@@ -69,9 +69,8 @@
                 android:layout_gravity="bottom|center_horizontal"
                 android:background="@drawable/login_border"
                 android:ems="14"
-
                 android:fitsSystemWindows="true"
-                android:text="Submit"
+                android:text="@string/Send"
                 android:textColor="@color/colorAccent" />
 
 

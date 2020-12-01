@@ -5,11 +5,13 @@ import androidx.lifecycle.ViewModelProviders;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.IOException;
 
@@ -29,6 +31,8 @@ import retrofit2.Response;
 public class TwoFactorActivity extends AppCompatActivity {
     private EditText editTwoFactor;
     private LoginViewModel loginViewModel;
+    private ProgressBar progressBar;
+    private Button sendButton;
 
 
     @Override
@@ -39,8 +43,8 @@ public class TwoFactorActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         editTwoFactor = findViewById(R.id.twoFactorEditText);
-        final Button sendButton = findViewById(R.id.twoFactorButton);
-        final ProgressBar progressBar = findViewById(R.id.progressBar);
+        sendButton = findViewById(R.id.twoFactorButton);
+        progressBar = findViewById(R.id.progressBar);
         TextView twoFactorTV = findViewById(R.id.twoFactorText);
         progressBar.setVisibility(View.GONE);
 
@@ -105,6 +109,10 @@ public class TwoFactorActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
+                } else{
+                    progressBar.setVisibility(View.INVISIBLE);
+                    sendButton.setVisibility(View.VISIBLE);
+                    Toast.makeText(getBaseContext(), "Feil kode, prøv på nytt", Toast.LENGTH_LONG).show();
                 }
             }
 

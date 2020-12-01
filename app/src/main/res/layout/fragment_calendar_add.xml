@@ -42,6 +42,7 @@
         android:datePickerMode="spinner"
         android:calendarViewShown="false"
         android:theme="@style/MyDatePicker"
+        android:scrollbars="none"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
@@ -51,7 +52,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:theme="@style/MyDatePicker"
-
+        android:scrollbars="none"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:timePickerMode="spinner"
@@ -83,6 +84,7 @@
                 android:datePickerMode="spinner"
                 android:calendarViewShown="false"
                 android:theme="@style/MyDatePicker"
+                android:scrollbars="none"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"/>
 
@@ -92,7 +94,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:theme="@style/MyDatePicker"
-
+                android:scrollbars="none"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:timePickerMode="spinner"
@@ -129,7 +131,7 @@
             android:background="@drawable/border"
             android:ems="14"
             android:layout_marginTop="15dp"
-            android:hint="Adresse"
+            android:hint="@string/adresse"
             android:textColorHint="#73FFFFFF"
             android:textColor="@color/colorAccent"
             app:layout_constraintStart_toStartOf="parent"
@@ -191,11 +193,12 @@
         android:id="@+id/addCalendarPageThree"
         android:visibility="gone">
 
+
         <TextView
             android:id="@+id/calendarTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Title"
+            android:text="@string/tittel"
             android:layout_marginTop="10dp"
             android:textColor="#FFF"
             app:layout_constraintStart_toStartOf="parent"
@@ -208,7 +211,7 @@
             android:id="@+id/calendarEditTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="Tittel"
+            android:hint="@string/tittel"
             android:ems="14"
             android:textColorHint="#73FFFFFF"
             android:textColor="@color/colorAccent"
@@ -225,28 +228,42 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             app:layout_constraintTop_toBottomOf="@+id/calendarEditTitle"
-            android:text="Beskrivelse"
+            android:text="@string/beskrivelse"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:textColor="#FFF"
             android:textSize="30sp"/>
+        <ScrollView
+            android:id="@+id/descriptionScroll"
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toBottomOf="@id/calendarDescription"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:fillViewport="true">
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
         <EditText
             android:id="@+id/calendarEditDescription"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:gravity="start"
-            android:hint="Beskrivelse"
+            android:hint="@string/beskrivelse"
             android:ems="14"
             android:textColorHint="#73FFFFFF"
             android:textColor="@color/colorAccent"
             android:background="@drawable/border"
             android:inputType="textMultiLine"
             android:minLines="10"
-            app:layout_constraintTop_toBottomOf="@id/calendarDescription"
+            android:maxLines="10"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:layout_marginTop="7dp"
             />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+    </ScrollView>
 
         <Button
             android:id="@+id/addEventButton"
@@ -254,9 +271,9 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/calendarEditDescription"
+            app:layout_constraintTop_toBottomOf="@id/descriptionScroll"
             android:layout_marginTop="25dp"
-            android:text="Legg til event"
+            android:text="@string/legg_til_event"
             android:textColor="#fff"
             android:background="@drawable/login_border"/>
 

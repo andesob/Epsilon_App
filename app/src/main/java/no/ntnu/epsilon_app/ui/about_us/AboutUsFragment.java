@@ -2,6 +2,7 @@ package no.ntnu.epsilon_app.ui.about_us;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -33,6 +34,8 @@ import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.ImageParser;
+import no.ntnu.epsilon_app.data.LoginDataSource;
+import no.ntnu.epsilon_app.data.LoginRepository;
 import no.ntnu.epsilon_app.ui.about_us.dummy.DummyContent;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -90,7 +93,11 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
 
         adapter = new AboutUsItemRecyclerViewAdapter(AboutUsViewModel.OBJECT_LIST);
 
-        adapter.setClickListener(this);
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+        if (loginRepository.isAdmin() || loginRepository.isBoardmember()) {
+            adapter.setClickListener(this);
+        }
+
         recyclerView.setAdapter(adapter);
 
         return root;
@@ -149,7 +156,7 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
 
             BitmapFactory.Options options = new BitmapFactory.Options();
             options.inPreferredConfig = Bitmap.Config.ARGB_8888;
-            Bitmap bitmap = BitmapFactory.decodeFile(imagePath, options);
+            Bitmap bitmap = BitmapFactory.decodeFile(file.getAbsolutePath(), options);
 
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
@@ -164,13 +171,12 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                     if (response.isSuccessful()) {
                         try {
                             ImageParser.parseImage(response.body().string());
+                            Navigation.findNavController(root).navigate(R.id.nav_about_us);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Navigation.findNavController(root).navigate(R.id.nav_about_us);
-                    }
-                    else{
-                        ((MainActivity)getActivity()).goToSplashScreen();
+                    } else {
+                        ((MainActivity) getActivity()).goToSplashScreen();
                     }
                 }
 
@@ -194,9 +200,8 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
-                    ((MainActivity)getActivity()).goToSplashScreen();
+                } else {
+                    ((MainActivity) getActivity()).goToSplashScreen();
                 }
             }
 
