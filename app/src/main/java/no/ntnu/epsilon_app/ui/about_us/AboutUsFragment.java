@@ -165,10 +165,10 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
                     if (response.isSuccessful()) {
                         try {
                             ImageParser.parseImage(response.body().string());
+                            Navigation.findNavController(root).navigate(R.id.nav_about_us);
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        Navigation.findNavController(root).navigate(R.id.nav_about_us);
                     } else {
                         ((MainActivity) getActivity()).goToSplashScreen();
                     }
