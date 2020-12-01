@@ -40,8 +40,7 @@
                         android:id="@+id/dateNum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="27"
-                        android:textSize="32dp"
+                        android:textSize="32sp"
                         android:textColor="#fff"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
@@ -53,8 +52,7 @@
                         android:id="@+id/day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="15dp"
-                        android:text="Sun"
+                        android:textSize="15sp"
                         android:textColor="#fff"
                         app:layout_constraintStart_toStartOf="@+id/dateNum"
                         app:layout_constraintTop_toBottomOf="@id/dateNum" />
@@ -65,9 +63,8 @@
                     android:id="@+id/calendarTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Fest hos mange"
                     android:paddingLeft="20dp"
-                    android:textSize="20dp"
+                    android:textSize="20sp"
                     android:layout_marginLeft="60dp"
                     android:layout_marginRight="30dp"
                     android:background="@drawable/border"
@@ -95,9 +92,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="Tidspunkt: "
+                        android:text="@string/tidspunkt"
                         android:textColor="#fff"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="@id/guideline"
                         app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,9 +102,8 @@
                         android:id="@+id/time"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="19:00 - 21:00"
                         android:textColor="#fff"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@id/timeTitle"
                         app:layout_constraintTop_toTopOf="parent" />
@@ -142,9 +138,9 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="Adresse: "
+                        android:text="@string/adresse"
                         android:textColor="#fff"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         app:layout_constraintStart_toStartOf="@id/guideline"
                         app:layout_constraintTop_toBottomOf="@id/time" />
 
@@ -152,9 +148,8 @@
                         android:id="@+id/address"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:text="Bestemor til keeds vei 69"
                         android:textColor="#fff"
-                        android:textSize="16dp"
+                        android:textSize="16sp"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/adressTitle"
                         app:layout_constraintTop_toBottomOf="@id/time" />
@@ -164,7 +159,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:contentDescription="123"
                         android:src="@color/divider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="@id/guideline"
@@ -179,7 +173,7 @@
                         android:textColor="#fff"
                         android:layout_height="wrap_content"
                         android:text="@string/showMoreText"
-                        android:textSize="8dp"/>
+                        android:textSize="8sp"/>
 
                     <Button
                         android:id="@+id/addButton"
