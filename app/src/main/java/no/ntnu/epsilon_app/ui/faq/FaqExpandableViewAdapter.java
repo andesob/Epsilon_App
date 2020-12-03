@@ -32,7 +32,6 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         this.expandableListDetail = expandableListDetail;
         this.admin = admin;
         this.faqList = faqList;
-
     }
 
     @Override
@@ -95,7 +94,15 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         this.trashClickListener = faqExpandableViewClickListener;
     }
 
-
+    /**
+     * Sets the text for the view, and the visibility for the buttons
+     *
+     * @param listPosition
+     * @param isExpanded
+     * @param convertView
+     * @param parent
+     * @return
+     */
     @Override
     public View getGroupView(final int listPosition, boolean isExpanded,
                              View convertView, ViewGroup parent) {
@@ -103,10 +110,7 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
         if (convertView == null) {
             LayoutInflater layoutInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = layoutInflater.inflate(R.layout.faq_list_parent, null);
-
         }
-
-
         TextView listTitleTextView = (TextView) convertView.findViewById(R.id.listTitle);
         listTitleTextView.setText(listTitle);
 
@@ -134,30 +138,33 @@ public class FaqExpandableViewAdapter extends BaseExpandableListAdapter {
                         trashClickListener.onTrashClick(view, listPosition, id);
                 }
             });
-
         }
         return convertView;
     }
 
+    /**
+     * Finds the faq id
+     *
+     * @param faqs
+     * @param searchWords
+     * @return
+     */
     private long findFaqId(List<Faq> faqs, String searchWords) {
         long id = -1;
 
-        for(int i = 0; i < faqs.size(); i++){
-            if (faqs.get(i).getQuestion().contentEquals(searchWords)){
+        for (int i = 0; i < faqs.size(); i++) {
+            if (faqs.get(i).getQuestion().contentEquals(searchWords)) {
                 id = faqs.get(i).getId();
-                return  id;
+                return id;
             }
         }
         return id;
-
     }
-
 
     @Override
     public boolean hasStableIds() {
         return false;
     }
-
 
     @Override
     public boolean isChildSelectable(int listPosition, int expandedListPosition) {

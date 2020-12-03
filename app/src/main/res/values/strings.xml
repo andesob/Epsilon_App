@@ -72,4 +72,15 @@
     <string name="tittel">Tittel</string>
     <string name="beskrivelse">Beskrivelse</string>
     <string name="legg_til_event">Legg til event</string>
+    <string name="added">Lagt til</string>
+    <string name="error_cant_add">Error: kunne ikke legge til</string>
+    <string name="please_provide_valid_first_name">Vennligst oppgi et gyldig fornavn</string>
+    <string name="please_provide_valid_last_name">Vennligst oppgi et gyldig etternavn</string>
+    <string name="please_provide_valid_email">Vennligst oppgi en gyldig email</string>
+    <string name="password_must_be_longer_than_5_characters">Passordet må være lengre enn 5 karakterer</string>
+    <string name="something_went_wrong_with_password_changing">Noe gikk galt da vi prøvde å endre passordet</string>
+    <string name="old_password_is_wrong">Det gamle passordet er feil</string>
+    <string name="password_is_changed">Passordet er endret</string>
+    <string name="password_must_be_equal">Passordene må være identiske</string>
+    <string name="error_cant_edit">Error: kunne ikke endre</string>
 </resources>

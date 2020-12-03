@@ -9,6 +9,9 @@ import java.util.List;
 
 import retrofit2.Response;
 
+/**
+ * The viewModel for the faq fragment.
+ */
 public class FaqViewModel extends AndroidViewModel {
 
     private FaqRepository repository;
@@ -18,6 +21,11 @@ public class FaqViewModel extends AndroidViewModel {
         this.repository = new FaqRepository(application);
     }
 
+    /**
+     * returns the mutable live data object, without making an APi call.
+     *
+     * @return
+     */
     public MutableLiveData<List<Faq>> getFaqList() {
         return repository.getFaqs();
     }
