@@ -34,6 +34,8 @@ import no.ntnu.epsilon_app.MainActivity;
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.ImageParser;
+import no.ntnu.epsilon_app.data.LoginDataSource;
+import no.ntnu.epsilon_app.data.LoginRepository;
 import no.ntnu.epsilon_app.ui.about_us.dummy.DummyContent;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -91,7 +93,11 @@ public class AboutUsFragment extends Fragment implements AboutUsItemRecyclerView
 
         adapter = new AboutUsItemRecyclerViewAdapter(AboutUsViewModel.OBJECT_LIST);
 
-        adapter.setClickListener(this);
+        LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
+        if (loginRepository.isAdmin() || loginRepository.isBoardmember()) {
+            adapter.setClickListener(this);
+        }
+
         recyclerView.setAdapter(adapter);
 
         return root;

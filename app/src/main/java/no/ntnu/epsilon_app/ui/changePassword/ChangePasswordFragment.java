@@ -114,6 +114,7 @@ public class ChangePasswordFragment extends Fragment {
         }
         else
         {
+            System.out.println("Error code: " + responseCode);
             System.out.println("An unknown error occurred while changing the password");
             Toast.makeText(getContext(), "Noe gikk galt da vi prøvde å endre passordet", Toast.LENGTH_SHORT).show();
         }

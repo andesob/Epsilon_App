@@ -19,10 +19,9 @@
         android:id="@+id/epsilon_logo"
         android:layout_width="408dp"
         android:layout_height="104dp"
-        android:layout_marginBottom="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/loginText"
+        app:layout_constraintTop_toBottomOf="@id/guideline"
         app:srcCompat="@drawable/ic_epsilon_logo" />
 
     <TextView
@@ -36,13 +35,15 @@
         android:textSize="56sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/editEmail" />
+        app:layout_constraintTop_toBottomOf="@id/epsilon_logo"
+
+        />
 
     <EditText
         android:id="@+id/editEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
         android:background="@drawable/border"
         android:ems="14"
         android:hint="@string/prompt_email"
@@ -51,13 +52,13 @@
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@id/loginText" />
 
     <EditText
         android:id="@+id/editTextPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/border"
         android:ems="14"
         android:hint="@string/prompt_password"
@@ -66,7 +67,7 @@
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/loginButton" />
+        app:layout_constraintTop_toBottomOf="@id/editEmail" />
 
 
 
@@ -74,15 +75,15 @@
         android:id="@+id/loginButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="200dp"
         android:background="@drawable/login_border"
+        android:layout_marginTop="20dp"
         android:ems="14"
         android:text="@string/loginBtnText"
         android:fitsSystemWindows="true"
         android:textColor="@color/colorAccent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/guideline" />
+        app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
 
 
     <ProgressBar
@@ -91,20 +92,32 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:layout_marginBottom="200dp"
+        android:layout_marginTop="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/guideline"  />
+        app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
 
     <TextView
         android:id="@+id/registerUserText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:textSize="18dp"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
         android:textColor="#fff"
         android:text="@string/RegisterNewUser"
-        app:layout_constraintBottom_toTopOf="@+id/facebookLinkText"
+        app:layout_constraintTop_toBottomOf="@id/loginButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/forgotPasswordText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="18sp"
+        android:textColor="#fff"
+        android:text="@string/forgotPassword"
+        app:layout_constraintTop_toBottomOf="@id/registerUserText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -117,29 +130,29 @@
         app:layout_constraintStart_toStartOf="parent"
         android:fontFamily="@font/roboto_thin"
         android:textColor="@color/colorAccent"
-        android:textSize="24sp"
+        android:textSize="20sp"
         android:layout_marginTop="40sp"
-        app:layout_constraintTop_toBottomOf="@id/loginButton"/>
+        app:layout_constraintTop_toBottomOf="@id/forgotPasswordText"/>
 
     <ImageButton
-
         android:id="@+id/facebookLink"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="20dp"
         android:background="@drawable/login_border"
         android:scaleType="fitXY"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_facebook_logo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/facebookLinkText" />
+        app:layout_constraintTop_toBottomOf="@+id/facebookLinkText"
+        android:contentDescription="@string/link_to_facebook" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.9"/>
+        app:layout_constraintGuide_percent="0.1"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
