@@ -6,19 +6,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
 
 import no.ntnu.epsilon_app.R;
 import no.ntnu.epsilon_app.ui.faq.FaqViewModel;
-import retrofit2.Response;
 
+/**
+ * A bottom sheet dialog for adding a faq to the database
+ */
 public class BottomSheetDialogAddFaq extends BottomSheetDialogFragment {
     private EditText editFaqQuestion;
     private EditText editFaqAnswer;

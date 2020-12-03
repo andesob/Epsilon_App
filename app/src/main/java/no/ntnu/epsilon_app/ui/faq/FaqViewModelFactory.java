@@ -1,6 +1,5 @@
 package no.ntnu.epsilon_app.ui.faq;
 
-import android.app.Activity;
 import android.app.Application;
 
 import androidx.annotation.NonNull;

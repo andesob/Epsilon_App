@@ -5,6 +5,9 @@ import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 
+/**
+ * A static helper class which return an intent which leads to the epsilon facebook page.
+ **/
 public class EpsilonFacebookIntent {
 
     private static final String FACEBOOK_ID = "1007001496115565";
