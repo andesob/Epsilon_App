@@ -1,17 +1,16 @@
 package no.ntnu.epsilon_app;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProviders;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProviders;
 
 import java.io.IOException;
 
@@ -58,10 +57,9 @@ public class TwoFactorActivity extends AppCompatActivity {
         });
 
 
-
     }
 
-    private void checkTwoFactor(){
+    private void checkTwoFactor() {
         Bundle extras = getIntent().getExtras();
         String email = "";
         String pwd = "";
@@ -69,7 +67,7 @@ public class TwoFactorActivity extends AppCompatActivity {
 
         final SharedUserPrefs sharedUserPrefs = new SharedUserPrefs(this);
 
-        if (extras != null){
+        if (extras != null) {
             email = extras.getString("email");
             pwd = extras.getString("pwd");
         }
@@ -85,7 +83,7 @@ public class TwoFactorActivity extends AppCompatActivity {
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         final String token = response.headers().get("Authorization");
                         final String refreshToken = response.headers().get("refreshTokenHeader");
@@ -109,7 +107,7 @@ public class TwoFactorActivity extends AppCompatActivity {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                } else{
+                } else {
                     progressBar.setVisibility(View.INVISIBLE);
                     sendButton.setVisibility(View.VISIBLE);
                     Toast.makeText(getBaseContext(), "Feil kode, prøv på nytt", Toast.LENGTH_LONG).show();

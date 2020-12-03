@@ -11,9 +11,6 @@ import java.util.List;
 
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.ImageParser;
-import no.ntnu.epsilon_app.data.User;
-import no.ntnu.epsilon_app.data.UserParser;
-import no.ntnu.epsilon_app.data.UserViewModel;
 import no.ntnu.epsilon_app.ui.about_us.AboutUsParser;
 import no.ntnu.epsilon_app.ui.calendar.Calendar;
 import no.ntnu.epsilon_app.ui.calendar.CalendarViewModel;
@@ -25,10 +22,14 @@ import retrofit2.Response;
 
 public class AfterLoginSplashActivity extends Activity {
 
-    /** Duration of wait **/
+    /**
+     * Duration of wait
+     **/
     private final int SPLASH_DISPLAY_LENGTH = 5000;
 
-    /** Called when the activity is first created. */
+    /**
+     * Called when the activity is first created.
+     */
     @Override
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
@@ -41,7 +42,7 @@ public class AfterLoginSplashActivity extends Activity {
 
         /* New Handler to start the Menu-Activity
          * and close this Splash-Screen after some seconds.*/
-        new Handler().postDelayed(new Runnable(){
+        new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 /* Create an Intent that will start the Menu-Activity. */
@@ -68,7 +69,7 @@ public class AfterLoginSplashActivity extends Activity {
         });
     }
 
-    private void fetchPictures(){
+    private void fetchPictures() {
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getUserPictures();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -89,7 +90,7 @@ public class AfterLoginSplashActivity extends Activity {
         });
     }
 
-    private void getNewsFeed(){
+    private void getNewsFeed() {
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getNewsfeed();
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -110,7 +111,7 @@ public class AfterLoginSplashActivity extends Activity {
         });
     }
 
-    private void getAboutUsObjects(){
+    private void getAboutUsObjects() {
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().getAboutUsObjects();
         call.enqueue(new Callback<ResponseBody>() {
             @Override

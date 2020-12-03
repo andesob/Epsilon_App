@@ -2,7 +2,6 @@ package no.ntnu.epsilon_app.ui.calendar;
 
 import android.location.Address;
 import android.location.Geocoder;
-import android.media.Image;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +16,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.navigation.Navigation;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -73,6 +71,11 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
 
         final Button editAddressButton = view.findViewById(R.id.addressConfirmButton);
         editAddressButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Sets the selected position
+             * @param v View
+             */
             @Override
             public void onClick(View v) {
                 addressToLatLong = editAddressText.getText().toString().trim();
@@ -133,6 +136,11 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
 
         final Button addButton = view.findViewById(R.id.addEventButton);
         addButton.setOnClickListener(new View.OnClickListener() {
+
+            /**
+             * Adds a calendar event to the database using the paramaters set
+             * @param v View
+             */
             @Override
             public void onClick(View v) {
                 String title = editTitle.getText().toString().trim();
@@ -212,6 +220,11 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
     }
 
 
+    /**
+     * Controls what widgets are going to be shown when adding a calendar item
+     *
+     * @param page the page to be shown
+     */
     private void setPage(int page) {
         ConstraintLayout addCalendarPageOne = getView().findViewById(R.id.addCalendarPageOne);
         ConstraintLayout addCalendarPageTwo = getView().findViewById(R.id.addCalendarPageTwo);
@@ -237,6 +250,11 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
         }
     }
 
+    /**
+     * Sets default position and marker for map
+     *
+     * @param googleMap
+     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;

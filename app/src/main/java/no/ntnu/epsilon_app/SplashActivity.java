@@ -1,6 +1,5 @@
 package no.ntnu.epsilon_app;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -11,13 +10,10 @@ import androidx.lifecycle.ViewModelProviders;
 import java.io.IOException;
 
 import no.ntnu.epsilon_app.api.RetrofitClientInstance;
-import no.ntnu.epsilon_app.data.ImageParser;
 import no.ntnu.epsilon_app.data.LoginViewModel;
 import no.ntnu.epsilon_app.data.LoginViewModelFactory;
 import no.ntnu.epsilon_app.data.User;
 import no.ntnu.epsilon_app.data.UserParser;
-import no.ntnu.epsilon_app.ui.about_us.AboutUsParser;
-import no.ntnu.epsilon_app.ui.news.NewsParser;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;

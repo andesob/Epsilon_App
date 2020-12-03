@@ -2,58 +2,37 @@ package no.ntnu.epsilon_app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.Menu;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-import com.google.android.material.navigation.NavigationView;
-
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.ContextCompat;
 import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
-import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
-import java.io.IOException;
-import java.util.Objects;
+import com.google.android.material.navigation.NavigationView;
 
-import javax.sql.DataSource;
-
-import no.ntnu.epsilon_app.api.RetrofitClientInstance;
-import no.ntnu.epsilon_app.data.Image;
-import no.ntnu.epsilon_app.data.ImageParser;
 import no.ntnu.epsilon_app.data.LoginDataSource;
 import no.ntnu.epsilon_app.data.LoginRepository;
-import no.ntnu.epsilon_app.data.User;
-import no.ntnu.epsilon_app.data.UserParser;
-import no.ntnu.epsilon_app.data.UserViewModel;
 import no.ntnu.epsilon_app.tools.EpsilonFacebookIntent;
-import no.ntnu.epsilon_app.ui.about_us.AboutUsViewModel;
-import okhttp3.ResponseBody;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class MainActivity extends AppCompatActivity {
 
     private AppBarConfiguration mAppBarConfiguration;
     DrawerLayout drawer;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -101,10 +80,10 @@ public class MainActivity extends AppCompatActivity {
                 Navigation.findNavController(this, R.id.nav_host_fragment).navigate(R.id.nav_settings);
                 break;
         }
-            return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
 
-    public void logout(){
+    public void logout() {
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
         if (loginRepository.isLoggedIn()) {
             loginRepository.logout();
@@ -118,12 +97,12 @@ public class MainActivity extends AppCompatActivity {
         MainActivity.this.finish();
     }
 
-    public void goToSplashScreen(){
+    public void goToSplashScreen() {
         LoginRepository loginRepository = LoginRepository.getInstance(new LoginDataSource());
-        if(loginRepository.isLoggedIn()){
+        if (loginRepository.isLoggedIn()) {
             loginRepository.logout();
         }
-        Intent mainIntent = new Intent(MainActivity.this,SplashActivity.class);
+        Intent mainIntent = new Intent(MainActivity.this, SplashActivity.class);
         MainActivity.this.startActivity(mainIntent);
         MainActivity.this.finish();
     }
@@ -152,10 +131,9 @@ public class MainActivity extends AppCompatActivity {
         }
         return super.dispatchTouchEvent(ev);
     }
-    private void onFailure(){
-        }
 
-
+    private void onFailure() {
+    }
 
 
 }
