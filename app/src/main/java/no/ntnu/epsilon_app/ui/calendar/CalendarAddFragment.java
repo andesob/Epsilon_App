@@ -83,16 +83,15 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
                     addressList = geocoder.getFromLocationName(addressToLatLong, 1);
                 } catch (IOException e) {
                 }
-                if(addressList != null && addressList.size() != 0) {
+                if (addressList != null && addressList.size() != 0) {
                     Address address = addressList.get(0);
                     mMap.clear();
                     LatLng latLng = new LatLng(address.getLatitude(), address.getLongitude());
-                    latitudeLongitude = String.valueOf(latLng.latitude) + (",") +String.valueOf(latLng.longitude);
+                    latitudeLongitude = latLng.latitude + (",") + latLng.longitude;
                     mMap.addMarker(new MarkerOptions().position(latLng));
                     mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 15f));
-                }
-                else{
-                    Toast.makeText(getActivity(),"Addresse ikke funnet",Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity(), "Addresse ikke funnet", Toast.LENGTH_SHORT).show();
                 }
             }
         });
@@ -127,7 +126,7 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
         backButtonTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count -=1;
+                count -= 1;
                 setPage(count);
             }
         });
@@ -136,55 +135,50 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int errorCount = 0;
                 String title = editTitle.getText().toString().trim();
                 String description = editDescription.getText().toString().trim();
-                //Time startTime = new Time(startDatePicker.getYear(),startDatePicker.getMonth(),startDatePicker.getDayOfMonth(),startTimePicker.getHour(),startTimePicker.getMinute());
-                String startTime =  String.valueOf(startDatePicker.getYear()) + (",") +String.valueOf(startDatePicker.getMonth())+
-                        (",") +  String.valueOf(startDatePicker.getDayOfMonth())+(",") + String.valueOf(startTimePicker.getHour()) +(",") + String.valueOf(startTimePicker.getMinute());
-                //Time endTime = new Time(endDatePicker.getYear(),endDatePicker.getMonth(),endDatePicker.getDayOfMonth(),endTimePicker.getHour(),endTimePicker.getMinute());
-                String endTime =  String.valueOf(endDatePicker.getYear()) + (",") +String.valueOf(endDatePicker.getMonth())+
-                        (",") +  String.valueOf(endDatePicker.getDayOfMonth())+(",") + String.valueOf(endTimePicker.getHour()) +(",") + String.valueOf(endTimePicker.getMinute());
+                String startMin = String.format("%02d", startTimePicker.getMinute());
+                String startHour = String.format("%02d", startTimePicker.getHour());
+                String endMin = String.format("%02d", endTimePicker.getMinute());
+                String endHour = String.format("%02d", endTimePicker.getHour());
 
-                if(LocalDate.of(startDatePicker.getYear(),startDatePicker.getMonth()+1,
-                            startDatePicker.getDayOfMonth()).isAfter(LocalDate.of(endDatePicker.getYear(),endDatePicker.getMonth()+1,
-                            endDatePicker.getDayOfMonth()))) {
+                String startTime = startDatePicker.getYear() + "," + startDatePicker.getMonth() +
+                        "," + startDatePicker.getDayOfMonth() + "," + startHour + "," + startMin;
+                String endTime = endDatePicker.getYear() + "," + endDatePicker.getMonth() +
+                        "," + endDatePicker.getDayOfMonth() + "," + endHour + "," + endMin;
+
+                if (LocalDate.of(startDatePicker.getYear(), startDatePicker.getMonth() + 1,
+                        startDatePicker.getDayOfMonth()).isAfter(LocalDate.of(endDatePicker.getYear(), endDatePicker.getMonth() + 1,
+                        endDatePicker.getDayOfMonth()))) {
                     count = 0;
                     setPage(count);
                     Toast.makeText(getActivity(), "Startdato er satt til etter sluttdato", Toast.LENGTH_SHORT).show();
-                    errorCount += 1;
                     return;
                 }
 
-                if(LocalTime.of(startTimePicker.getHour(),startTimePicker.getMinute()).isAfter(LocalTime.of(endTimePicker.getHour(),endTimePicker.getMinute()))){
+                if (LocalTime.of(startTimePicker.getHour(), startTimePicker.getMinute()).isAfter(LocalTime.of(endTimePicker.getHour(), endTimePicker.getMinute()))) {
                     count = 0;
                     setPage(count);
                     Toast.makeText(getActivity(), "Starttid er satt til etter slutt-tid", Toast.LENGTH_SHORT).show();
-                    errorCount += 1;
                     return;
                 }
-                if(title.isEmpty()){
+                if (title.isEmpty()) {
                     editTitle.setError("Vennligst tast inn en tittel");
                     editTitle.requestFocus();
-                    errorCount += 1;
                     return;
                 }
-                if(description.isEmpty()){
+                if (description.isEmpty()) {
                     editDescription.setError("Vennligst tast inn en beskrivelse");
                     editDescription.requestFocus();
-                    errorCount += 1;
                     return;
                 }
-                if(addressToLatLong.isEmpty() || latitudeLongitude.isEmpty()){
-                    count=1;
+                if ((addressToLatLong == null || addressToLatLong.isEmpty()) || (latitudeLongitude == null || latitudeLongitude.isEmpty())) {
+                    count = 1;
                     setPage(count);
-                    Toast.makeText(getActivity(),"Lokasjon ikke satt",Toast.LENGTH_SHORT).show();
-                    errorCount += 1;
+                    Toast.makeText(getActivity(), "Lokasjon ikke satt", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(errorCount != 0) {
-                    addEvent(title, description, latitudeLongitude, startTime, endTime, addressToLatLong);
-                }
+                addEvent(title, description, latitudeLongitude, startTime, endTime, addressToLatLong);
 
             }
 
@@ -195,21 +189,19 @@ public class CalendarAddFragment extends BottomSheetDialogFragment implements On
         return view;
     }
 
-    private void addEvent(String title,String description,String latLng,String startTime,String endTime,String addressToLatLong) {
+    private void addEvent(String title, String description, String latLng, String startTime, String endTime, String addressToLatLong) {
 
 
-
-        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().addCalendarItem(title,description,
-                latLng,startTime,endTime,addressToLatLong);
+        Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().addCalendarItem(title, description,
+                latLng, startTime, endTime, addressToLatLong);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                System.out.println("RESPONSE CODE: " + response.code());
                 dismiss();
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
 
-                }else{
-                    ((MainActivity)getActivity()).goToSplashScreen();
+                } else {
+                    ((MainActivity) getActivity()).goToSplashScreen();
                 }
             }
 
