@@ -30,7 +30,7 @@ import retrofit2.Response;
 
 
 /**
- * A fragment representing a list of Items.
+ * A fragment representing a list of faqs.
  */
 public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.FaqExpandableViewClickListener {
 
@@ -70,7 +70,7 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
             addBtn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                        addBtn.setEnabled(false);
+                    addBtn.setEnabled(false);
                     new CountDownTimer(500, 1000) {
                         @Override
                         public void onTick(long l) {
@@ -82,7 +82,6 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
                         }
                     }.start();
 
-                    System.out.println("add btn clicked");
                     BottomSheetDialogAddFaq bottomSheet = new BottomSheetDialogAddFaq();
                     bottomSheet.show(requireActivity().getSupportFragmentManager(), "ModalBottomSheet");
                 }
@@ -98,6 +97,9 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         return root;
     }
 
+    /**
+     * Refreshes the faq list when the mutable live data object changes.
+     */
     public void getFaq() {
         faqViewModel.getFaqList().observe(getViewLifecycleOwner(), new Observer<List<Faq>>() {
             @Override
@@ -111,6 +113,12 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         });
     }
 
+    /**
+     * Parses the api call, and puts the question and answers on a hashMap, representing the faq.
+     *
+     * @param ApiResponse
+     * @return
+     */
     private HashMap<String, List<String>> parseApiCall(List<Faq> ApiResponse) {
         HashMap<String, List<String>> hashMap = new HashMap<>();
         for (int i = 0; i < ApiResponse.size(); i++) {
@@ -123,7 +131,11 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         return hashMap;
     }
 
-
+    /**
+     * Creates an alert dialog asking if the user really wants to delete the faq.
+     *
+     * @param faqId - the faq id for the faq the user wants to delete
+     */
     private void createAlertBox(final long faqId) {
         //Setting message manually and performing action on button click
         builder.setMessage("Vil du slette dette ofte stilte spørsmålet?")
@@ -145,13 +157,20 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         alert.show();
     }
 
-
+    /**
+     * Return a fade animation
+     *
+     * @return
+     */
     private AlphaAnimation getFadeInAnimation() {
         AlphaAnimation alphaAnimation = new AlphaAnimation(0.0f, 1.0f);
         alphaAnimation.setDuration(800);
         return alphaAnimation;
     }
 
+    /**
+     * Observes the delete faq mutable object and refreshes the faq list when a faq is deleted.
+     */
     private void observeDeleteFaq() {
         faqViewModel.getDeleteFaqLiveData().observe(getViewLifecycleOwner(), new Observer<Response>() {
             @Override
@@ -161,6 +180,9 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
         });
     }
 
+    /**
+     * Updates the faq list when an faq is edited.
+     */
     private void observeEditFaq() {
 
         faqViewModel.getEditFaqLiveData().observe(getViewLifecycleOwner(), new Observer<Response>() {
@@ -170,41 +192,46 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
                 if (response.isSuccessful()) {
                     faqViewModel.getFaqList();
                 } else {
-                    Toast.makeText(getContext(), "Error: kunne ikke endre", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.error_cant_edit, Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
+    /**
+     * Updates the faq list when an faq is added.
+     */
     private void observeAddFaq() {
         faqViewModel.getAddFaqLiveData().observe(getViewLifecycleOwner(), new Observer<Response>() {
             @Override
             public void onChanged(@NonNull Response response) {
                 if (response.isSuccessful()) {
                     faqViewModel.getFaqList();
-                    Toast.makeText(getContext(), "Lagt til", Toast.LENGTH_SHORT).show();
-
-
+                    Toast.makeText(getContext(), R.string.added, Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(getContext(), "Error: kunne ikke legge til", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), R.string.error_cant_add, Toast.LENGTH_SHORT).show();
                 }
             }
-
         });
     }
 
+    /**
+     * Sets the view adapter for the wxpandable view.
+     *
+     * @param questions   - The faq questions, represented as a arrayList
+     * @param listDetails - The question and answer for the faq. The sting represents the question, and the List represents the answer
+     * @param faqList     - The list returned from the api call
+     */
     private void setViewAdapter(List<String> questions, HashMap<String, List<String>> listDetails, List<Faq> faqList) {
         ExpandableListView expandableListView = requireActivity().findViewById(R.id.expandableListView);
         if (clicked) {
             expandableListView.setGroupIndicator(null);
         }
-        System.out.println("Refreshing");
         expandableListView.setAnimation(getFadeInAnimation());
         FaqExpandableViewAdapter faqAdapter = new FaqExpandableViewAdapter(getContext(), questions, listDetails, clicked, faqList);
         expandableListView.setAdapter(faqAdapter);
         faqAdapter.setTrashClickListener(this);
         faqAdapter.setEditClickListener(this);
-
         expandableListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
 
             @Override
@@ -226,11 +253,26 @@ public class FaqFragment extends Fragment implements FaqExpandableViewAdapter.Fa
             }
         });
     }
+
+    /**
+     * Opens an alert dialog on click
+     *
+     * @param view     - the view
+     * @param position - the position in the list
+     * @param faqId    - the faq id
+     */
     @Override
     public void onTrashClick(View view, int position, long faqId) {
         createAlertBox(faqId);
     }
 
+    /**
+     * Opens a modal bottom sheet on click
+     *
+     * @param view
+     * @param position
+     * @param faq
+     */
     @Override
     public void onEditClick(View view, int position, Faq faq) {
         BottomSheetDialogEditFaq bottomSheet = new BottomSheetDialogEditFaq(faq);

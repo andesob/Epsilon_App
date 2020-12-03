@@ -12,6 +12,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
+/**
+ * The faq repository.
+ */
 public class FaqRepository {
 
     private MutableLiveData<List<Faq>> faqListLiveData = new MutableLiveData<>();
@@ -29,7 +32,6 @@ public class FaqRepository {
         call.enqueue(new Callback<List<Faq>>() {
             @Override
             public void onResponse(Call<List<Faq>> call, Response<List<Faq>> response) {
-                System.out.println("getFaqs code: " + response.code());
                 if (response.isSuccessful()) {
                     List<Faq> faqList = response.body();
                     if (faqList != null) {
@@ -47,8 +49,6 @@ public class FaqRepository {
         return faqListLiveData;
     }
 
-
-    //Todo change the returnvalue
 
     public MutableLiveData<Response> addFaq(String question, String answer) {
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().add_faqs(question, answer);
@@ -71,7 +71,6 @@ public class FaqRepository {
         return addFaqLiveData;
     }
 
-    //TODO change the returnvalue
 
     public MutableLiveData<Response> editFaq(String question, String answer, long id) {
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().edit_faq(question, answer, id);

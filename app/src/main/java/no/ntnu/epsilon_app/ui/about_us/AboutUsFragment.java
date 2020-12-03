@@ -2,7 +2,6 @@ package no.ntnu.epsilon_app.ui.about_us;
 
 import android.Manifest;
 import android.app.Activity;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
@@ -14,7 +13,6 @@ import android.provider.MediaStore;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
@@ -36,7 +34,6 @@ import no.ntnu.epsilon_app.api.RetrofitClientInstance;
 import no.ntnu.epsilon_app.data.ImageParser;
 import no.ntnu.epsilon_app.data.LoginDataSource;
 import no.ntnu.epsilon_app.data.LoginRepository;
-import no.ntnu.epsilon_app.ui.about_us.dummy.DummyContent;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;

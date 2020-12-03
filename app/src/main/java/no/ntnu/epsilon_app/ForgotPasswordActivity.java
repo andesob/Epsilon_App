@@ -36,7 +36,7 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.GONE);
 
-        forgotPasswordButton.setOnClickListener(new View.OnClickListener(){
+        forgotPasswordButton.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
@@ -57,16 +57,16 @@ public class ForgotPasswordActivity extends AppCompatActivity {
 
     }
 
-    private void sendForgotPasswordRequest(String email){
+    private void sendForgotPasswordRequest(String email) {
         Call<ResponseBody> call = RetrofitClientInstance.getSINGLETON().getAPI().forgotPassword(email);
         call.enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                if (progressBar != null){
+                if (progressBar != null) {
                     progressBar.setVisibility(View.INVISIBLE);
                 }
 
-                if (response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Toast.makeText(getBaseContext(), "Nytt passord er sendt på epost.", Toast.LENGTH_LONG).show();
                     startActivity(new Intent(ForgotPasswordActivity.this, LoginActivity.class));
                 } else {

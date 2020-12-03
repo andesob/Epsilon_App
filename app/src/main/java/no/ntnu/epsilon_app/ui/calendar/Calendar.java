@@ -1,11 +1,5 @@
 package no.ntnu.epsilon_app.ui.calendar;
 
-import com.google.android.gms.maps.model.LatLng;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 public class Calendar {
     long id;
     String title;
@@ -70,20 +64,21 @@ public class Calendar {
         String[] arr = getStartTime().split(",");
         return arr[poistion];
     }
+
     public String getEndTimeParsed(int poistion) {
         String[] arr = getEndTime().split(",");
         return arr[poistion];
     }
 
-    public String getTime(String startTime,String endTime){
+    public String getTime(String startTime, String endTime) {
         String time = getStartTimeParsed(3) + ":" +
                 getStartTimeParsed(4) + " - " +
-                getEndTimeParsed(3)+":"+
+                getEndTimeParsed(3) + ":" +
                 getEndTimeParsed(4);
         return time;
     }
 
-    public String splitLangLng(int position){
+    public String splitLangLng(int position) {
         String[] arr = getLatLng().split(",");
         return arr[position];
     }
